@@ -1,0 +1,88 @@
+گزارش Audit — شهدآور
+تاریخ: ۱۴۰۵/۰۶/۱۷
+
+بررسی انجام‌شده:
+- تمام Pythonهای اصلی، Service شهدیار، Templateها، CSS/JSهای اصلی، Routeهای Flask، دیتابیس و Assetهای پروژه بررسی شدند.
+- دو منبع مستقل Banner در app.py و database.py شناسایی و به یک منبع اصلی database.py یکپارچه شد.
+- سیستم‌های Theme، Contact، Authentication/Session، Product و Support از نظر اتصال Frontend/Backend بررسی شدند.
+
+اصلاحات اصلی:
+1) Migration امن و بدون حذف داده برای reviews.rating، support_messages.reply_to_message_id، products.tags، covers.sort_order و banners.is_active/sort_order.
+2) Backup قبل از Migration و Backup نهایی نگهداری شد.
+3) Theme سراسری با localStorage و منوی سریع مرکزی تثبیت شد.
+4) CSRF برای فرم‌ها و درخواست‌های state-changing اضافه شد.
+5) اعتبارسنجی واقعی signature فایل‌های تصویر اضافه شد.
+6) Rich Text Editor داخلی برای About با تیتر، پاراگراف، اندازه، رنگ، highlight، alignment، list، link، image upload، resize، undo/redo و پاک‌سازی HTML اضافه شد.
+7) HTML ذخیره‌شده قبل از نمایش sanitize می‌شود و event handlerهای مخرب حذف می‌شوند.
+8) Reviews به امتیاز ۱ تا ۵ و statusهای pending/approved/rejected/replied مجهز شد.
+9) Support Reply-to واقعی با FK و UI اضافه شد.
+10) تاریخ پیام‌ها با timezone ایران و نمایش امروز/دیروز/تاریخ فارسی اضافه شد.
+11) Contactها و Bannerها عملیات مدیریت، فعال/غیرفعال و جابه‌جایی دارند.
+12) Product Listing به Carousel دسته‌ای با سقف ۱۰ محصول اولیه و لینک مشاهده همه مجهز شد.
+13) tags و وضعیت موجودی در مدیریت محصول اضافه شد.
+14) SiteKnowledge شهدیار اصلاح شد تا schema واقعی site_settings یک‌ردیفی را بخواند؛ snapshot واقعی سایت اکنون ساخته می‌شود.
+15) کلید Flask در نبود FLASK_SECRET_KEY به صورت تصادفی و پایدار محلی تولید می‌شود.
+16) Headerهای امنیتی پایه اضافه شد.
+17) README_FA و START.bat به‌روزرسانی شد.
+
+تست‌های قابل اجرا در این محیط:
+- Python AST/syntax: PASS
+- Jinja template compilation برای templates و pages: PASS
+- بررسی url_forهای Templateها: PASS
+- Node syntax برای theme.js: PASS
+- Database integrity_check: PASS
+- foreign_key_check: PASS
+- DB smoke test ایزوله برای user/review/support/contact/product: PASS
+- تست idempotency برای init_db: PASS
+- بررسی Assetهای ثبت‌شده در DB: PASS
+- وضعیت Providerهای شهدیار: OpenRouter/Cloudflare/Cerebras configured؛ AionLabs به علت نبود model فعال نیست.
+
+محدودیت محیط تحویل:
+محیط اجرای فعلی Flask را نصب ندارد و دسترسی شبکه برای نصب packageها نیز در دسترس نیست؛ بنابراین اجرای واقعی `python app.py` و درخواست‌های HTTP با Flask در همین محیط قابل انجام نبود. این مورد با `python app.py` به خطای `ModuleNotFoundError: flask` منتهی شد. بنابراین Runtime/Browser/E2E واقعی را نمی‌توان با صداقت PASS اعلام کرد.
+
+امنیت Provider:
+.env پروژه حاوی کلیدهای Provider است. برای استقرار عمومی باید کلیدهای فعلی Rotate شوند. این مورد در README نیز ثبت شده است.
+
+داده‌های فعلی حفظ‌شده:
+users=2
+products=3
+categories=5
+covers=6
+reviews=1
+banners=0
+contact_methods=0
+support_conversations=0
+support_messages=0
+site_settings=1
+
+--- PATCH 2026-09-09: بازسازی کامل Contact ---
+
+مشکل اصلی صفحه تماس در نسخه قبلی:
+- فایل pages/contact.html یک نسخه قدیمی و استاتیک با نام «عسل ایران 41» بود.
+- templates/contact.html کلاس‌های CSS متفاوتی از css/contact.css داشت و در نتیجه بخش زیادی از صفحه بدون استایل نمایش داده می‌شد.
+- لوگو در صفحه تماس محدودیت اندازه نداشت.
+- در manage_site.html فرم افزودن Contact داخل فرم اصلی تنظیمات سایت قرار گرفته بود؛ Nested Form در HTML معتبر نیست و باعث می‌شد عملیات Contact/تنظیمات رفتار نادرست داشته باشد.
+- نام فیلد آپلود در یک فرم icon_file بود ولی برخی Routeها فقط icon را می‌خواندند.
+- فرم ویرایش sort_order را ذخیره نمی‌کرد.
+
+اصلاحات:
+- صفحه Contact عمومی با طراحی Responsive حرفه‌ای، Header، کارت‌های واقعی و CTA پشتیبانی بازسازی شد.
+- لوگو در Header و Footer دارای محدودیت ابعاد مشخص شد و دیگر امکان بزرگ‌شدن خارج از Header ندارد.
+- Dark/Light Mode و منوی سریع مرکزی حفظ و با Contact هماهنگ شد.
+- Contact Methodها مستقیماً از Database خوانده می‌شوند؛ هیچ داده ساختگی برای Contact نمایش داده نمی‌شود.
+- دکمه‌های ارتباط واقعی بر اساس link ذخیره‌شده کار می‌کنند.
+- صفحه مدیریت Contact مستقل شد و شامل تنظیمات صفحه، افزودن، ویرایش، Preview، فعال/غیرفعال، حذف و جابه‌جایی ترتیب است.
+- چند رکورد از یک Platform کاملاً مجاز باقی ماند.
+- icon_type به Database اضافه شد و Image/Emoji را به شکل صریح مدیریت می‌کند.
+- Migration مربوط به icon_type بدون حذف داده انجام شد.
+- API واقعی GET /api/contact برای fallback استاتیک و Integration اضافه شد.
+- CSRF helper و مقدار csrf_token در context نیز برای فرم‌های واقعی تثبیت شد.
+- Backupهای قبل و بعد از این Patch نگهداری شدند.
+
+تست Patch:
+- Python compile: PASS
+- Jinja template compilation: PASS
+- Database integrity_check: PASS
+- Contact create/update/toggle/delete smoke test: PASS
+- Nested forms در manage_site: حذف شد؛ فقط یک فرم اصلی سایت باقی مانده و مدیریت Contact در صفحه مستقل انجام می‌شود.
+- Route path duplicate در Contact: ندارد.

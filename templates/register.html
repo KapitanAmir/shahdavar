@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ساخت حساب کاربری | {{ site.site_name }}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='account.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+<style>.gender-option span{display:flex;align-items:center;justify-content:center;gap:8px}.gender-icon{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}html[data-theme="dark"] .form-card{background:#191713!important;color:#f4efe4!important}html[data-theme="dark"] .account-form input{background:#fffdf8!important;color:#111!important;border-color:#d7cbb8!important}html[data-theme="dark"] .gender-option span{background:#fff8e8!important;color:#111!important;border-color:#d7c5a2!important}</style></head>
+
+<body>
+
+<div class="account-page">
+
+    <div class="form-card register-card">
+
+        <div class="account-icon">
+            🐝
+        </div>
+
+        <h1>
+            ساخت حساب کاربری
+        </h1>
+
+        <p class="form-description">
+            حساب خودت رو بساز و وارد خانواده شهدآور شو.
+        </p>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="messages">
+
+                    {% for category, message in messages %}
+
+                        <div class="message {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form
+            method="POST"
+            class="account-form"
+        >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+            <label>
+                نام
+            </label>
+
+            <input
+                type="text"
+                name="first_name"
+                placeholder="نام"
+                maxlength="50"
+                required
+            >
+
+
+            <label>
+                نام خانوادگی
+            </label>
+
+            <input
+                type="text"
+                name="last_name"
+                placeholder="نام خانوادگی"
+                maxlength="60"
+                required
+            >
+
+
+            <label>
+                نام کاربری
+            </label>
+
+            <input
+                type="text"
+                name="username"
+                placeholder="مثلاً Amir_1386"
+                minlength="3"
+                maxlength="20"
+                pattern="[A-Za-z][A-Za-z0-9_]{7,19}" minlength="8"
+                autocomplete="username"
+                required
+            >
+
+            <small class="account-hint">نام کاربری باید ۸ تا ۲۰ کاراکتر، انگلیسی، یکتا و فقط شامل عدد و underscore باشد.</small>
+
+
+            <label>
+                شماره تماس
+            </label>
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="مثلاً 09123456789"
+                maxlength="11"
+                required
+            >
+
+
+            <label>
+                ایمیل
+                <span class="optional">
+                    اختیاری
+                </span>
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="example@email.com"
+                maxlength="120"
+            >
+
+
+            <label>
+                جنسیت
+            </label>
+
+            <div class="gender-options">
+
+                <label class="gender-option">
+
+                    <input
+                        type="radio"
+                        name="gender"
+                        value="male"
+                        required
+                    >
+
+                    <span>
+                        <svg class="gender-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg> مرد
+                    </span>
+
+                </label>
+
+
+                <label class="gender-option">
+
+                    <input
+                        type="radio"
+                        name="gender"
+                        value="female"
+                    >
+
+                    <span>
+                        <svg class="gender-icon" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M8 21h8M12 14v7M9 18h6"/></svg> زن
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <label>
+                رمز عبور
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="حداقل ۶ کاراکتر"
+                minlength="6"
+                required
+            >
+
+
+            <label>
+                تکرار رمز عبور
+            </label>
+
+            <input
+                type="password"
+                name="password_confirm"
+                placeholder="رمز عبور را دوباره وارد کنید"
+                minlength="6"
+                required
+            >
+
+
+            <label class="terms-option">
+
+                <input
+                    type="checkbox"
+                    name="terms"
+                    value="1"
+                    required
+                >
+
+                <span>
+                    قوانین و شرایط سایت را می‌پذیرم
+                </span>
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="account-main-button"
+            >
+                ساخت حساب
+            </button>
+
+        </form>
+
+
+        <div class="form-footer">
+
+            <span>
+                قبلاً حساب ساخته‌ای؟
+            </span>
+
+            <a href="{{ url_for('login') }}">
+                ورود
+            </a>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('home') }}"
+            class="back-home"
+        >
+            ← بازگشت به سایت
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        دسته‌بندی‌ها | شهدآور
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='owner_panel.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='owner.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="manager-page">
+
+    <header class="manager-header">
+
+        <a
+            href="{{ url_for('owner_dashboard') }}"
+            class="manager-back"
+        >
+            ← پنل مالکیت
+        </a>
+
+        <div>
+
+            <h1>
+                📁 دسته‌بندی محصولات
+            </h1>
+
+            <p>
+                دسته‌ها را مدیریت کنید
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <main class="manager-container">
+
+        <section class="manager-card">
+
+            <div class="manager-card-title">
+
+                <h2>
+                    ایجاد دسته جدید
+                </h2>
+
+            </div>
+
+
+            <form
+                method="POST"
+                class="category-create-form"
+            >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="مثلاً سنتی"
+                    maxlength="80"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="manager-primary-button"
+                >
+                    + ایجاد دسته
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <section class="manager-card">
+
+            <div class="manager-card-title">
+
+                <h2>
+                    دسته‌های فعلی
+                </h2>
+
+            </div>
+
+
+            {% if categories %}
+
+            <div class="category-manager-list">
+
+                {% for category in categories %}
+
+                <div class="category-manager-item">
+
+                    <div>
+
+                        <span>
+                            📁
+                        </span>
+
+                        <strong>{{ category.name }}</strong>
+                        {% if category.cover_image %}<small style="display:block;color:#8b6a25;margin-top:5px">کاور اختصاصی ثبت شده</small>{% endif %}
+
+                    </div>
+
+
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                        <form method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                            <input type="hidden" name="category_id" value="{{ category.id }}">
+                            <label class="manager-primary-button" style="cursor:pointer">🖼 کاور دسته<input type="file" name="cover" accept="image/*" hidden onchange="this.form.submit()"></label>
+                        </form>
+                        <a class="manager-primary-button" href="{{ url_for('category_products_page', category_name=category.name) }}">مشاهده صفحه</a>
+                        <form method="POST" action="{{ url_for('delete_category_route', category_id=category.id) }}" onsubmit="return confirm('با حذف دسته، محصولات حذف نمی‌شوند اما از این دسته خارج می‌شوند. ادامه؟');">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                            <button type="submit" class="cover-delete-button">🗑 حذف</button>
+                        </form>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-manager">
+                هنوز دسته‌ای ساخته نشده است.
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        افزودن محصول | شهدآور
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='product_manager.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='owner.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="pm-page">
+
+    <header class="pm-header">
+
+        <a
+            href="{{ url_for('owner_dashboard') }}"
+            class="pm-back"
+        >
+            ← بازگشت
+        </a>
+
+        <div class="pm-header-title">
+
+            <div class="pm-header-icon">
+                🍯
+            </div>
+
+            <div>
+
+                <h1>
+                    افزودن محصول
+                </h1>
+
+                <p>
+                    محصول جدید را به فروشگاه شهدآور اضافه کنید
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="pm-owner-badge">
+            <span></span>
+            مالک
+        </div>
+
+    </header>
+
+
+    <main class="pm-container">
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            id="productForm"
+        >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+
+            <section class="pm-section">
+
+                <div class="pm-section-title">
+
+                    <div class="pm-step">
+                        ۱
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            تصاویر محصول
+                        </h2>
+
+                        <p>
+                            حداکثر سه تصویر
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pm-image-grid">
+
+                    {% for number in [1, 2, 3] %}
+
+                    <label
+                        class="pm-image-box"
+                        id="box_{{ number }}"
+                    >
+
+                        <input
+                            type="file"
+                            id="image_{{ number }}"
+                            name="image_{{ number }}"
+                            accept="image/*"
+                            hidden
+                        >
+<div class="pm-image-preview" data-preview-for="image_{{ number }}" aria-live="polite"><span>پیش‌نمایش تصویر انتخاب‌شده</span></div>
+
+                        <div
+                            class="pm-upload-placeholder"
+                            id="placeholder_{{ number }}"
+                        >
+
+                            <div class="pm-plus">
+                                +
+                            </div>
+
+                            <strong>
+
+                                {% if number == 1 %}
+                                    تصویر اصلی
+                                {% else %}
+                                    تصویر {{ number }}
+                                {% endif %}
+
+                            </strong>
+
+                            <small>
+                                برای آپلود کلیک کنید
+                            </small>
+                            <small style="display:block;margin-top:5px;color:#9a7b39;line-height:1.7">پیشنهاد شهدآور: ۱۲۰۰×۱۵۰۰ پیکسل، نسبت ۴:۵، JPG یا WebP</small>
+
+                        </div>
+
+
+                        <img
+                            id="preview_{{ number }}"
+                            class="pm-preview"
+                            alt=""
+                        >
+
+
+                        <button
+                            type="button"
+                            class="pm-remove-image"
+                            id="remove_{{ number }}"
+                        >
+                            ×
+                        </button>
+
+                    </label>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="pm-tip">
+
+                    💡
+                    عکس‌ها می‌توانند اندازه‌های متفاوت داشته باشند؛
+                    سایت آن‌ها را در قاب‌های یکسان نمایش می‌دهد.
+
+                </div>
+
+            </section>
+
+
+            <section class="pm-section">
+
+                <div class="pm-section-title">
+
+                    <div class="pm-step">
+                        ۲
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            مشخصات محصول
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pm-field">
+
+                    <label for="title">
+                        عنوان محصول
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        maxlength="120"
+                        placeholder="مثلاً عسل طبیعی کوهستان"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="pm-field">
+
+                    <label for="price">
+                        قیمت اصلی <span style="color:#a53b34;font-size:10px">(قیمت خط‌خورده در تخفیف)</span>
+                    </label>
+
+                    <div class="pm-price">
+
+                        <input
+                            type="text"
+                            id="price"
+                            name="price"
+                            inputmode="numeric"
+                            placeholder="مثلاً ۸۵۰۰۰۰"
+                            required
+                        >
+
+                        <span>
+                            تومان
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pm-field">
+
+                    <label for="description">
+                        توضیح محصول
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        maxlength="2000"
+                        placeholder="توضیحی درباره محصول بنویسید..."
+                    ></textarea>
+
+                </div>
+
+            </section>
+
+
+            <section class="pm-section">
+
+                <div class="pm-section-title">
+
+                    <div class="pm-step">
+                        ۳
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            گروه محصول
+                        </h2>
+
+                        <p>
+                            نام دسته را مستقیم تایپ کنید
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                                    <div class="form-group">
+                        <label for="tags">برچسب‌ها</label>
+                        <input type="text" id="tags" name="tags" maxlength="500" value="{{ product.tags if product is defined else '' }}" placeholder="مثلاً طبیعی، گشنیز، صادراتی">
+                        <small>برچسب‌ها را با ویرگول جدا کنید.</small>
+                    </div>
+
+<div class="pm-field" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+    <div>
+        <label for="weight">وزن محصول</label>
+        <input type="text" id="weight" name="weight" maxlength="80" value="{{ product.weight if product is defined else '' }}" placeholder="مثلاً ۵۰۰ گرم">
+    </div>
+    <div>
+        <label for="stock">تعداد موجودی</label>
+        <input type="number" id="stock" name="stock" min="0" step="1" value="{{ product.stock if product is defined else 0 }}" placeholder="مثلاً ۲۰">
+    </div>
+</div>
+
+<div class="pm-field">
+
+                    <label for="category_name">
+                        نام دسته
+                    </label>
+
+                    <input
+                        type="text"
+                        id="category_name"
+                        name="category_name"
+                        list="categoryList"
+                        maxlength="80"
+                        autocomplete="off"
+                        placeholder="مثلاً سنتی"
+                        required
+                    >
+
+
+                    {% if categories %}
+
+                    <datalist id="categoryList">
+
+                        {% for category in categories %}
+
+                        <option
+                            value="{{ category.name }}"
+                        ></option>
+
+                        {% endfor %}
+
+                    </datalist>
+
+                    {% endif %}
+
+
+                    <div class="pm-category-note">
+
+                        📁
+
+                        محصولات دارای نام دسته یکسان،
+                        در یک گروه قرار می‌گیرند.
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="pm-section">
+
+                <div class="pm-section-title">
+
+                    <div class="pm-step">
+                        ۴
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            وضعیت محصول
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    type="hidden"
+                    name="product_type"
+                    id="product_type"
+                    value="normal"
+                >
+
+
+                <div class="pm-type-grid">
+
+
+                    <button
+                        type="button"
+                        class="pm-type-card active"
+                        data-type="normal"
+                    >
+
+                        <span class="pm-type-icon">
+                            🛍️
+                        </span>
+
+                        <strong>
+                            عادی
+                        </strong>
+
+                        <small>
+                            محصول معمولی
+                        </small>
+
+                        <span class="pm-type-check">
+                            ✓
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="pm-type-card"
+                        data-type="discount"
+                    >
+
+                        <span class="pm-type-icon">
+                            🔥
+                        </span>
+
+                        <strong>
+                            تخفیف‌دار
+                        </strong>
+
+                        <small>
+                            نمایش در تخفیف‌ها
+                        </small>
+
+                        <span class="pm-type-check">
+                            ✓
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="pm-type-card"
+                        data-type="popular"
+                    >
+
+                        <span class="pm-type-icon">
+                            ⭐
+                        </span>
+
+                        <strong>
+                            محبوب
+                        </strong>
+
+                        <small>
+                            نمایش در محبوب‌ها
+                        </small>
+
+                        <span class="pm-type-check">
+                            ✓
+                        </span>
+
+                    </button>
+
+                <label class="availability-toggle" style="display:flex;align-items:center;gap:10px;margin:14px 0;padding:12px;border:1px solid #eadfce;border-radius:12px">
+                    <input type="checkbox" name="is_available" value="1" checked>
+                    <span><strong>موجود برای فروش</strong><small style="display:block">اگر غیرفعال باشد محصول در سایت «ناموجود» نمایش داده می‌شود.</small></span>
+                </label>
+
+
+                <div
+                    class="pm-discount-panel"
+                    id="discountPanel"
+                >
+
+                    <div class="pm-discount-title">
+                        🔥 اطلاعات تخفیف
+                    </div>
+
+
+                    <div class="pm-discount-grid">
+
+                        <div class="pm-field">
+
+                            <label for="discount_percent">
+                                درصد تخفیف
+                            </label>
+
+                            <div class="pm-stepper-field"><button type="button" class="pm-stepper plus" data-target="discount_percent" data-step="1" aria-label="افزایش درصد تخفیف">+</button><input type="number" id="discount_percent" name="discount_percent" min="1" max="100" placeholder="مثلاً ۲۰"><button type="button" class="pm-stepper minus" data-target="discount_percent" data-step="-1" aria-label="کاهش درصد تخفیف">−</button></div>
+
+                        </div>
+
+
+                        <div class="pm-field">
+
+                            <label for="final_price">
+                                قیمت فروش پس از تخفیف <span class="discount-auto-note">با درصد تخفیف محاسبه می‌شود</span>
+                            </label>
+
+                            <div class="pm-price">
+
+                                <input
+                                    type="text"
+                                    id="final_price"
+                                    name="final_price"
+                                    inputmode="numeric"
+                                    placeholder="مثلاً ۶۸۰۰۰۰"
+                                >
+
+                                <span>
+                                    تومان
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="pm-field">
+
+                            <label for="discount_days">
+                                مدت تخفیف
+                            </label>
+
+                            <div class="pm-days">
+
+                                <div class="pm-stepper-field days-stepper"><button type="button" class="pm-stepper plus" data-target="discount_days" data-step="1" aria-label="یک روز اضافه کن">+</button><input type="number" id="discount_days" name="discount_days" min="1" max="365" placeholder="مثلاً ۷"><button type="button" class="pm-stepper minus" data-target="discount_days" data-step="-1" aria-label="یک روز کم کن">−</button></div>
+
+                                <span>
+                                    روز
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="pm-submit">
+
+                <div>
+
+                    <strong>
+                        محصول آماده ثبت است
+                    </strong>
+
+                    <small>
+                        اطلاعات را بررسی کنید و ثبت نهایی را بزنید.
+                    </small>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="pm-submit-button"
+                >
+                    ✓ ثبت نهایی محصول
+                </button>
+
+            </section>
+
+        </form>
+
+    </main>
+
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const money=v=>{v=String(v||'').replace(/[^0-9]/g,'');return v?Number(v):0};
+  const format=n=>n?new Intl.NumberFormat('fa-IR').format(n):'';
+  for(let i=1;i<=3;i++){
+    const input=document.getElementById(`image_${i}`),preview=document.getElementById(`preview_${i}`),box=document.getElementById(`box_${i}`),ph=document.getElementById(`placeholder_${i}`),remove=document.getElementById(`remove_${i}`);
+    if(!input)continue;
+    input.addEventListener('change',()=>{const file=input.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('لطفاً یک فایل تصویری معتبر انتخاب کنید.');input.value='';return}if(file.size>50*1024*1024){alert('حجم تصویر نباید بیشتر از ۵۰ مگابایت باشد.');input.value='';return}const r=new FileReader();r.onload=e=>{if(preview){preview.src=e.target.result;preview.classList.add('visible')}if(ph)ph.classList.add('hidden');if(box)box.classList.add('has-image')};r.readAsDataURL(file)});
+    remove?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();input.value='';if(preview){preview.src='';preview.classList.remove('visible')}ph?.classList.remove('hidden');box?.classList.remove('has-image')});
+  }
+  const cards=document.querySelectorAll('.pm-type-card'),type=document.getElementById('product_type'),panel=document.getElementById('discountPanel'),percent=document.getElementById('discount_percent'),price=document.getElementById('price'),finalPrice=document.getElementById('final_price'),days=document.getElementById('discount_days');
+  let live=document.getElementById('discountLivePreview');if(panel&&!live){live=document.createElement('div');live.id='discountLivePreview';live.className='discount-live-preview';live.innerHTML='<span class="old"></span><span class="new"></span><span class="badge"></span><span class="timer"></span>';panel.appendChild(live)}
+  function update(){const p=money(price?.value),pct=Math.min(100,Math.max(0,money(percent?.value))),fp=money(finalPrice?.value)||Math.round(p*(1-pct/100));if(finalPrice&&pct&&p&&!finalPrice.matches(':focus'))finalPrice.value=fp?format(fp):'';if(!live)return;live.querySelector('.old').textContent=p?'قیمت اصلی: '+format(p)+' تومان':'';live.querySelector('.new').textContent=fp?'قیمت فروش: '+format(fp)+' تومان':'';live.querySelector('.badge').textContent=pct?'٪ '+format(pct)+' تخفیف':'';const d=money(days?.value);live.querySelector('.timer').textContent=d?'⏱ مدت: '+format(d)+' روز':''}
+  function setType(v){if(type)type.value=v;cards.forEach(c=>c.classList.toggle('active',c.dataset.type===v));if(panel)panel.classList.toggle('visible',v==='discount');if(percent)percent.required=v==='discount';if(finalPrice)finalPrice.required=v==='discount';if(days)days.required=v==='discount';update()}
+  document.querySelectorAll('.pm-stepper').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.target);if(!el)return;let v=parseInt(el.value||'0',10)||0;v+=parseInt(btn.dataset.step||'1',10);const min=parseInt(el.min||'0',10),max=parseInt(el.max||'999999',10);v=Math.max(min,Math.min(max,v));el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));}));
+cards.forEach(c=>c.addEventListener('click',()=>setType(c.dataset.type)));[price,percent,finalPrice,days].forEach(x=>x?.addEventListener('input',update));setType(type?.value||'normal');
+  document.getElementById('productForm')?.addEventListener('submit',e=>{for(let i=1;i<=3;i++){const input=document.getElementById(`image_${i}`);if(input?.files?.[0] && input.files[0].size>8*1024*1024){e.preventDefault();alert('حجم یکی از تصاویر بیشتر از ۵۰ مگابایت است.');return}}});
+});
+</script>
+
+
+<script>
+document.querySelectorAll('input[type="file"]').forEach(function(input){
+  input.addEventListener('change',function(){
+    const box=document.querySelector('[data-preview-for="'+input.id+'"]');
+    if(!box)return;
+    const file=input.files&&input.files[0];
+    if(!file){box.innerHTML='<span>تصویری انتخاب نشده است</span>';return;}
+    if(!file.type.startsWith('image/')){box.innerHTML='<span>لطفاً فایل تصویری معتبر انتخاب کنید.</span>';input.value='';return;}
+    if(file.size>50*1024*1024){box.innerHTML='<span>حجم تصویر باید کمتر از ۸ مگابایت باشد.</span>';input.value='';return;}
+    const reader=new FileReader();
+    reader.onload=function(e){box.innerHTML='';const img=document.createElement('img');img.src=e.target.result;img.alt='پیش‌نمایش تصویر محصول';box.appendChild(img);};
+    reader.readAsDataURL(file);
+  });
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>تماس با شهدآور</title>
+<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/contact.css"><link rel="stylesheet" href="/css/theme.css"><script src="/js/theme.js"></script>
+</head>
+<body class="contact-site">
+<header class="site-header contact-site-header"><div class="header-container">
+<a href="/" class="brand contact-brand"><span class="brand-logo contact-brand-logo"><img src="/images/logo/logo.png" alt="لوگوی شهدآور"></span><span class="brand-text"><strong>شهدآور</strong><span>طعم واقعی طبیعت</span></span></a>
+<nav class="desktop-nav contact-desktop-nav"><a href="/">خانه</a><a href="/pages/products.html">محصولات</a><a href="/pages/about.html">درباره ما</a><a href="/pages/support.html">پشتیبانی</a><a class="active" href="/pages/contact.html">تماس با ما</a></nav>
+<div class="header-account contact-header-account"><a class="account-button" href="/account">👤 حساب کاربری</a></div>
+</div></header>
+<main class="contact-page">
+<section class="contact-hero"><div class="contact-hero-copy"><span class="contact-eyebrow"><span>✦</span> ارتباط مستقیم با شهدآور</span><h1 id="contact-title">تماس با شهدآور</h1><p id="contact-text">برای خرید، دریافت اطلاعات محصولات، پیگیری سفارش یا ارتباط با مدیریت، راه مناسب خود را انتخاب کنید.</p></div><div class="contact-hero-mark" aria-hidden="true"><span>✦</span></div></section>
+<section class="contact-section"><div class="contact-section-heading"><div><span class="contact-section-kicker">راه‌های ارتباطی</span><h2>هر زمان خواستید، با ما در ارتباط باشید</h2><p>راه ارتباطی موردنظر خود را انتخاب کنید.</p></div><span class="contact-count" id="contact-count">۰ راه ارتباطی</span></div><div class="contact-grid" id="contact-grid"><div class="contact-empty"><div class="contact-empty-icon">☎</div><div><h3>در حال دریافت راه‌های ارتباطی</h3><p>لطفاً چند لحظه صبر کنید.</p></div></div></div></section>
+<section class="contact-cta"><div><span class="contact-section-kicker">پشتیبانی شهدآور</span><h2>اگر راه ارتباطی موردنظرتان را پیدا نکردید</h2><p>از بخش پشتیبانی پیام بفرستید تا در سریع‌ترین زمان ممکن پاسخ‌گو باشیم.</p></div><a class="contact-cta-button" href="/pages/support.html">ورود به پشتیبانی <span>←</span></a></section>
+</main>
+<footer class="contact-footer"><div class="contact-footer-inner"><a href="/" class="footer-brand"><img src="/images/logo/logo.png" alt="لوگوی شهدآور"><span>شهدآور</span></a><span>© ۱۴۰۵ شهدآور</span></div></footer>
+<script>
+(function(){
+ const grid=document.getElementById('contact-grid'),count=document.getElementById('contact-count'),title=document.getElementById('contact-title'),text=document.getElementById('contact-text');
+ const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+ const icon=m=>m.icon_type==='image'&&m.icon_filename&&!/^https?:\/\//i.test(m.icon_filename)?'<img src="/uploads/contact_icons/'+encodeURIComponent(m.icon_filename)+'" alt="">':(m.icon_emoji||'🔗');
+ fetch('/api/contact',{headers:{'Accept':'application/json'}}).then(r=>r.ok?r.json():Promise.reject()).then(data=>{
+   title.textContent=data.title||'تماس با شهدآور'; if(data.text)text.textContent=data.text; const methods=data.methods||[]; count.textContent=methods.length+' راه ارتباطی';
+   if(!methods.length){grid.innerHTML='<div class="contact-empty"><div class="contact-empty-icon">☎</div><div><h3>راه ارتباطی ثبت نشده است</h3><p>راه‌های ارتباطی توسط مدیریت سایت در حال تکمیل است.</p></div></div>';return;}
+   grid.innerHTML=methods.map(m=>{const link=String(m.link||'').trim(), card=link?'a':'div'; const attrs=link?' href="'+escapeHtml(link)+'"'+(/^https?:\/\//i.test(link)?' target="_blank" rel="noopener noreferrer"':''):'';return '<'+card+' class="contact-card"'+attrs+'><div class="contact-card-top"><div class="contact-icon">'+icon(m)+'</div>'+(link?'<span class="contact-card-arrow">↗</span>':'')+'</div><div class="contact-card-body"><span class="contact-card-label">'+escapeHtml(m.platform||'ارتباط با شهدآور')+'</span><h3>'+escapeHtml(m.title||'ارتباط')+'</h3><p class="contact-value">'+escapeHtml(m.value||'')+'</p>'+(m.description?'<p class="contact-description">'+escapeHtml(m.description)+'</p>':'')+'</div><span class="contact-card-action">'+escapeHtml(m.button_text||data.button_text||'ارتباط')+' <span>←</span></span></'+card+'>';}).join('');
+ }).catch(()=>{grid.innerHTML='<div class="contact-empty"><div class="contact-empty-icon">⚠</div><div><h3>راه‌های ارتباطی در دسترس نیست</h3><p>لطفاً صفحه را دوباره بارگذاری کنید.</p></div></div>';});
+})();
+</script>
+</body></html>

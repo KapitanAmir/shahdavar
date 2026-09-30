@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ product.title }} | {{ site.site_name }}</title>
+    <meta name="description" content="{{ product.title }}؛ {{ product.description or site.site_tagline }}">
+    <link rel="canonical" href="{{ request.host_url.rstrip('/') }}/product/{{ product.id }}">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="{{ product.title }} | {{ site.site_name }}">
+    <meta property="og:description" content="{{ product.description or site.site_tagline }}">
+    <meta property="og:url" content="{{ request.host_url.rstrip('/') }}/product/{{ product.id }}">
+    <script type="application/ld+json">{{ {'@context':'https://schema.org','@type':'Product','name':product.title,'description':product.description or '','url':request.host_url.rstrip('/') ~ '/product/' ~ product.id,'image':request.host_url.rstrip('/') ~ '/uploads/products/' ~ product.image_1,'offers':{'@type':'Offer','priceCurrency':'IRR','price':(product.final_price if product.is_discount and product.final_price else product.price),'availability':('https://schema.org/InStock' if product.is_available else 'https://schema.org/OutOfStock')}}|tojson }}</script>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='style.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+<style>.review-rating{display:flex;gap:2px;direction:rtl;margin:8px 0;color:#dcae2f;font-size:18px}.review-rating-input{border:0;padding:0;margin:0 0 14px}.review-rating-input legend{font-weight:800;margin-bottom:5px}.stars-input{display:flex;direction:rtl;justify-content:flex-start}.stars-input input{position:absolute;opacity:0;pointer-events:none}.stars-input label{font-size:30px;line-height:1;cursor:pointer;color:#b7aa97;padding:2px;transition:.15s}.stars-input label:hover,.stars-input label:hover~label,.stars-input input:checked~label{color:#e3b32e}</style><style>.product-tags{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 16px}.product-tags span{padding:5px 9px;border-radius:999px;background:#f7efd9;color:#79580f;font-size:12px}</style><style>
+.product-engagement-actions{display:flex;flex-wrap:wrap;gap:9px;margin:8px 0 6px;width:100%;padding:7px 0 2px}.product-action-btn{border:1px solid #ead9b7;background:#fffaf0;color:#5a4318;border-radius:13px;padding:9px 12px;display:inline-flex;align-items:center;gap:7px;font:800 12px inherit;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;box-shadow:0 5px 14px rgba(91,65,20,.06)}.product-action-btn:hover{transform:translateY(-2px);border-color:#d7aa42;box-shadow:0 9px 20px rgba(91,65,20,.1)}.product-action-icon{width:29px;height:29px;border-radius:9px;background:#f3d47e;display:grid;place-items:center;color:#3c2a0b}.product-action-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.product-action-btn b{font-size:10px;color:#9b6a10}.product-action-btn.liked{background:#fff5f5;border-color:#df8d87;color:#a32620}.product-action-btn.liked .product-action-icon{background:#fff;color:#c52820}.product-like-icon{transition:transform .22s cubic-bezier(.2,.9,.25,1.5),filter .22s ease}.product-action-btn.like-pop .product-like-icon{animation:shdLikePop .48s cubic-bezier(.2,.85,.3,1.3)}@keyframes shdLikePop{0%{transform:scale(1)}45%{transform:scale(1.65)}72%{transform:scale(.88)}100%{transform:scale(1.08)}}.product-action-btn.copied{background:#eaf8ed;border-color:#9bd2a5;color:#236b31}@media(max-width:600px){.product-engagement-actions{gap:7px}.product-action-btn{padding:8px 9px;font-size:10px;flex:1;justify-content:center}.cart-purchase-box{padding:11px!important}.cart-purchase-box button[onclick="changeQty(-1)"],.cart-purchase-box button[onclick="changeQty(1)"]{width:40px;height:40px;padding:0!important;font-size:20px}.cart-purchase-box #productQuantity{height:40px;width:48px!important}}
+</style></head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="site-header">
+
+    <div class="header-container">
+
+        <!-- BRAND -->
+
+        <a
+            href="{{ url_for('home') }}"
+            class="brand"
+        >
+
+            <div class="brand-logo">
+
+                <img
+                    src="{% if logo.filename and '/' in logo.filename %}{{ url_for('images', filename=logo.filename) }}{% else %}{{ url_for('uploads', filename='logo/' + (logo.filename or 'logo.png')) }}{% endif %}"
+                    alt="لوگوی شهدآور"
+                >
+
+            </div>
+
+
+            <div class="brand-text">
+
+                <strong>
+                    شهدآور
+                </strong>
+
+                <span>
+                    {{ site.site_tagline }}
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="desktop-nav">
+
+            <a
+                href="{{ url_for('home') }}"
+            >
+                خانه
+            </a>
+
+
+            <a
+                href="{{ url_for('products_page') }}"
+                class="active"
+            >
+                محصولات
+            </a>
+
+
+            <a
+                href="{{ url_for('about_page') }}"
+            >
+                درباره ما
+            </a>
+
+
+            <a
+                href="{{ url_for('support_page') }}"
+            >
+                پشتیبانی
+            </a>
+
+        </nav>
+
+
+        <!-- ACCOUNT -->
+
+        <div class="header-account">
+
+            {% if current_user %}
+            <a href="{{ url_for('account') }}" class="global-profile-link"><img class="global-profile-avatar" src="{{ url_for('uploaded_file', filename='profiles/' + current_user.avatar) }}" alt="پروفایل"><span class="global-profile-name">{{ current_user.first_name }}</span></a>
+            {% else %}
+            <a href="{{ url_for('account') }}" class="account-button"><svg class="shd-account-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>ورود</span></a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==================================================
+     PRODUCT DETAIL
+================================================== -->
+
+<main class="product-detail-page">
+
+
+    <div class="product-detail-card">
+
+
+        <!-- ==================================================
+             PRODUCT GALLERY
+        ================================================== -->
+
+        <div class="product-gallery">
+
+
+            <!-- MAIN IMAGE -->
+
+            <div class="product-detail-image">{% if product.is_discount %}<span class="discount-corner-badge"><small>تخفیف</small>{{ product.discount_percent }}٪</span>{% endif %}
+
+                {% if product.image_1 %}
+
+                    <img
+                        id="mainProductImage"
+                        src="{{ url_for('uploads', filename='products/' + product.image_1) }}"
+                        alt="{{ product.title }}"
+                    >
+
+                {% else %}
+
+                    <div class="no-product-image">
+                        🍯
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- THUMBNAILS -->
+
+            {% set product_images = [
+                product.image_1,
+                product.image_2,
+                product.image_3
+            ] %}
+
+
+            {% if product.image_1
+               or product.image_2
+               or product.image_3 %}
+
+                <div class="product-thumbnails">
+
+
+                    {% for image in product_images %}
+
+                        {% if image %}
+
+                            <button
+                                type="button"
+                                class="product-thumbnail {% if loop.first %}active{% endif %}"
+                                onclick="showProductImage(
+                                    this,
+                                    '{{ url_for('uploads', filename='products/' + image) }}'
+                                )"
+                            >
+
+                                <img
+                                    src="{{ url_for('uploads', filename='products/' + image) }}"
+                                    alt="تصویر {{ loop.index }}"
+                                >
+
+                            </button>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- ==================================================
+             PRODUCT INFORMATION
+        ================================================== -->
+
+        <div class="product-detail-info">
+
+
+            <!-- CATEGORY -->
+
+            {% if product.category_name %}
+
+                <span class="product-detail-category">
+                    {{ product.category_name }}
+                </span>
+
+            {% endif %}
+
+
+
+            <!-- TITLE -->
+
+            <h1>
+                {{ product.title }}
+            </h1>
+            {% if product.tags %}<div class="product-tags">{% for tag in product.tags.split(',') %}{% if tag.strip() %}<span>#{{ tag.strip() }}</span>{% endif %}{% endfor %}</div>{% endif %}
+
+
+
+            <!-- POPULAR -->
+
+            {% if product.is_popular %}
+
+                <span class="detail-tag">
+                    ⭐ محبوب
+                </span>
+
+            {% endif %}
+
+
+
+            <!-- UNAVAILABLE -->
+
+            {% if not product.is_available %}
+
+                <span class="detail-tag unavailable">
+                    ناموجود
+                </span>
+
+            {% endif %}
+
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="product-detail-description">
+
+                {{ product.description or
+                   'توضیحات این محصول هنوز ثبت نشده است.' }}
+
+            </p>
+
+
+
+            <!-- PRICE -->
+
+            <div class="product-detail-price">
+
+
+                {% if product.is_discount and product.final_price %}
+
+
+                    <del>
+                        {{ "{:,}".format(product.price) }}
+                        تومان
+                    </del>
+
+
+                    <strong>
+                        {{ "{:,}".format(product.final_price) }}
+                        تومان
+                    </strong>
+
+
+                    {% if product.discount_percent %}
+
+                        <span>
+                            {{ product.discount_percent }}٪ تخفیف
+                        </span>
+
+                    {% endif %}
+
+
+                {% else %}
+
+
+                    <strong>
+                        {{ "{:,}".format(product.price) }}
+                        تومان
+                    </strong>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- META -->
+
+            <div class="product-engagement-actions" aria-label="ابزارهای محصول">
+                <button type="button" class="product-action-btn" id="productLikeBtn" aria-pressed="false">
+                    <span class="product-action-icon"><svg class="product-like-icon" viewBox="0 0 24 24" aria-hidden="true"><path id="productLikePath" d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.3a4.7 4.7 0 0 1 8.8 2.4Z"/></svg></span><span>پسندیدم</span><b id="productLikeCount">۰</b>
+                </button>
+                <button type="button" class="product-action-btn" id="productShareBtn">
+                    <span class="product-action-icon"><svg viewBox="0 0 24 24"><path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></span><span>اشتراک‌گذاری</span>
+                </button>
+                <button type="button" class="product-action-btn" id="productCopyBtn">
+                    <span class="product-action-icon"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="12" rx="2"/><path d="M5 16H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg></span><span>کپی لینک</span>
+                </button>
+            </div>
+
+
+            {% if product.is_available %}
+            <div class="cart-purchase-box" style="margin-top:22px;padding:16px;border:1px solid #eadfca;border-radius:18px;background:#fffaf0;width:100%;box-sizing:border-box">
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                    <label for="productQuantity" style="font-weight:900">تعداد</label>
+                    <div style="display:flex;align-items:center;border:1px solid #ddcfae;border-radius:12px;overflow:hidden;background:#fff">
+                        <button type="button" onclick="changeQty(-1)" style="border:0;background:#f5ecd7;padding:9px 13px;cursor:pointer">−</button>
+                        <input id="productQuantity" type="number" min="1" max="{{ product.stock if product.stock else 999 }}" value="1" style="width:58px;text-align:center;border:0;padding:9px;font-weight:900">
+                        <button type="button" onclick="changeQty(1)" style="border:0;background:#f5ecd7;padding:9px 13px;cursor:pointer">+</button>
+                    </div>
+                    <button type="button" class="account-main-button" onclick="addToCart()">🛒 افزودن به سبد خرید</button>
+                    <a href="{{ url_for('cart_page') }}" class="account-main-button" style="text-decoration:none;background:#fff;border:1px solid #e2c981">مشاهده سبد خرید</a>
+                </div>
+                <div id="cartNotice" style="margin-top:10px;font-size:13px;color:#6e5a39"></div>
+            </div>
+            {% endif %}
+
+            <div class="product-detail-meta">
+
+
+                {% if product.weight %}<span>⚖️ وزن: {{ product.weight }}</span>{% endif %}
+                <span>📦 موجودی: {{ product.stock if product.stock else 'موجود' }}</span>
+                <span>🚚 محصول طبیعی شهدآور</span>
+
+
+                <span>
+
+                    {% if product.is_available %}
+
+                        ✅ موجود
+
+                    {% else %}
+
+                        ❌ ناموجود
+
+                    {% endif %}
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         REVIEWS
+    ================================================== -->
+
+    <section class="reviews-section">
+
+
+        <!-- REVIEWS HEADER -->
+
+        <div class="reviews-header">
+
+
+            <div>
+
+                <span class="reviews-eyebrow">
+                    تجربه مشتریان
+                </span>
+
+
+                <h2>
+                    💬 نظرات کاربران
+                </h2>
+
+            </div>
+
+
+            <span>
+                {{ reviews|length }} نظر
+            </span>
+
+
+        </div>
+
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages =
+            get_flashed_messages(with_categories=true)
+        %}
+
+            {% if messages %}
+
+                <div class="messages">
+
+
+                    {% for category, message in messages %}
+
+                        <div class="message {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- ==================================================
+             REVIEWS LIST
+        ================================================== -->
+
+        {% if reviews %}
+
+
+            <div class="reviews-list">
+
+
+                {% for review in reviews %}
+
+
+                    <article class="review-card">
+
+
+                        <!-- USER -->
+
+                        <div class="review-user">
+
+
+                            <img
+                                src="{{ url_for('uploaded_file', filename='profiles/' + review.avatar) }}"
+                                alt="پروفایل"
+                            >
+
+
+                            <div>
+
+                                <strong>
+                                    {{ review.first_name }}
+                                    {{ review.last_name }}
+                                </strong>
+
+
+                                <small>
+                                    @{{ review.username }}
+                                </small>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- COMMENT -->
+
+                        <div class="review-rating" aria-label="امتیاز {{ review.rating or 5 }} از ۵">{% for star in range(1,6) %}<span>{{ '★' if star <= (review.rating or 5) else '☆' }}</span>{% endfor %}</div>
+                        <p class="review-text">
+                            {{ review.comment }}
+                        </p>
+
+
+
+                        <!-- OWNER REPLY -->
+
+                        {% if review.owner_reply %}
+
+                            <div class="owner-reply">
+
+
+                                <strong>
+                                    🍯 پاسخ شهدآور
+                                </strong>
+
+
+                                <p>
+                                    {{ review.owner_reply }}
+                                </p>
+
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </article>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- EMPTY REVIEWS -->
+
+            <div class="empty-reviews">
+
+
+                <div>
+                    💭
+                </div>
+
+
+                <h3>
+                    هنوز نظری ثبت نشده
+                </h3>
+
+
+                <p>
+                    اولین نفری باش که درباره این محصول نظر می‌دهی.
+                </p>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+
+        <!-- ==================================================
+             WRITE REVIEW
+        ================================================== -->
+
+        <div class="write-review">
+
+
+            <h3>
+                ✍️ نظر خودت را بنویس
+            </h3>
+
+
+
+            {% if current_user %}
+
+
+                <!-- LOGGED IN -->
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'submit_review',
+                        product_id=product.id
+                    ) }}"
+                >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+
+                    <fieldset class="review-rating-input"><legend>امتیاز شما</legend><div class="stars-input" role="radiogroup" aria-label="امتیاز محصول">{% for star in range(5,0,-1) %}<input id="rating-{{ star }}" type="radio" name="rating" value="{{ star }}" {% if star == 5 %}checked{% endif %}><label for="rating-{{ star }}" title="{{ star }} از ۵">★</label>{% endfor %}</div></fieldset>
+                    <textarea
+                        name="comment"
+                        maxlength="1000"
+                        placeholder="نظرت درباره این محصول چیه؟"
+                        required
+                    ></textarea>
+
+
+                    <button
+                        type="submit"
+                        class="account-main-button"
+                    >
+                        ارسال نظر
+                    </button>
+
+
+                </form>
+
+
+                <p class="review-note">
+
+                    نظر شما ابتدا برای مالک ارسال می‌شود
+                    و پس از تأیید در سایت نمایش داده خواهد شد.
+
+                </p>
+
+
+            {% else %}
+
+
+                <!-- NOT LOGGED IN -->
+
+                <p class="login-review-message">
+
+                    برای ثبت نظر ابتدا وارد حساب کاربری خود شوید.
+
+
+                    <a href="{{ url_for('account') }}">
+                        ورود به حساب
+                    </a>
+
+
+                </p>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- BACK TO PRODUCTS -->
+
+        <a
+            href="{{ url_for('products_page') }}"
+            class="back-home"
+        >
+            ← بازگشت به محصولات
+        </a>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ==================================================
+     PRODUCT IMAGE SCRIPT
+================================================== -->
+
+<script>
+
+function showProductImage(button, src) {
+
+    const mainImage =
+        document.getElementById("mainProductImage");
+
+
+    if (mainImage) {
+
+        mainImage.src = src;
+
+    }
+
+
+    document
+        .querySelectorAll(".product-thumbnail")
+        .forEach(function (thumbnail) {
+
+            thumbnail.classList.remove("active");
+
+        });
+
+
+    button.classList.add("active");
+
+}
+
+</script>
+
+
+
+<script>
+function changeQty(delta){const i=document.getElementById('productQuantity');if(!i)return;let v=Math.max(1,(parseInt(i.value)||1)+delta);let max=parseInt(i.max)||999;v=Math.min(v,max);i.value=v;}
+async function addToCart(){const q=document.getElementById('productQuantity');const n=document.getElementById('cartNotice');const token=document.querySelector('meta[name="csrf-token"]')?.content||'';try{const r=await fetch('{{ url_for('cart_add_api') }}',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':token},body:JSON.stringify({product_id:{{ product.id }},quantity:parseInt(q.value)||1})});const d=await r.json();if(r.status===401){location.href=d.redirect||'/account';return;}n.textContent=d.message||'انجام شد';if(d.success){n.innerHTML='✅ '+d.message+' — <a href="{{ url_for('cart_page') }}">مشاهده سبد خرید</a>';}}catch(e){n.textContent='خطا در ارتباط با سرور.'}}
+</script>
+<script>document.getElementById('siteSearch')?.querySelector('.shd-search-trigger')?.addEventListener('click',()=>{const w=document.getElementById('siteSearch');w.classList.toggle('open');if(w.classList.contains('open'))setTimeout(()=>w.querySelector('input')?.focus(),80)});document.addEventListener('DOMContentLoaded',()=>{const fa=n=>new Intl.NumberFormat('fa-IR').format(n);document.querySelectorAll('[data-discount-expires]').forEach(el=>{const end=new Date(el.dataset.discountExpires).getTime();const tick=()=>{let d=Math.max(0,end-Date.now());if(!d){el.textContent='تخفیف به پایان رسیده است';return}let x=Math.floor(d/1000),days=Math.floor(x/86400);x%=86400;let h=Math.floor(x/3600);x%=3600;let m=Math.floor(x/60);x%=60;el.innerHTML='🔥 <strong>'+fa(days)+' روز '+fa(h)+' ساعت '+fa(m)+' دقیقه '+fa(x)+' ثانیه</strong> باقی مانده است';};tick();setInterval(tick,1000)})});</script>
+<script>
+(function(){
+  const id={{ product.id|tojson }};
+  const key='shd_product_likes_'+id;
+  const likedKey='shd_product_liked_'+id;
+  const likeBtn=document.getElementById('productLikeBtn'), count=document.getElementById('productLikeCount');
+  let n=Math.max(0,parseInt(localStorage.getItem(key)||'0',10)||0), liked=localStorage.getItem(likedKey)==='1';
+  const fa=v=>new Intl.NumberFormat('fa-IR').format(v);
+  function paint(){if(count)count.textContent=fa(n);if(likeBtn){likeBtn.classList.toggle('liked',liked);likeBtn.setAttribute('aria-pressed',liked?'true':'false');const path=document.getElementById('productLikePath');if(path){path.setAttribute('fill',liked?'currentColor':'none');path.setAttribute('stroke','currentColor');}}}
+  paint();
+  likeBtn?.addEventListener('click',()=>{liked=!liked;n=Math.max(0,n+(liked?1:-1));localStorage.setItem(key,n);localStorage.setItem(likedKey,liked?'1':'0');paint();if(liked){likeBtn.classList.remove('like-pop');void likeBtn.offsetWidth;likeBtn.classList.add('like-pop');setTimeout(()=>likeBtn.classList.remove('like-pop'),520);}});
+  const copy=async(text)=>{try{await navigator.clipboard.writeText(text);return true}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();return ok;}};
+  document.getElementById('productCopyBtn')?.addEventListener('click',async e=>{const ok=await copy(location.href);const b=e.currentTarget;if(ok){b.classList.add('copied');b.querySelector('span:nth-child(2)').textContent='کپی شد';setTimeout(()=>{b.classList.remove('copied');b.querySelector('span:nth-child(2)').textContent='کپی لینک'},1500);}});
+  document.getElementById('productShareBtn')?.addEventListener('click',async()=>{const data={title:{{ product.title|tojson }},text:{{ (product.title ~ ' | شهدآور')|tojson }},url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{await copy(location.href);const b=document.getElementById('productShareBtn');b.classList.add('copied');b.querySelector('span:nth-child(2)').textContent='لینک کپی شد';setTimeout(()=>{b.classList.remove('copied');b.querySelector('span:nth-child(2)').textContent='اشتراک‌گذاری'},1500);}});
+})();
+</script>
+</body>
+
+</html>

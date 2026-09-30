@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ورود مالک | شهدآور
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='owner.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="owner-login-page">
+
+
+    <div class="owner-login-card">
+
+
+        <!-- ==================================================
+             LOGO
+        ================================================== -->
+
+        <div class="owner-login-logo">
+
+            <img
+                src="{{ url_for('images', filename='logo/logo.png') }}"
+                alt="شهدآور"
+            >
+
+        </div>
+
+
+        <!-- ==================================================
+             TITLE
+        ================================================== -->
+
+        <h1 class="owner-login-title">
+
+            پنل مالک شهدآور
+
+        </h1>
+
+
+        <p class="owner-login-subtitle">
+
+            برای ورود به مدیریت سایت، شماره مالک را وارد کنید.
+
+        </p>
+
+
+        <!-- ==================================================
+             ALERTS
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="owner-alert {{ category }}"
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- ==================================================
+             LOGIN FORM
+        ================================================== -->
+
+        <form
+            class="owner-login-form"
+            method="POST"
+            action="{{ url_for('owner_login') }}"
+        >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+
+            <div class="owner-field">
+
+                <label for="phone">
+
+                    شماره تلفن مالک
+
+                </label>
+
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="مثلاً 09123456789"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="owner-submit"
+            >
+
+                🔐 ورود به پنل مالک
+
+            </button>
+
+
+        </form>
+
+
+        <!-- ==================================================
+             BACK
+        ================================================== -->
+
+        <a
+            href="/"
+            class="owner-back"
+        >
+
+            ← بازگشت به سایت
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+<script
+    src="{{ url_for('js_files', filename='owner.js') }}"
+></script>
+
+
+</body>
+
+</html>

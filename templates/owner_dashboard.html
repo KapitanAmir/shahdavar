@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        پنل مالکیت شهدآور
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='owner_panel.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='owner.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="owner-app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="owner-sidebar">
+
+        <div class="owner-logo">
+
+            <div class="owner-logo-mark">
+                🍯
+            </div>
+
+            <div>
+
+                <strong>
+                    شهدآور
+                </strong>
+
+                <span>
+                    پنل مالکیت
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="owner-navigation">
+
+            <a
+                href="{{ url_for('owner_dashboard') }}"
+                class="owner-nav-item active"
+            >
+
+                <span class="nav-icon">
+                    🏠
+                </span>
+
+                <span>
+                    داشبورد
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('add_product_page') }}"
+                class="owner-nav-item"
+            >
+
+                <span class="nav-icon">
+                    ➕
+                </span>
+
+                <span>
+                    افزودن محصول
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('manage_categories') }}"
+                class="owner-nav-item"
+            >
+
+                <span class="nav-icon">
+                    📁
+                </span>
+
+                <span>
+                    دسته‌بندی محصولات
+                </span>
+
+            </a>
+
+
+            <div class="owner-nav-label">
+                مدیریت سایت
+            </div>
+
+
+            <a
+                href="{{ url_for('manage_site') }}"
+                class="owner-nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙️
+                </span>
+
+                <span>
+                    تنظیمات سایت
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('manage_covers') }}"
+                class="owner-nav-item"
+            >
+
+                <span class="nav-icon">
+                    🖼️
+                </span>
+
+                <span>
+                    کاور سایت
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('manage_logo') }}"
+                class="owner-nav-item"
+            >
+
+                <span class="nav-icon">
+                    🏷️
+                </span>
+
+                <span>
+                    لوگوی سایت
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('manage_reviews') }}"
+                class="owner-nav-item"
+            >
+                <span class="nav-icon">💬</span>
+                <span>نظرات{% if pending_reviews_count %} ({{ pending_reviews_count }}){% endif %}</span>
+            </a>
+
+            <a href="{{ url_for('owner_recovery') }}" class="owner-nav-item">
+                <span class="nav-icon">🔑</span>
+                <span>فراموشی‌ها{% if unread_recovery_count %} ({{ unread_recovery_count }}){% endif %}</span>
+            </a>
+
+            <a href="{{ url_for('owner_orders') }}" class="owner-nav-item"><span class="nav-icon">📦</span><span>سفارش‌ها</span></a>
+
+            <a href="{{ url_for('owner_users') }}" class="owner-nav-item">
+                <span class="nav-icon">👥</span>
+                <span>کاربران ثبت‌نامی</span>
+            </a>
+
+            <a href="{{ url_for('approved_reviews_page') }}" class="owner-nav-item">
+                <span class="nav-icon">✅</span>
+                <span>نظرات تأییدشده</span>
+            </a>
+
+            <a href="{{ url_for('owner_support_branding') }}" class="owner-nav-item">
+                <span class="nav-icon">◈</span><span>ظاهر پشتیبانی</span>
+            </a>
+
+            <a href="{{ url_for('owner_messages') }}" class="owner-nav-item owner-messages-nav">
+                <span class="nav-icon">📨</span>
+                <span>پیام‌ها</span>
+                {% if unread_support_count %}<b class="owner-unread-square" title="{{ unread_support_count }} پیام خوانده‌نشده">{{ unread_support_count if unread_support_count < 100 else '99+' }}</b>{% endif %}
+            </a>
+
+            <a
+                href="{{ url_for('manage_contact') }}"
+                class="owner-nav-item"
+            >
+                <span class="nav-icon">📞</span>
+                <span>راه‌های ارتباطی</span>
+            </a>
+
+            <a href="{{ url_for('manage_profiles') }}" class="owner-nav-item">
+                <span class="nav-icon">◎</span><span>پروفایل‌ها</span>
+            </a>
+
+            <a href="{{ url_for('manage_knowledge') }}" class="owner-nav-item">
+                <span class="nav-icon">✦</span><span>دانستنی و اطلاعات</span>
+            </a>
+            <a href="{{ url_for('owner_layout') }}" class="owner-nav-item">
+                <span class="nav-icon">▦</span><span>سازنده چیدمان</span>
+            </a>
+            <a href="{{ url_for('owner_payment_gateways') }}" class="owner-nav-item">
+                <span class="nav-icon">💳</span><span>درگاه‌های پرداخت</span>
+            </a>
+
+            <a
+                href="{{ url_for('manage_banners') }}"
+                class="owner-nav-item"
+            >
+
+                <span class="nav-icon">
+                    📢
+                </span>
+
+                <span>
+                    بنرهای تبلیغاتی
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="owner-sidebar-bottom">
+
+            <a
+                href="{{ url_for('home') }}"
+            >
+                🌐 مشاهده سایت
+            </a>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-link"
+            >
+                خروج از حساب
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="owner-content">
+
+
+        <header class="owner-topbar">
+
+            <div>
+
+                <div class="owner-kicker">
+                    مدیریت فروشگاه
+                </div>
+
+                <h1>
+                    سلام مالک 👑
+                </h1>
+
+                <p>
+                    همه چیز برای مدیریت شهدآور از همین‌جا در دسترس است.
+                </p>
+
+            </div>
+
+
+            <div class="owner-user">
+
+                <span class="online-dot"></span>
+
+                <div>
+
+                    <strong>
+                        مالک سایت
+                    </strong>
+
+                    <small>
+                        {{ owner_phone }}
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             STATS
+        ====================================================== -->
+
+        <section class="owner-stats">
+
+            <div class="owner-stat-card">
+
+                <div class="stat-icon">
+                    🍯
+                </div>
+
+                <div>
+
+                    <small>
+                        کل محصولات
+                    </small>
+
+                    <strong>
+                        {{ products|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="owner-stat-card">
+
+                <div class="stat-icon">
+                    🔥
+                </div>
+
+                <div>
+
+                    <small>
+                        تخفیف‌دار
+                    </small>
+
+                    <strong>
+
+                        {{
+                            products
+                            |selectattr("is_discount")
+                            |list
+                            |length
+                        }}
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="owner-stat-card">
+
+                <div class="stat-icon">
+                    ⭐
+                </div>
+
+                <div>
+
+                    <small>
+                        محبوب
+                    </small>
+
+                    <strong>
+
+                        {{
+                            products
+                            |selectattr("is_popular")
+                            |list
+                            |length
+                        }}
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="owner-stat-card">
+
+                <div class="stat-icon">
+                    📁
+                </div>
+
+                <div>
+
+                    <small>
+                        دسته‌بندی
+                    </small>
+
+                    <strong>
+                        {{ categories|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="owner-stat-card">
+                <div class="stat-icon">👥</div>
+                <div><small>کاربران ثبت‌نامی</small><strong>{{ user_count }}</strong></div>
+            </div>
+
+            <div class="owner-stat-card"><div class="stat-icon">◎</div><div><small>پروفایل‌ها</small><strong>{{ profile_count }}</strong></div></div>
+            <div class="owner-stat-card"><div class="stat-icon">✦</div><div><small>مقالات</small><strong>{{ knowledge_count }}</strong></div></div>
+
+        </section>
+
+
+        <!-- =====================================================
+             QUICK ACTIONS
+        ====================================================== -->
+
+        <section class="owner-block">
+
+            <div class="owner-block-head">
+
+                <div>
+
+                    <h2>
+                        دسترسی سریع
+                    </h2>
+
+                    <p>
+                        ابزارهای اصلی مدیریت فروشگاه
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <a
+                    href="{{ url_for('add_product_page') }}"
+                    class="quick-card highlight"
+                >
+
+                    <div class="quick-card-icon">
+                        ➕
+                    </div>
+
+                    <strong>
+                        افزودن محصول
+                    </strong>
+
+                    <span>
+                        محصول جدید ثبت کنید
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('manage_site') }}"
+                    class="quick-card"
+                >
+
+                    <div class="quick-card-icon">
+                        ⚙️
+                    </div>
+
+                    <strong>
+                        مدیریت سایت
+                    </strong>
+
+                    <span>
+                        نام، نوار، اطلاعات و رنگ
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('manage_covers') }}"
+                    class="quick-card"
+                >
+
+                    <div class="quick-card-icon">
+                        🖼️
+                    </div>
+
+                    <strong>
+                        کاور سایت
+                    </strong>
+
+                    <span>
+                        مدیریت تا ۱۰ کاور
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('manage_logo') }}"
+                    class="quick-card"
+                >
+
+                    <div class="quick-card-icon">
+                        🏷️
+                    </div>
+
+                    <strong>
+                        لوگوی سایت
+                    </strong>
+
+                    <span>
+                        تغییر یا حذف لوگو
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('manage_banners') }}"
+                    class="quick-card"
+                >
+
+                    <div class="quick-card-icon">
+                        📢
+                    </div>
+
+                    <strong>
+                        بنر تبلیغاتی
+                    </strong>
+
+                    <span>
+                        تبلیغات سایت
+                    </span>
+
+                </a>
+
+
+                <a href="{{ url_for('owner_users') }}" class="quick-card">
+                    <div class="quick-card-icon">👥</div>
+                    <strong>کاربران ثبت‌نامی</strong>
+                    <span>{{ user_count }} کاربر در سایت</span>
+                </a>
+
+                <a href="{{ url_for('manage_categories') }}" class="quick-card"><div class="quick-card-icon">📁</div><strong>دسته‌بندی</strong><span>مدیریت گروه محصولات</span></a>
+
+                <a href="{{ url_for('manage_profiles') }}" class="quick-card"><div class="quick-card-icon">◎</div><strong>پروفایل‌ها</strong><span>پروفایل عسل، زنبور و موضوعات علمی</span></a>
+
+                <a href="{{ url_for('manage_knowledge') }}" class="quick-card"><div class="quick-card-icon">✦</div><strong>دانستنی و اطلاعات</strong><span>ساخت مقاله‌های علمی و سئو شده</span></a>
+
+                <a href="{{ url_for('owner_support_branding') }}" class="quick-card"><div class="quick-card-icon">◈</div><strong>ظاهر پشتیبانی</strong><span>تغییر پروفایل و پس‌زمینه گفت‌وگو</span></a>
+
+                <a href="{{ url_for('owner_messages') }}" class="quick-card"><div class="quick-card-icon">📨</div><strong>پیام‌ها{% if unread_support_count %} <b class="owner-unread-square">{{ unread_support_count if unread_support_count < 100 else '99+' }}</b>{% endif %}</strong><span>گفت‌وگوی مستقیم با مشتریان</span></a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PRODUCTS
+        ====================================================== -->
+
+        <section class="owner-block">
+
+            <div class="owner-block-head">
+
+                <div>
+
+                    <h2>
+                        محصولات
+                    </h2>
+
+                    <p>
+                        برای تغییر مشخصات روی محصول کلیک کنید.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('add_product_page') }}"
+                    class="owner-add-button"
+                >
+                    + افزودن محصول
+                </a>
+
+            </div>
+
+
+            {% if products %}
+
+            <div class="owner-products-grid">
+
+                {% for product in products %}
+
+                <article class="owner-product-card">
+
+
+                    <div class="owner-product-photo">
+
+                        {% if product.image_1 %}
+
+                        <img
+                            src="{{ url_for('uploads', filename='products/' ~ product.image_1) }}"
+                            alt="{{ product.title }}"
+                        >
+
+                        {% else %}
+
+                        <div class="owner-no-image">
+                            🍯
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if product.is_discount %}
+
+                        <span class="product-status discount">
+                            🔥 {{ product.discount_percent }}٪ تخفیف
+                        </span>
+
+                        {% elif product.is_popular %}
+
+                        <span class="product-status popular">
+                            ⭐ محبوب
+                        </span>
+
+                        {% else %}
+
+                        <span class="product-status normal">
+                            عادی
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="owner-product-body">
+
+                        {% if product.category_name %}
+
+                        <div class="owner-category">
+                            📁 {{ product.category_name }}
+                        </div>
+
+                        {% endif %}
+
+
+                        <h3>
+                            {{ product.title }}
+                        </h3>
+
+
+                        <div class="owner-product-price">
+
+                            {% if product.is_discount and product.final_price %}
+
+                            <del>
+                                {{ "{:,}".format(product.price) }}
+                            </del>
+
+                            <strong>
+                                {{ "{:,}".format(product.final_price) }}
+                                <small>
+                                    تومان
+                                </small>
+                            </strong>
+
+                            {% else %}
+
+                            <strong>
+                                {{ "{:,}".format(product.price) }}
+                                <small>
+                                    تومان
+                                </small>
+                            </strong>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="owner-product-actions">
+
+                            <a
+                                href="{{ url_for('edit_product_page', product_id=product.id) }}"
+                                class="edit-product-button"
+                            >
+                                ✏️ تغییر مشخصات
+                            </a>
+
+
+                            <a
+                                href="{{ url_for('product_detail', product_id=product.id) }}"
+                                class="view-product-button"
+                            >
+                                مشاهده
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="owner-empty">
+
+                <div class="owner-empty-icon">
+                    🍯
+                </div>
+
+                <h3>
+                    هنوز محصولی ثبت نشده
+                </h3>
+
+                <p>
+                    اولین محصول فروشگاه شهدآور را اضافه کنید.
+                </p>
+
+                <a
+                    href="{{ url_for('add_product_page') }}"
+                >
+                    افزودن اولین محصول
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

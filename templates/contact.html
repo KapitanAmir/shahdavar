@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="راه‌های ارتباطی با {{ site.site_name or 'شهدآور' }}">
+    <title>{{ page_title or site.contact_title or 'تماس با شهدآور' }} | {{ site.site_name or 'شهدآور' }}</title>
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='contact.css') }}">
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+</head>
+<body class="contact-site" style="--site-background: {{ site.background_color or '#fffdf8' }};">
+
+<header class="site-header contact-site-header">
+    <div class="header-container">
+        <a href="{{ url_for('home') }}" class="brand contact-brand" aria-label="صفحه اصلی شهدآور">
+            <span class="brand-logo contact-brand-logo">
+                {% if logo and logo.filename %}
+                    <img src="{% if '/' in logo.filename %}{{ url_for('images', filename=logo.filename) }}{% else %}{{ url_for('uploads', filename='logo/' + logo.filename) }}{% endif %}" alt="لوگوی شهدآور">
+                {% else %}
+                    <span class="brand-fallback">🍯</span>
+                {% endif %}
+            </span>
+            <span class="brand-text">
+                <strong>{{ site.site_name or 'شهدآور' }}</strong>
+                <span>{{ site.site_tagline or 'طعم واقعی طبیعت' }}</span>
+            </span>
+        </a>
+
+        <nav class="desktop-nav contact-desktop-nav" aria-label="ناوبری اصلی">
+            <a href="{{ url_for('home') }}">خانه</a>
+            <a href="{{ url_for('products_page') }}">محصولات</a>
+            <a href="{{ url_for('about_page') }}">درباره ما</a>
+            <a href="{{ url_for('support_page') }}">پشتیبانی</a>
+            <a class="active" href="{{ url_for('contact_page') }}">تماس با ما</a>
+        </nav>
+
+        <div class="header-account contact-header-account">
+            {% if current_user %}
+                <a class="header-profile" href="{{ url_for('account') }}" aria-label="حساب کاربری">
+                    {% if current_user.avatar %}
+                        <img src="{{ url_for('uploaded_file', filename='profiles/' + current_user.avatar) }}" alt="پروفایل">
+                    {% else %}
+                        <span class="profile-fallback">{{ (current_user.first_name or 'ش')[:1] }}</span>
+                    {% endif %}
+                    <span>{{ current_user.first_name }} {{ current_user.last_name }}</span>
+                </a>
+            {% else %}
+                <a class="account-button" href="{{ url_for('account') }}"><svg class="shd-account-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> ورود</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<main class="contact-page">
+    <section class="contact-hero" aria-labelledby="contact-title">
+        <div class="contact-hero-copy">
+            <span class="contact-eyebrow"><span>✦</span> ارتباط مستقیم با شهدآور</span>
+            <h1 id="contact-title">{{ page_title or site.contact_title or 'تماس با شهدآور' }}</h1>
+            <p>{{ site.contact_text or 'برای خرید، دریافت اطلاعات محصولات، پیگیری سفارش یا ارتباط با مدیریت، راه مناسب خود را انتخاب کنید.' }}</p>
+        </div>
+        <div class="contact-hero-mark" aria-hidden="true"><span>✦</span></div>
+    </section>
+
+    <section class="contact-section" aria-labelledby="contact-methods-title">
+        <div class="contact-section-heading">
+            <div>
+                <span class="contact-section-kicker">راه‌های ارتباطی</span>
+                <h2 id="contact-methods-title">هر زمان خواستید، با ما در ارتباط باشید</h2>
+                <p>راه ارتباطی موردنظر خود را انتخاب کنید.</p>
+            </div>
+            <span class="contact-count">{{ contact_methods|length }} راه ارتباطی</span>
+        </div>
+
+        {% if contact_methods %}
+        <div class="contact-grid">
+            {% for method in contact_methods %}
+                {% set method_link = (method.link or '')|trim %}
+                {% set clean_icon = (method.icon_filename or method.icon or '')|trim %}
+                {% set icon_is_file = (method.icon_type or '') == 'image' and clean_icon and not clean_icon.startswith('http://') and not clean_icon.startswith('https://') %}
+                {% set platform_icon = method.icon_emoji or '🔗' %}
+                {% set card_label = method.platform|replace('_', ' ')|title if method.platform else 'ارتباط با شهدآور' %}
+
+                {% if method_link %}<a class="contact-card" href="{{ method_link }}" {% if method_link.startswith('http://') or method_link.startswith('https://') %}target="_blank" rel="noopener noreferrer"{% endif %}>{% else %}<div class="contact-card">{% endif %}
+                    <div class="contact-card-top">
+                        <div class="contact-icon">
+                            {% if icon_is_file %}
+                                <img src="{{ url_for('uploads', filename='contact_icons/' + clean_icon) }}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false;">
+                                <span hidden>{{ platform_icon }}</span>
+                            {% elif clean_icon and (clean_icon.startswith('http://') or clean_icon.startswith('https://')) %}
+                                <img src="{{ clean_icon }}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false;">
+                                <span hidden>{{ platform_icon }}</span>
+                            {% else %}
+                                <span>{{ platform_icon }}</span>
+                            {% endif %}
+                        </div>
+                        {% if method_link %}<span class="contact-card-arrow" aria-hidden="true">↗</span>{% endif %}
+                    </div>
+
+                    <div class="contact-card-body">
+                        <span class="contact-card-label">{{ card_label }}</span>
+                        <h3>{{ method.title }}</h3>
+                        {% if method.value %}<p class="contact-value">{{ method.value }}</p>{% endif %}
+                        {% if method.description %}<p class="contact-description">{{ method.description }}</p>{% endif %}
+                    </div>
+
+                    {% if method_link %}
+                        <span class="contact-card-action">{{ method.button_text or site.contact_button_text or 'ارتباط' }} <span>←</span></span>
+                    {% else %}
+                        <span class="contact-card-action muted">اطلاعات تماس</span>
+                    {% endif %}
+                {% if method_link %}</a>{% else %}</div>{% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="contact-empty">
+            <div class="contact-empty-icon">☎</div>
+            <div>
+                <h3>راه ارتباطی ثبت نشده است</h3>
+                <p>راه‌های ارتباطی توسط مدیریت سایت در حال تکمیل است.</p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="contact-cta">
+        <div>
+            <span class="contact-section-kicker">پشتیبانی شهدآور</span>
+            <h2>اگر راه ارتباطی موردنظرتان را پیدا نکردید</h2>
+            <p>از بخش پشتیبانی پیام بفرستید تا در سریع‌ترین زمان ممکن پاسخ‌گو باشیم.</p>
+        </div>
+        <a class="contact-cta-button" href="{{ url_for('support_page') }}">ورود به پشتیبانی <span>←</span></a>
+    </section>
+</main>
+
+<footer class="contact-footer">
+    <div class="contact-footer-inner">
+        <a href="{{ url_for('home') }}" class="footer-brand">
+            {% if logo and logo.filename %}<img src="{% if '/' in logo.filename %}{{ url_for('images', filename=logo.filename) }}{% else %}{{ url_for('uploads', filename='logo/' + logo.filename) }}{% endif %}" alt="لوگوی شهدآور">{% endif %}
+            <span>{{ site.site_name or 'شهدآور' }}</span>
+        </a>
+        <span>© {{ now_year or '۱۴۰۵' }} {{ site.site_name or 'شهدآور' }}</span>
+    </div>
+</footer>
+
+</body>
+</html>

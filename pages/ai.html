@@ -1,0 +1,4872 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="شهدیار؛ دستیار هوشمند سایت شهدآور برای راهنمایی درباره عسل و محصولات زنبورعسل"
+    >
+
+    <title>شهدیار | دستیار هوشمند شهدآور</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='style.css') }}"
+    >
+
+    <style>
+
+        /* =========================================================
+           SHAHYAR AI PAGE
+           THEME-READY SYSTEM
+        ========================================================= */
+
+        :root {
+
+            color-scheme: light dark;
+
+            /* ---------- BRAND ---------- */
+
+            --sh-primary: #f5b800;
+            --sh-primary-dark: #c99100;
+            --sh-primary-soft: #ffe89a;
+            --sh-gold: #ffc928;
+
+
+            /* ---------- LIGHT THEME ---------- */
+
+            --sh-page-bg: #ffffff;
+            --sh-page-bg-2: #ffffff;
+            --sh-page-text: #171717;
+            --sh-page-muted: #666666;
+
+            --sh-header-bg:
+                rgba(255, 255, 255, 0.96);
+
+            --sh-header-border:
+                rgba(0, 0, 0, 0.08);
+
+            --sh-sidebar-bg:
+                rgba(255, 255, 255, 0.96);
+
+            --sh-sidebar-border:
+                rgba(0, 0, 0, 0.08);
+
+            --sh-hero-text:
+                #171717;
+
+            --sh-hero-muted:
+                #5f5f5f;
+
+
+            /* ---------- CHAT ---------- */
+
+            --sh-chat-border:
+                rgba(0, 0, 0, 0.10);
+
+            --sh-chat-shadow:
+                0 30px 80px
+                rgba(0, 0, 0, 0.16);
+
+            --sh-chat-topbar:
+                rgba(255, 255, 255, 0.90);
+
+            --sh-chat-messages-overlay:
+                linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.62) 0%,
+                    rgba(255, 255, 255, 0.76) 100%
+                );
+
+            --sh-chat-footer:
+                rgba(255, 255, 255, 0.94);
+
+
+            /* ---------- INPUT ---------- */
+
+            --sh-input-bg:
+                #ffffff;
+
+            --sh-input-text:
+                #111111;
+
+            --sh-input-border:
+                #dedede;
+
+            --sh-input-placeholder:
+                #888888;
+
+
+            /* ---------- MESSAGE ---------- */
+
+            --sh-assistant-message-bg:
+                rgba(255, 255, 255, 0.90);
+
+            --sh-assistant-message-text:
+                #222222;
+
+            --sh-user-message-text:
+                #171717;
+
+
+            /* ---------- COMMON ---------- */
+
+            --sh-white: #ffffff;
+
+            --sh-text: #171717;
+
+            --sh-muted: #747474;
+
+            --sh-radius-xl: 28px;
+
+            --sh-radius-lg: 20px;
+
+            --sh-radius-md: 14px;
+
+            --sh-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.18);
+
+            --sh-gold-shadow:
+                0 0 45px
+                rgba(245, 184, 0, 0.15);
+        }
+
+
+        /* =========================================================
+           DARK THEME
+           
+           آماده برای سیستم شب و روز آینده
+        ========================================================= */
+
+        @media (prefers-color-scheme: dark) {
+
+            :root {
+
+                --sh-page-bg:
+                    #11100d;
+
+                --sh-page-bg-2:
+                    #15130f;
+
+                --sh-page-text:
+                    #f5f1e7;
+
+                --sh-page-muted:
+                    #aaa59a;
+
+
+                --sh-header-bg:
+                    rgba(20, 18, 14, 0.96);
+
+                --sh-header-border:
+                    rgba(255, 255, 255, 0.08);
+
+
+                --sh-sidebar-bg:
+                    rgba(24, 22, 17, 0.96);
+
+                --sh-sidebar-border:
+                    rgba(255, 255, 255, 0.08);
+
+
+                --sh-hero-text:
+                    #f5f1e7;
+
+                --sh-hero-muted:
+                    #b8b2a5;
+
+
+                --sh-chat-border:
+                    rgba(255, 255, 255, 0.10);
+
+                --sh-chat-shadow:
+                    0 30px 80px
+                    rgba(0, 0, 0, 0.50);
+
+
+                --sh-chat-topbar:
+                    rgba(24, 22, 17, 0.88);
+
+                --sh-chat-messages-overlay:
+                    linear-gradient(
+                        180deg,
+                        rgba(16, 15, 12, 0.54) 0%,
+                        rgba(12, 11, 9, 0.70) 100%
+                    );
+
+                --sh-chat-footer:
+                    rgba(22, 20, 16, 0.92);
+
+
+                --sh-input-bg:
+                    #242119;
+
+                --sh-input-text:
+                    #ffffff;
+
+                --sh-input-border:
+                    rgba(255, 255, 255, 0.10);
+
+                --sh-input-placeholder:
+                    #aaa59a;
+
+
+                --sh-assistant-message-bg:
+                    rgba(31, 29, 23, 0.90);
+
+                --sh-assistant-message-text:
+                    #f5f1e7;
+
+                --sh-user-message-text:
+                    #211b0c;
+            }
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        .shahdyar-page,
+        .shahdyar-page * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background:
+                var(--sh-page-bg);
+
+            color:
+                var(--sh-page-text);
+
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================================================
+           MAIN PAGE
+        ========================================================= */
+
+        .shahdyar-page {
+
+            min-height: 100vh;
+
+            position: relative;
+
+            overflow: hidden;
+
+            color:
+                var(--sh-page-text);
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--sh-page-bg-2) 0%,
+                    var(--sh-page-bg) 100%
+                );
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================================================
+           PAGE DECORATION
+           
+           مهم:
+           هیچ تصویر شهدیار اینجا استفاده نمی‌شود.
+        ========================================================= */
+
+        .shahdyar-page::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 15%,
+                    rgba(245, 184, 0, 0.045),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 10% 85%,
+                    rgba(255, 201, 40, 0.025),
+                    transparent 28%
+                );
+
+            opacity:
+                1;
+        }
+
+
+        .shahdyar-page::after {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1;
+
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle at 50% 40%,
+                    rgba(245, 184, 0, 0.035),
+                    transparent 36%
+                );
+
+            box-shadow:
+                inset 0 0 180px
+                rgba(0, 0, 0, 0.04);
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .shahdyar-page::after {
+
+                box-shadow:
+                    inset 0 0 180px
+                    rgba(0, 0, 0, 0.30);
+            }
+        }
+
+
+        /* =========================================================
+           MAIN CONTAINER
+        ========================================================= */
+
+        .shahdyar-container {
+
+            position: relative;
+
+            z-index: 3;
+
+            width:
+                min(
+                    1450px,
+                    calc(100% - 40px)
+                );
+
+            margin:
+                0 auto;
+
+            padding:
+                25px 0 45px;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .shahdyar-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 28px;
+
+            padding:
+                14px 18px;
+
+            border:
+                1px solid
+                var(--sh-header-border);
+
+            border-radius:
+                20px;
+
+            background:
+                var(--sh-header-bg);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            color:
+                var(--sh-page-text);
+
+            box-shadow:
+                0 15px 45px
+                rgba(0, 0, 0, 0.07);
+
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        .shahdyar-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            color:
+                var(--sh-page-text);
+
+            text-decoration:
+                none;
+        }
+
+
+        .brand-logo {
+
+            width:
+                50px;
+
+            height:
+                50px;
+
+            object-fit:
+                contain;
+
+            border-radius:
+                14px;
+        }
+
+
+        .shahdyar-brand-text {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 2px;
+        }
+
+
+        .shahdyar-brand-name {
+
+            font-size:
+                18px;
+
+            font-weight:
+                900;
+
+            color:
+                var(--sh-page-text);
+        }
+
+
+        .shahdyar-brand-subtitle {
+
+            color:
+                var(--sh-page-muted);
+
+            font-size:
+                12px;
+        }
+
+
+        .shahdyar-nav {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            flex-wrap:
+                wrap;
+        }
+
+
+        .shahdyar-nav a {
+
+            color:
+                var(--sh-page-muted);
+
+            text-decoration:
+                none;
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+
+            padding:
+                9px 12px;
+
+            border-radius:
+                10px;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .shahdyar-nav a:hover {
+
+            color:
+                var(--sh-primary-dark);
+
+            background:
+                rgba(245, 184, 0, 0.09);
+        }
+
+
+        .shahdyar-nav .active {
+
+            color:
+                var(--sh-primary-dark);
+
+            background:
+                rgba(245, 184, 0, 0.12);
+
+            box-shadow:
+                inset 0 0 0 1px
+                rgba(245, 184, 0, 0.05);
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .shahdyar-nav a {
+
+                color:
+                    #dedede;
+            }
+
+            .shahdyar-nav a:hover {
+
+                color:
+                    var(--sh-primary-soft);
+            }
+
+            .shahdyar-nav .active {
+
+                color:
+                    var(--sh-primary);
+            }
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .shahdyar-hero {
+
+            display:
+                block;
+
+            margin-bottom:
+                28px;
+
+            position:
+                relative;
+        }
+
+
+        .shahdyar-hero-content {
+
+            max-width:
+                850px;
+
+            padding:
+                25px 10px;
+        }
+
+
+        .shahdyar-badge {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                8px 14px;
+
+            margin-bottom:
+                18px;
+
+            border:
+                1px solid
+                rgba(245, 184, 0, 0.34);
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(245, 184, 0, 0.07);
+
+            color:
+                var(--sh-primary-dark);
+
+            font-size:
+                13px;
+
+            font-weight:
+                800;
+
+            box-shadow:
+                0 8px 30px
+                rgba(0, 0, 0, 0.05);
+        }
+
+
+        .shahdyar-hero h1 {
+
+            margin:
+                0 0 10px;
+
+            font-size:
+                clamp(34px, 5vw, 64px);
+
+            line-height:
+                1.1;
+
+            font-weight:
+                1000;
+
+            letter-spacing:
+                -1px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #171717 0%,
+                    #51451f 48%,
+                    #c99100 100%
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            color:
+                transparent;
+
+            filter:
+                drop-shadow(
+                    0 8px 25px
+                    rgba(0, 0, 0, 0.07)
+                );
+        }
+
+
+        .shahdyar-hero h2 {
+
+            margin:
+                0 0 18px;
+
+            color:
+                var(--sh-primary-dark);
+
+            font-size:
+                clamp(18px, 2.2vw, 25px);
+
+            font-weight:
+                900;
+        }
+
+
+        .shahdyar-hero-description {
+
+            max-width:
+                720px;
+
+            margin:
+                0;
+
+            color:
+                var(--sh-hero-muted);
+
+            font-size:
+                15px;
+
+            line-height:
+                2;
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .shahdyar-hero h1 {
+
+                background:
+                    linear-gradient(
+                        135deg,
+                        #ffffff 0%,
+                        #fff5ca 45%,
+                        var(--sh-primary) 100%
+                    );
+
+                -webkit-background-clip:
+                    text;
+
+                background-clip:
+                    text;
+
+                color:
+                    transparent;
+            }
+
+            .shahdyar-hero h2 {
+
+                color:
+                    var(--sh-primary);
+            }
+        }
+
+
+        /* =========================================================
+           MAIN AI LAYOUT
+        ========================================================= */
+
+        .shahdyar-workspace {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                270px
+                minmax(0, 1fr);
+
+            gap:
+                20px;
+
+            align-items:
+                stretch;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .shahdyar-sidebar {
+
+            padding:
+                18px;
+
+            border:
+                1px solid
+                var(--sh-sidebar-border);
+
+            border-radius:
+                var(--sh-radius-xl);
+
+            background:
+                var(--sh-sidebar-bg);
+
+            backdrop-filter:
+                blur(22px);
+
+            -webkit-backdrop-filter:
+                blur(22px);
+
+            box-shadow:
+                var(--sh-shadow);
+
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+
+        .sidebar-title {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            margin-bottom:
+                15px;
+
+            color:
+                var(--sh-page-text);
+
+            font-size:
+                14px;
+
+            font-weight:
+                900;
+        }
+
+
+        .new-chat-button {
+
+            width:
+                100%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                13px 15px;
+
+            margin-bottom:
+                18px;
+
+            border:
+                none;
+
+            border-radius:
+                14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--sh-primary),
+                    var(--sh-primary-dark)
+                );
+
+            color:
+                #171717;
+
+            font-family:
+                inherit;
+
+            font-size:
+                14px;
+
+            font-weight:
+                900;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 10px 25px
+                rgba(245, 184, 0, 0.18);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .new-chat-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 14px 32px
+                rgba(245, 184, 0, 0.27);
+        }
+
+
+        .sidebar-links {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                7px;
+        }
+
+
+        .sidebar-link {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                11px 12px;
+
+            border-radius:
+                12px;
+
+            color:
+                var(--sh-page-muted);
+
+            text-decoration:
+                none;
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .sidebar-link:hover {
+
+            color:
+                var(--sh-primary-dark);
+
+            background:
+                rgba(245, 184, 0, 0.08);
+
+            transform:
+                translateX(-2px);
+        }
+
+
+        .sidebar-divider {
+
+            height:
+                1px;
+
+            margin:
+                18px 0;
+
+            background:
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .close-chat-button {
+
+            width:
+                100%;
+
+            border:
+                1px solid
+                rgba(0, 0, 0, 0.08);
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(0, 0, 0, 0.025);
+
+            color:
+                #777;
+
+            padding:
+                11px;
+
+            font-family:
+                inherit;
+
+            font-size:
+                12px;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .close-chat-button:hover {
+
+            color:
+                #171717;
+
+            border-color:
+                rgba(245, 184, 0, 0.32);
+
+            background:
+                rgba(245, 184, 0, 0.07);
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .sidebar-divider {
+
+                background:
+                    rgba(255, 255, 255, 0.08);
+            }
+
+            .close-chat-button {
+
+                border-color:
+                    rgba(255, 255, 255, 0.09);
+
+                background:
+                    rgba(255, 255, 255, 0.035);
+
+                color:
+                    #aaa;
+            }
+
+            .close-chat-button:hover {
+
+                color:
+                    #fff;
+            }
+
+            .sidebar-link {
+
+                color:
+                    #c7c7c7;
+            }
+
+            .sidebar-link:hover {
+
+                color:
+                    var(--sh-primary-soft);
+            }
+        }
+
+
+        /* =========================================================
+           CHAT CARD
+           
+           shahdyar-day.png فقط اینجاست
+        ========================================================= */
+
+        .shahdyar-chat-card {
+
+            min-width:
+                0;
+
+            height:
+                720px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            overflow:
+                hidden;
+
+            border:
+                1px solid
+                var(--sh-chat-border);
+
+            border-radius:
+                var(--sh-radius-xl);
+
+            background:
+
+                linear-gradient(
+                    180deg,
+                    rgba(245, 184, 0, 0.04),
+                    rgba(0, 0, 0, 0.04)
+                ),
+
+                url(
+                    "{{ url_for(
+                        'images',
+                        filename='shahdyar/shahdyar-day.png'
+                    ) }}"
+                );
+
+            background-size:
+                cover;
+
+            background-position:
+                center center;
+
+            background-repeat:
+                no-repeat;
+
+            color:
+                var(--sh-text);
+
+            box-shadow:
+                var(--sh-chat-shadow);
+
+            position:
+                relative;
+        }
+
+
+        /* =========================================================
+           CHAT TOPBAR
+        ========================================================= */
+
+        .chat-topbar {
+
+            min-height:
+                74px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                12px 18px;
+
+            border-bottom:
+                1px solid
+                rgba(0, 0, 0, 0.07);
+
+            background:
+                var(--sh-chat-topbar);
+
+            backdrop-filter:
+                blur(14px);
+
+            -webkit-backdrop-filter:
+                blur(14px);
+        }
+
+
+        .assistant-identity {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            min-width:
+                0;
+        }
+
+
+        /* =========================================================
+           SHAHYAR AVATAR
+        ========================================================= */
+
+        .assistant-avatar {
+
+            width:
+                48px;
+
+            height:
+                48px;
+
+            flex:
+                0 0 48px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff5bf,
+                    #ffd84a
+                );
+
+            border:
+                1px solid
+                rgba(201, 145, 0, 0.2);
+
+            box-shadow:
+                0 8px 20px
+                rgba(245, 184, 0, 0.17);
+        }
+
+
+        .assistant-avatar img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+        }
+
+
+        .assistant-avatar-fallback {
+
+            font-size:
+                25px;
+        }
+
+
+        .assistant-info {
+
+            min-width:
+                0;
+        }
+
+
+        .assistant-name {
+
+            font-size:
+                15px;
+
+            font-weight:
+                950;
+
+            color:
+                #151515;
+        }
+
+
+        .assistant-status {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+
+            margin-top:
+                3px;
+
+            color:
+                #737373;
+
+            font-size:
+                11px;
+        }
+
+
+        .status-dot {
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            border-radius:
+                50%;
+
+            background:
+                #35a853;
+
+            box-shadow:
+                0 0 8px
+                rgba(53, 168, 83, 0.4);
+        }
+
+
+        .status-dot.locked {
+
+            background:
+                #d93025;
+
+            box-shadow:
+                0 0 8px
+                rgba(217, 48, 37, 0.25);
+        }
+
+
+        .chat-top-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+        }
+
+
+        .chat-icon-button {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid
+                rgba(0, 0, 0, 0.08);
+
+            border-radius:
+                11px;
+
+            background:
+                rgba(255, 255, 255, 0.85);
+
+            color:
+                #555;
+
+            font-size:
+                18px;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .chat-icon-button:hover {
+
+            color:
+                #111;
+
+            border-color:
+                rgba(245, 184, 0, 0.35);
+
+            background:
+                #fff9df;
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .assistant-name {
+
+                color:
+                    #ffffff;
+            }
+
+            .assistant-status {
+
+                color:
+                    #aaa;
+            }
+
+            .chat-icon-button {
+
+                border-color:
+                    rgba(255, 255, 255, 0.08);
+
+                background:
+                    rgba(255, 255, 255, 0.08);
+
+                color:
+                    #ddd;
+            }
+
+            .chat-icon-button:hover {
+
+                color:
+                    #fff;
+
+                background:
+                    rgba(245, 184, 0, 0.12);
+            }
+        }
+
+
+        /* =========================================================
+           MESSAGES
+           
+           شفاف است تا تصویر شهدیار دیده شود.
+        ========================================================= */
+
+        .messages-container {
+
+            flex:
+                1;
+
+            min-height:
+                0;
+
+            overflow-y:
+                auto;
+
+            padding:
+                25px 24px 20px;
+
+            scroll-behavior:
+                smooth;
+
+            background:
+                var(--sh-chat-messages-overlay);
+
+            backdrop-filter:
+                blur(2px);
+
+            -webkit-backdrop-filter:
+                blur(2px);
+        }
+
+
+        .messages-container::-webkit-scrollbar {
+
+            width:
+                7px;
+        }
+
+
+        .messages-container::-webkit-scrollbar-track {
+
+            background:
+                transparent;
+        }
+
+
+        .messages-container::-webkit-scrollbar-thumb {
+
+            background:
+                rgba(0, 0, 0, 0.13);
+
+            border-radius:
+                99px;
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .messages-container::-webkit-scrollbar-thumb {
+
+                background:
+                    rgba(255, 255, 255, 0.14);
+            }
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+        .empty-state {
+
+            min-height:
+                100%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            flex-direction:
+                column;
+
+            text-align:
+                center;
+
+            padding:
+                30px;
+        }
+
+
+        .empty-state-icon {
+
+            width:
+                78px;
+
+            height:
+                78px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            margin-bottom:
+                15px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff3b0,
+                    #ffe06b
+                );
+
+            box-shadow:
+                0 15px 35px
+                rgba(245, 184, 0, 0.17);
+
+            font-size:
+                38px;
+        }
+
+
+        .empty-state-icon img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+        }
+
+
+        .empty-state h3 {
+
+            margin:
+                0 0 7px;
+
+            font-size:
+                20px;
+
+            font-weight:
+                950;
+
+            color:
+                #171717;
+        }
+
+
+        .empty-state p {
+
+            max-width:
+                580px;
+
+            margin:
+                0 0 22px;
+
+            color:
+                #555;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.9;
+        }
+
+
+        .suggestions {
+
+            width:
+                min(100%, 650px);
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap:
+                9px;
+        }
+
+
+        .suggestion-button {
+
+            padding:
+                12px 13px;
+
+            border:
+                1px solid
+                rgba(0, 0, 0, 0.08);
+
+            border-radius:
+                13px;
+
+            background:
+                rgba(255, 255, 255, 0.86);
+
+            color:
+                #444;
+
+            font-family:
+                inherit;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.7;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s ease;
+
+            backdrop-filter:
+                blur(8px);
+        }
+
+
+        .suggestion-button:hover {
+
+            color:
+                #161616;
+
+            border-color:
+                rgba(245, 184, 0, 0.45);
+
+            background:
+                #fff9df;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .empty-state h3 {
+
+                color:
+                    #ffffff;
+            }
+
+            .empty-state p {
+
+                color:
+                    #c0baad;
+            }
+
+            .suggestion-button {
+
+                border-color:
+                    rgba(255, 255, 255, 0.10);
+
+                background:
+                    rgba(25, 23, 18, 0.75);
+
+                color:
+                    #ddd;
+            }
+
+            .suggestion-button:hover {
+
+                color:
+                    #fff;
+
+                background:
+                    rgba(245, 184, 0, 0.12);
+            }
+        }
+
+
+        /* =========================================================
+           MESSAGE ROW
+        ========================================================= */
+
+        .message-row {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            gap:
+                10px;
+
+            margin-bottom:
+                18px;
+
+            animation:
+                messageIn 0.22s ease;
+        }
+
+
+        @keyframes messageIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(7px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .message-row.user {
+
+            flex-direction:
+                row-reverse;
+        }
+
+
+        .message-avatar {
+
+            width:
+                36px;
+
+            height:
+                36px;
+
+            flex:
+                0 0 36px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                12px;
+
+            background:
+                #f3f3f3;
+
+            font-size:
+                17px;
+        }
+
+
+        .message-avatar img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+        }
+
+
+        .message-content {
+
+            max-width:
+                min(78%, 780px);
+        }
+
+
+        .message-bubble {
+
+            padding:
+                12px 15px;
+
+            border-radius:
+                17px;
+
+            font-size:
+                13px;
+
+            line-height:
+                2;
+
+            word-break:
+                break-word;
+
+            white-space:
+                normal;
+        }
+
+
+        .message-row.assistant .message-bubble {
+
+            background:
+                var(--sh-assistant-message-bg);
+
+            color:
+                var(--sh-assistant-message-text);
+
+            border:
+                1px solid
+                rgba(0, 0, 0, 0.055);
+
+            border-top-right-radius:
+                5px;
+
+            backdrop-filter:
+                blur(8px);
+        }
+
+
+        .message-row.user .message-bubble {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe37a,
+                    #f7c62d
+                );
+
+            color:
+                var(--sh-user-message-text);
+
+            border-top-left-radius:
+                5px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(245, 184, 0, 0.11);
+        }
+
+
+        .message-bubble a {
+
+            color:
+                #946c00;
+
+            font-weight:
+                800;
+
+            text-decoration:
+                underline;
+        }
+
+
+        .message-row.user .message-bubble a {
+
+            color:
+                #5d4500;
+        }
+
+
+        .message-bubble code {
+
+            padding:
+                2px 6px;
+
+            border-radius:
+                6px;
+
+            background:
+                rgba(0, 0, 0, 0.06);
+
+            font-family:
+                monospace;
+
+            direction:
+                ltr;
+        }
+
+
+        /* =========================================================
+           TYPING
+        ========================================================= */
+
+        .typing-row {
+
+            display:
+                none;
+
+            align-items:
+                flex-start;
+
+            gap:
+                10px;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .typing-row.visible {
+
+            display:
+                flex;
+        }
+
+
+        .typing-bubble {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+
+            padding:
+                14px 17px;
+
+            border-radius:
+                17px;
+
+            border-top-right-radius:
+                5px;
+
+            background:
+                rgba(255, 255, 255, 0.88);
+
+            border:
+                1px solid
+                rgba(0, 0, 0, 0.05);
+
+            backdrop-filter:
+                blur(8px);
+        }
+
+
+        .typing-dot {
+
+            width:
+                6px;
+
+            height:
+                6px;
+
+            border-radius:
+                50%;
+
+            background:
+                #999;
+
+            animation:
+                typing 1.2s infinite ease-in-out;
+        }
+
+
+        .typing-dot:nth-child(2) {
+
+            animation-delay:
+                0.15s;
+        }
+
+
+        .typing-dot:nth-child(3) {
+
+            animation-delay:
+                0.3s;
+        }
+
+
+        @keyframes typing {
+
+            0%,
+            60%,
+            100% {
+
+                transform:
+                    translateY(0);
+
+                opacity:
+                    0.45;
+            }
+
+            30% {
+
+                transform:
+                    translateY(-4px);
+
+                opacity:
+                    1;
+            }
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .typing-bubble {
+
+                background:
+                    rgba(31, 29, 23, 0.88);
+
+                border-color:
+                    rgba(255, 255, 255, 0.08);
+            }
+
+            .typing-dot {
+
+                background:
+                    #aaa;
+            }
+        }
+
+
+        /* =========================================================
+           ALERT
+        ========================================================= */
+
+        .chat-alert {
+
+            display:
+                none;
+
+            margin:
+                0 20px 12px;
+
+            padding:
+                11px 13px;
+
+            border:
+                1px solid
+                rgba(217, 48, 37, 0.16);
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(217, 48, 37, 0.06);
+
+            color:
+                #a52a22;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.8;
+        }
+
+
+        .chat-alert.visible {
+
+            display:
+                block;
+        }
+
+
+        /* =========================================================
+           CHAT FOOTER
+        ========================================================= */
+
+        .chat-footer {
+
+            padding:
+                13px 18px 16px;
+
+            border-top:
+                1px solid
+                rgba(0, 0, 0, 0.07);
+
+            background:
+                var(--sh-chat-footer);
+
+            backdrop-filter:
+                blur(14px);
+
+            -webkit-backdrop-filter:
+                blur(14px);
+        }
+
+
+        .message-counter-row {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                12px;
+
+            margin-bottom:
+                8px;
+
+            color:
+                #8a8a8a;
+
+            font-size:
+                10px;
+        }
+
+
+        .counter-text {
+
+            font-weight:
+                800;
+        }
+
+
+        .counter-progress {
+
+            flex:
+                1;
+
+            height:
+                4px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                999px;
+
+            background:
+                #eeeeee;
+        }
+
+
+        .counter-progress-fill {
+
+            width:
+                0%;
+
+            height:
+                100%;
+
+            border-radius:
+                inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--sh-primary),
+                    #e09c00
+                );
+
+            transition:
+                width 0.25s ease;
+        }
+
+
+        .input-row {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            gap:
+                9px;
+        }
+
+
+        /* =========================================================
+           MESSAGE INPUT
+           
+           در حالت روز متن حتماً مشکی است.
+        ========================================================= */
+
+        #messageInput {
+
+            flex:
+                1;
+
+            min-width:
+                0;
+
+            min-height:
+                48px;
+
+            max-height:
+                140px;
+
+            resize:
+                none;
+
+            padding:
+                13px 14px;
+
+            border:
+                1px solid
+                var(--sh-input-border);
+
+            border-radius:
+                15px;
+
+            outline:
+                none;
+
+            background:
+                var(--sh-input-bg);
+
+            color:
+                var(--sh-input-text);
+
+            caret-color:
+                var(--sh-input-text);
+
+            font-family:
+                inherit;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.8;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        #messageInput::placeholder {
+
+            color:
+                var(--sh-input-placeholder);
+
+            opacity:
+                1;
+        }
+
+
+        #messageInput:focus {
+
+            border-color:
+                rgba(245, 184, 0, 0.6);
+
+            background:
+                var(--sh-input-bg);
+
+            color:
+                var(--sh-input-text);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(245, 184, 0, 0.08);
+        }
+
+
+        #messageInput:disabled {
+
+            cursor:
+                not-allowed;
+
+            opacity:
+                0.65;
+        }
+
+
+        .send-button {
+
+            width:
+                49px;
+
+            height:
+                49px;
+
+            flex:
+                0 0 49px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                none;
+
+            border-radius:
+                15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--sh-primary),
+                    var(--sh-primary-dark)
+                );
+
+            color:
+                #171717;
+
+            font-size:
+                20px;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s ease;
+
+            box-shadow:
+                0 8px 20px
+                rgba(245, 184, 0, 0.15);
+        }
+
+
+        .send-button:hover:not(:disabled) {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(245, 184, 0, 0.24);
+        }
+
+
+        .send-button:disabled {
+
+            cursor:
+                not-allowed;
+
+            opacity:
+                0.5;
+
+            transform:
+                none;
+        }
+
+
+        .chat-hint {
+
+            margin:
+                7px 3px 0;
+
+            color:
+                #9a9a9a;
+
+            font-size:
+                9px;
+
+            line-height:
+                1.7;
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+
+            .chat-footer {
+
+                border-top-color:
+                    rgba(255, 255, 255, 0.08);
+            }
+
+            .message-counter-row {
+
+                color:
+                    #aaa;
+            }
+
+            .counter-progress {
+
+                background:
+                    rgba(255, 255, 255, 0.10);
+            }
+
+            .chat-hint {
+
+                color:
+                    #aaa;
+            }
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        #toast {
+
+            position:
+                fixed;
+
+            left:
+                50%;
+
+            bottom:
+                25px;
+
+            z-index:
+                9999;
+
+            transform:
+                translate(-50%, 20px);
+
+            opacity:
+                0;
+
+            pointer-events:
+                none;
+
+            max-width:
+                min(90vw, 500px);
+
+            padding:
+                11px 16px;
+
+            border-radius:
+                12px;
+
+            background:
+                #171717;
+
+            color:
+                #fff;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.1);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.35);
+
+            font-size:
+                12px;
+
+            text-align:
+                center;
+
+            transition:
+                0.25s ease;
+        }
+
+
+        #toast.show {
+
+            opacity:
+                1;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .shahdyar-workspace {
+
+                grid-template-columns:
+                    220px
+                    minmax(0, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .shahdyar-container {
+
+                width:
+                    min(
+                        calc(100% - 24px),
+                        720px
+                    );
+            }
+
+
+            .shahdyar-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+            }
+
+
+            .shahdyar-nav {
+
+                width:
+                    100%;
+
+                overflow-x:
+                    auto;
+
+                flex-wrap:
+                    nowrap;
+
+                padding-bottom:
+                    2px;
+            }
+
+
+            .shahdyar-hero {
+
+                text-align:
+                    center;
+            }
+
+
+            .shahdyar-hero-content {
+
+                padding:
+                    10px;
+            }
+
+
+            .shahdyar-hero-description {
+
+                margin:
+                    0 auto;
+            }
+
+
+            .shahdyar-workspace {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .shahdyar-sidebar {
+
+                display:
+                    none;
+            }
+
+
+            .shahdyar-chat-card {
+
+                height:
+                    700px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .shahdyar-container {
+
+                width:
+                    calc(100% - 14px);
+
+                padding-top:
+                    10px;
+            }
+
+
+            .shahdyar-header {
+
+                border-radius:
+                    16px;
+
+                padding:
+                    11px;
+            }
+
+
+            .shahdyar-nav a {
+
+                font-size:
+                    11px;
+
+                padding:
+                    8px 9px;
+            }
+
+
+            .shahdyar-hero h1 {
+
+                font-size:
+                    35px;
+            }
+
+
+            .shahdyar-hero h2 {
+
+                font-size:
+                    18px;
+            }
+
+
+            .shahdyar-hero-description {
+
+                font-size:
+                    12px;
+            }
+
+
+            .shahdyar-chat-card {
+
+                height:
+                    calc(100vh - 170px);
+
+                min-height:
+                    600px;
+
+                border-radius:
+                    20px;
+            }
+
+
+            .chat-topbar {
+
+                min-height:
+                    65px;
+
+                padding:
+                    10px 12px;
+            }
+
+
+            .assistant-avatar {
+
+                width:
+                    42px;
+
+                height:
+                    42px;
+
+                flex-basis:
+                    42px;
+            }
+
+
+            .assistant-name {
+
+                font-size:
+                    13px;
+            }
+
+
+            .messages-container {
+
+                padding:
+                    18px 12px;
+            }
+
+
+            .message-content {
+
+                max-width:
+                    84%;
+            }
+
+
+            .message-bubble {
+
+                font-size:
+                    12px;
+
+                line-height:
+                    1.9;
+
+                padding:
+                    10px 12px;
+            }
+
+
+            .suggestions {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .empty-state {
+
+                padding:
+                    15px;
+            }
+
+
+            .empty-state h3 {
+
+                font-size:
+                    17px;
+            }
+
+
+            .empty-state p {
+
+                font-size:
+                    11px;
+            }
+
+
+            .chat-footer {
+
+                padding:
+                    10px 10px 12px;
+            }
+
+
+            #messageInput {
+
+                font-size:
+                    12px;
+
+                min-height:
+                    45px;
+            }
+
+
+            .send-button {
+
+                width:
+                    45px;
+
+                height:
+                    45px;
+
+                flex-basis:
+                    45px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="shahdyar-page">
+
+    <div class="shahdyar-container">
+
+
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+
+        <header class="shahdyar-header">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="shahdyar-brand"
+            >
+
+                {% if logo and logo.get('filename') %}
+
+                    {% set logo_filename = logo.get('filename') %}
+
+                    {% if '/' in logo_filename or '\\' in logo_filename %}
+
+                        <img
+                            class="brand-logo"
+                            src="{{ url_for('images', filename=logo_filename) }}"
+                            alt="لوگوی شهدآور"
+                        >
+
+                    {% else %}
+
+                        <img
+                            class="brand-logo"
+                            src="{{ url_for('uploads', filename='logo/' ~ logo_filename) }}"
+                            alt="لوگوی شهدآور"
+                        >
+
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="brand-logo">
+                        🍯
+                    </div>
+
+                {% endif %}
+
+
+                <div class="shahdyar-brand-text">
+
+                    <div class="shahdyar-brand-name">
+                        شهدآور
+                    </div>
+
+                    <div class="shahdyar-brand-subtitle">
+                        دستیار هوشمند شهدیار
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <nav class="shahdyar-nav">
+
+                <a href="{{ url_for('home') }}">
+                    خانه
+                </a>
+
+                <a href="{{ url_for('products_page') }}">
+                    محصولات
+                </a>
+
+                <a href="{{ url_for('about_page') }}">
+                    درباره ما
+                </a>
+
+                <a href="{{ url_for('support_page') }}">
+                    پشتیبانی
+                </a>
+
+                <a href="{{ url_for('account') }}">
+                    حساب کاربری
+                </a>
+
+                <a
+                    href="{{ url_for('ai_page') }}"
+                    class="active"
+                >
+                    شهدیار
+                </a>
+
+            </nav>
+
+        </header>
+
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="shahdyar-hero">
+
+            <div class="shahdyar-hero-content">
+
+                <div class="shahdyar-badge">
+                    🐝 دستیار هوشمند شهدآور
+                </div>
+
+
+                <h1>
+                    من شهدیار هستم
+                </h1>
+
+
+                <h2>
+                    زنبور رباتی هوشمند شهدآور
+                </h2>
+
+
+                <p class="shahdyar-hero-description">
+
+                    من برای کمک به شما در شناخت و انتخاب محصولات زنبورعسل،
+                    پیدا کردن محصولات مناسب، پاسخ به پرسش‌های شما درباره
+                    عسل و فرآورده‌های زنبورداری و راهنمایی در سایت شهدآور
+                    ساخته شده‌ام.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             WORKSPACE
+        ====================================================== -->
+
+        <section class="shahdyar-workspace">
+
+
+            <!-- =================================================
+                 SIDEBAR
+            ================================================== -->
+
+            <aside class="shahdyar-sidebar">
+
+                <div class="sidebar-title">
+                    🐝
+                    گفت‌وگو
+                </div>
+
+
+                <button
+                    type="button"
+                    id="newChatButton"
+                    class="new-chat-button"
+                >
+
+                    <span>＋</span>
+
+                    <span>
+                        گفت‌وگوی جدید
+                    </span>
+
+                </button>
+
+
+                <div class="sidebar-title">
+
+                    🔗
+
+                    دسترسی سریع
+
+                </div>
+
+
+                <div class="sidebar-links">
+
+                    <a
+                        href="{{ url_for('products_page') }}"
+                        class="sidebar-link"
+                    >
+                        🍯
+                        محصولات شهدآور
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('about_page') }}"
+                        class="sidebar-link"
+                    >
+                        🏡
+                        درباره شهدآور
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('support_page') }}"
+                        class="sidebar-link"
+                    >
+                        🎧
+                        پشتیبانی
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('home') }}"
+                        class="sidebar-link"
+                    >
+                        🏠
+                        صفحه اصلی
+                    </a>
+
+                </div>
+
+
+                <div class="sidebar-divider"></div>
+
+
+                <button
+                    type="button"
+                    id="closeChatButton"
+                    class="close-chat-button"
+                >
+                    بستن گفت‌وگو
+                </button>
+
+            </aside>
+
+
+
+            <!-- =================================================
+                 CHAT
+            ================================================== -->
+
+            <div class="shahdyar-chat-card">
+
+
+                <!-- CHAT TOPBAR -->
+
+                <div class="chat-topbar">
+
+                    <div class="assistant-identity">
+
+                        <div class="assistant-avatar">
+
+                            <img
+                                src="{{ url_for(
+                                    'images',
+                                    filename='shahdyar/shahdyar-avatar.png'
+                                ) }}"
+                                alt="شهدیار"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                            >
+
+                            <span
+                                class="assistant-avatar-fallback"
+                                style="display:none;"
+                            >
+                                🐝
+                            </span>
+
+                        </div>
+
+
+                        <div class="assistant-info">
+
+                            <div class="assistant-name">
+                                شهدیار
+                            </div>
+
+
+                            <div class="assistant-status">
+
+                                <span
+                                    id="assistantStatusDot"
+                                    class="status-dot"
+                                ></span>
+
+
+                                <span id="assistantStatusText">
+                                    آماده پاسخ‌گویی
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chat-top-actions">
+
+                        <button
+                            type="button"
+                            id="refreshStatusButton"
+                            class="chat-icon-button"
+                            title="به‌روزرسانی وضعیت گفت‌وگو"
+                            aria-label="به‌روزرسانی وضعیت گفت‌وگو"
+                        >
+                            ↻
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="closeChatTopButton"
+                            class="chat-icon-button"
+                            title="بستن گفت‌وگو"
+                            aria-label="بستن گفت‌وگو"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MESSAGES -->
+
+                <div
+                    id="messagesContainer"
+                    class="messages-container"
+                >
+
+
+                    <div
+                        id="emptyState"
+                        class="empty-state"
+                    >
+
+                        <div class="empty-state-icon">
+
+                            <img
+                                src="{{ url_for(
+                                    'images',
+                                    filename='shahdyar/shahdyar-avatar.png'
+                                ) }}"
+                                alt="شهدیار"
+                                onerror="this.style.display='none'; this.parentElement.textContent='🐝';"
+                            >
+
+                        </div>
+
+
+                        <h3>
+                            آماده‌ام بهت کمک کنم
+                        </h3>
+
+
+                        <p>
+
+                            درباره محصولات شهدآور، عسل و فرآورده‌های
+                            زنبورعسل سؤال کن یا برای شروع یکی از گزینه‌های
+                            زیر را انتخاب کن.
+
+                        </p>
+
+
+                        <div class="suggestions">
+
+                            <button
+                                type="button"
+                                class="suggestion-button"
+                                data-message="چه محصولاتی در شهدآور دارید؟"
+                            >
+                                🍯 چه محصولاتی در شهدآور دارید؟
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="suggestion-button"
+                                data-message="برای خرید عسل چه محصولی را پیشنهاد می‌کنی؟"
+                            >
+                                🛒 برای خرید عسل چه محصولی را پیشنهاد می‌کنی؟
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="suggestion-button"
+                                data-message="تفاوت عسل، ژل رویال، گرده گل و بره‌موم چیست؟"
+                            >
+                                🐝 تفاوت محصولات زنبورعسل چیست؟
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="suggestion-button"
+                                data-message="درباره شهدآور برایم توضیح بده."
+                            >
+                                🏡 درباره شهدآور برایم توضیح بده.
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TYPING -->
+
+                    <div
+                        id="typingRow"
+                        class="typing-row"
+                    >
+
+                        <div class="message-avatar">
+
+                            <img
+                                src="{{ url_for(
+                                    'images',
+                                    filename='shahdyar/shahdyar-avatar.png'
+                                ) }}"
+                                alt="شهدیار"
+                            >
+
+                        </div>
+
+
+                        <div class="typing-bubble">
+
+                            <span class="typing-dot"></span>
+                            <span class="typing-dot"></span>
+                            <span class="typing-dot"></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ALERT -->
+
+                <div
+                    id="chatAlert"
+                    class="chat-alert"
+                ></div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="chat-footer">
+
+                    <div class="message-counter-row">
+
+                        <span
+                            id="messageCounter"
+                            class="counter-text"
+                        >
+                            ۰ / ۵۰
+                        </span>
+
+
+                        <div class="counter-progress">
+
+                            <div
+                                id="counterProgressFill"
+                                class="counter-progress-fill"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-row">
+
+                        <textarea
+                            id="messageInput"
+                            maxlength="8000"
+                            rows="1"
+                            placeholder="پیامت را برای شهدیار بنویس..."
+                        ></textarea>
+
+
+                        <button
+                            type="button"
+                            id="sendButton"
+                            class="send-button"
+                            title="ارسال پیام"
+                            aria-label="ارسال پیام"
+                        >
+                            ➤
+                        </button>
+
+                    </div>
+
+
+                    <div class="chat-hint">
+
+                        برای ارسال سریع، Enter را بزن؛
+                        برای خط جدید Shift + Enter را استفاده کن.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- TOAST -->
+
+    <div id="toast"></div>
+
+</div>
+
+
+
+<script>
+
+    /* =========================================================
+       ENDPOINTS
+    ========================================================= */
+
+    const CHAT_URL =
+        "{{ url_for('shahdyar_chat') }}";
+
+    const NEW_CHAT_URL =
+        "{{ url_for('shahdyar_new_chat') }}";
+
+    const STATUS_URL =
+        "{{ url_for('shahdyar_chat_status') }}";
+
+    const DELETE_CHAT_URL =
+        "{{ url_for('shahdyar_delete_chat') }}";
+
+    const CLOSE_CHAT_URL =
+        "{{ url_for('shahdyar_close_chat') }}";
+
+
+    /* =========================================================
+       SETTINGS
+    ========================================================= */
+
+    const MAX_MESSAGES =
+        50;
+
+    const MAX_MESSAGE_LENGTH =
+        8000;
+
+
+    /* =========================================================
+       STATE
+    ========================================================= */
+
+    let isSending =
+        false;
+
+    let chatLocked =
+        false;
+
+    let currentChatId =
+        null;
+
+    let currentMessageCount =
+        0;
+
+    let toastTimer =
+        null;
+
+
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const messagesContainer =
+        document.getElementById(
+            "messagesContainer"
+        );
+
+    const emptyState =
+        document.getElementById(
+            "emptyState"
+        );
+
+    const typingRow =
+        document.getElementById(
+            "typingRow"
+        );
+
+    const messageInput =
+        document.getElementById(
+            "messageInput"
+        );
+
+    const sendButton =
+        document.getElementById(
+            "sendButton"
+        );
+
+    const newChatButton =
+        document.getElementById(
+            "newChatButton"
+        );
+
+    const closeChatButton =
+        document.getElementById(
+            "closeChatButton"
+        );
+
+    const closeChatTopButton =
+        document.getElementById(
+            "closeChatTopButton"
+        );
+
+    const refreshStatusButton =
+        document.getElementById(
+            "refreshStatusButton"
+        );
+
+    const messageCounter =
+        document.getElementById(
+            "messageCounter"
+        );
+
+    const counterProgressFill =
+        document.getElementById(
+            "counterProgressFill"
+        );
+
+    const assistantStatusText =
+        document.getElementById(
+            "assistantStatusText"
+        );
+
+    const assistantStatusDot =
+        document.getElementById(
+            "assistantStatusDot"
+        );
+
+    const chatAlert =
+        document.getElementById(
+            "chatAlert"
+        );
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+
+    /* =========================================================
+       HELPERS
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+    }
+
+
+    function toPersianDigits(value) {
+
+        return String(value)
+            .replace(
+                /\d/g,
+                digit =>
+                    "۰۱۲۳۴۵۶۷۸۹"[digit]
+            );
+    }
+
+
+    function showToast(message) {
+
+        clearTimeout(
+            toastTimer
+        );
+
+        toast.textContent =
+            message;
+
+        toast.classList.add(
+            "show"
+        );
+
+        toastTimer =
+            setTimeout(
+                () => {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3000
+            );
+    }
+
+
+    function showAlert(message) {
+
+        chatAlert.textContent =
+            message;
+
+        chatAlert.classList.add(
+            "visible"
+        );
+    }
+
+
+    function hideAlert() {
+
+        chatAlert.textContent =
+            "";
+
+        chatAlert.classList.remove(
+            "visible"
+        );
+    }
+
+
+    function scrollMessagesToBottom() {
+
+        requestAnimationFrame(
+            () => {
+
+                messagesContainer.scrollTop =
+                    messagesContainer.scrollHeight;
+
+            }
+        );
+    }
+
+
+
+    /* =========================================================
+       FORMAT ASSISTANT TEXT
+    ========================================================= */
+
+    function formatAssistantText(text) {
+
+        let html =
+            escapeHtml(text);
+
+
+        html =
+            html.replace(
+                /\*\*(.*?)\*\*/g,
+                "<strong>$1</strong>"
+            );
+
+
+        html =
+            html.replace(
+                /`([^`]+)`/g,
+                "<code>$1</code>"
+            );
+
+
+        html =
+            html.replace(
+                /(https?:\/\/[^\s<]+)/g,
+                '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+            );
+
+
+        html =
+            html.replace(
+                /\n/g,
+                "<br>"
+            );
+
+
+        return html;
+    }
+
+
+
+    /* =========================================================
+       ADD MESSAGE
+    ========================================================= */
+
+    function addMessage(
+        role,
+        text
+    ) {
+
+        if (!text) {
+            return;
+        }
+
+
+        emptyState.style.display =
+            "none";
+
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+        row.className =
+            `message-row ${role}`;
+
+
+        const avatar =
+            document.createElement(
+                "div"
+            );
+
+        avatar.className =
+            "message-avatar";
+
+
+        if (
+            role ===
+            "assistant"
+        ) {
+
+            avatar.innerHTML = `
+
+                <img
+                    src="{{ url_for(
+                        'images',
+                        filename='shahdyar/shahdyar-avatar.png'
+                    ) }}"
+                    alt="شهدیار"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                >
+
+                <span style="display:none;">
+                    🐝
+                </span>
+
+            `;
+
+        } else {
+
+            {% if logo and logo.get('filename') %}
+
+                {% set logo_filename = logo.get('filename') %}
+
+                {% if '/' in logo_filename or '\\' in logo_filename %}
+
+                    avatar.innerHTML = `
+
+                        <img
+                            src="{{ url_for(
+                                'images',
+                                filename=logo_filename
+                            ) }}"
+                            alt="شهدآور"
+                        >
+
+                    `;
+
+                {% else %}
+
+                    avatar.innerHTML = `
+
+                        <img
+                            src="{{ url_for(
+                                'uploads',
+                                filename='logo/' ~ logo_filename
+                            ) }}"
+                            alt="شهدآور"
+                        >
+
+                    `;
+
+                {% endif %}
+
+            {% else %}
+
+                avatar.textContent =
+                    "🍯";
+
+            {% endif %}
+
+        }
+
+
+        const content =
+            document.createElement(
+                "div"
+            );
+
+        content.className =
+            "message-content";
+
+
+        const bubble =
+            document.createElement(
+                "div"
+            );
+
+        bubble.className =
+            "message-bubble";
+
+
+        if (
+            role ===
+            "assistant"
+        ) {
+
+            bubble.innerHTML =
+                formatAssistantText(
+                    text
+                );
+
+        } else {
+
+            bubble.textContent =
+                text;
+
+        }
+
+
+        content.appendChild(
+            bubble
+        );
+
+
+        row.appendChild(
+            avatar
+        );
+
+        row.appendChild(
+            content
+        );
+
+
+        messagesContainer.insertBefore(
+            row,
+            typingRow
+        );
+
+
+        scrollMessagesToBottom();
+    }
+
+
+
+    /* =========================================================
+       TYPING
+    ========================================================= */
+
+    function setTyping(
+        visible
+    ) {
+
+        if (visible) {
+
+            typingRow.classList.add(
+                "visible"
+            );
+
+            scrollMessagesToBottom();
+
+        } else {
+
+            typingRow.classList.remove(
+                "visible"
+            );
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       COUNTER
+    ========================================================= */
+
+    function updateMessageCounter() {
+
+        const count =
+            Math.max(
+                0,
+                Math.min(
+                    currentMessageCount,
+                    MAX_MESSAGES
+                )
+            );
+
+
+        messageCounter.textContent =
+            `${toPersianDigits(count)} / ${toPersianDigits(MAX_MESSAGES)}`;
+
+
+        const percentage =
+            Math.min(
+                100,
+                (count / MAX_MESSAGES) * 100
+            );
+
+
+        counterProgressFill.style.width =
+            `${percentage}%`;
+    }
+
+
+
+    /* =========================================================
+       LOCK / UNLOCK
+    ========================================================= */
+
+    function lockChat(
+        message =
+            "سقف ۵۰ پیام این گفت‌وگو به پایان رسیده است. برای ادامه، یک گفت‌وگوی جدید شروع کن."
+    ) {
+
+        chatLocked =
+            true;
+
+
+        messageInput.disabled =
+            true;
+
+        sendButton.disabled =
+            true;
+
+
+        assistantStatusText.textContent =
+            "گفت‌وگو به سقف پیام رسید";
+
+
+        assistantStatusDot.classList.add(
+            "locked"
+        );
+
+
+        showAlert(
+            message
+        );
+
+
+        updateMessageCounter();
+    }
+
+
+    function unlockChat() {
+
+        chatLocked =
+            false;
+
+
+        messageInput.disabled =
+            false;
+
+        sendButton.disabled =
+            false;
+
+
+        assistantStatusText.textContent =
+            "آماده پاسخ‌گویی";
+
+
+        assistantStatusDot.classList.remove(
+            "locked"
+        );
+
+
+        hideAlert();
+
+
+        updateMessageCounter();
+    }
+
+
+
+    /* =========================================================
+       EXTRACT MESSAGE COUNT
+    ========================================================= */
+
+    function extractMessageCount(
+        payload
+    ) {
+
+        if (!payload) {
+            return null;
+        }
+
+
+        const candidates = [
+
+            payload.message_count,
+
+            payload.messages_count,
+
+            payload.user_message_count,
+
+            payload.count,
+
+            payload.chat?.message_count,
+
+            payload.chat?.messages_count,
+
+            payload.chat?.user_message_count,
+
+            payload.chat?.count
+
+        ];
+
+
+        for (
+            const value of candidates
+        ) {
+
+            if (
+                typeof value === "number" &&
+                Number.isFinite(value)
+            ) {
+
+                return value;
+
+            }
+
+        }
+
+
+        return null;
+    }
+
+
+
+    /* =========================================================
+       FETCH JSON
+    ========================================================= */
+
+    async function fetchJson(
+        url,
+        options = {}
+    ) {
+
+        const response =
+            await fetch(
+                url,
+                {
+
+                    credentials:
+                        "same-origin",
+
+                    ...options,
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        ...(options.headers || {})
+
+                    }
+
+                }
+            );
+
+
+        if (
+            response.status ===
+            401
+        ) {
+
+            window.location.href =
+                "{{ url_for('account') }}";
+
+            throw new Error(
+                "AUTH_REQUIRED"
+            );
+        }
+
+
+        let payload =
+            null;
+
+
+        try {
+
+            payload =
+                await response.json();
+
+        } catch {
+
+            payload =
+                null;
+
+        }
+
+
+        if (!response.ok) {
+
+            const error =
+                new Error(
+                    payload?.error ||
+                    payload?.message ||
+                    `HTTP ${response.status}`
+                );
+
+            error.status =
+                response.status;
+
+            error.payload =
+                payload;
+
+            throw error;
+        }
+
+
+        return payload;
+    }
+
+
+
+    /* =========================================================
+       LOAD CHAT STATUS
+    ========================================================= */
+
+    async function loadChatStatus() {
+
+        try {
+
+            const payload =
+                await fetchJson(
+                    STATUS_URL,
+                    {
+                        method:
+                            "GET"
+                    }
+                );
+
+
+            const statusObject =
+                payload?.chat ||
+                payload;
+
+
+            currentChatId =
+                statusObject?.chat_id ??
+                statusObject?.id ??
+                payload?.chat_id ??
+                null;
+
+
+            const count =
+                extractMessageCount(
+                    payload
+                );
+
+
+            if (
+                count !== null
+            ) {
+
+                currentMessageCount =
+                    Math.max(
+                        0,
+                        Math.min(
+                            count,
+                            MAX_MESSAGES
+                        )
+                    );
+
+            } else {
+
+                currentMessageCount =
+                    0;
+
+            }
+
+
+            updateMessageCounter();
+
+
+            const locked =
+                Boolean(
+                    statusObject?.limit_reached ||
+                    statusObject?.locked ||
+                    payload?.limit_reached ||
+                    payload?.locked ||
+                    currentMessageCount >= MAX_MESSAGES
+                );
+
+
+            if (locked) {
+
+                lockChat();
+
+            } else {
+
+                unlockChat();
+
+            }
+
+        } catch (error) {
+
+            if (
+                error.message ===
+                "AUTH_REQUIRED"
+            ) {
+
+                return;
+            }
+
+
+            console.warn(
+                "Shahdyar chat status:",
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       SEND MESSAGE
+    ========================================================= */
+
+    async function sendMessage(
+        forcedMessage = null
+    ) {
+
+        if (
+            isSending ||
+            chatLocked
+        ) {
+
+            return;
+        }
+
+
+        let message =
+            forcedMessage !== null
+                ? forcedMessage
+                : messageInput.value.trim();
+
+
+        if (!message) {
+
+            return;
+        }
+
+
+        if (
+            message.length >
+            MAX_MESSAGE_LENGTH
+        ) {
+
+            showToast(
+                "پیام بیش از حد مجاز طولانی است."
+            );
+
+            return;
+        }
+
+
+        isSending =
+            true;
+
+
+        sendButton.disabled =
+            true;
+
+        messageInput.disabled =
+            true;
+
+
+        hideAlert();
+
+
+        addMessage(
+            "user",
+            message
+        );
+
+
+        messageInput.value =
+            "";
+
+
+        autoResizeInput();
+
+
+        setTyping(
+            true
+        );
+
+
+        try {
+
+            const payload =
+                await fetchJson(
+                    CHAT_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        body:
+                            JSON.stringify({
+                                message:
+                                    message
+                            })
+
+                    }
+                );
+
+
+            const assistantMessage =
+                payload?.reply ??
+                payload?.response ??
+                payload?.message ??
+                payload?.answer ??
+                payload?.data?.reply ??
+                payload?.data?.response ??
+                "";
+
+
+            const count =
+                extractMessageCount(
+                    payload
+                );
+
+
+            if (
+                count !== null
+            ) {
+
+                currentMessageCount =
+                    count;
+
+            } else {
+
+                currentMessageCount +=
+                    1;
+
+            }
+
+
+            currentMessageCount =
+                Math.max(
+                    0,
+                    Math.min(
+                        currentMessageCount,
+                        MAX_MESSAGES
+                    )
+                );
+
+
+            updateMessageCounter();
+
+
+            if (assistantMessage) {
+
+                addMessage(
+                    "assistant",
+                    assistantMessage
+                );
+
+            } else {
+
+                addMessage(
+                    "assistant",
+                    "پاسخی از شهدیار دریافت نشد. لطفاً دوباره تلاش کن."
+                );
+
+            }
+
+
+            const responseChatId =
+                payload?.chat_id ??
+                payload?.chat?.chat_id ??
+                payload?.chat?.id;
+
+
+            if (
+                responseChatId
+            ) {
+
+                currentChatId =
+                    responseChatId;
+
+            }
+
+
+            const locked =
+                Boolean(
+                    payload?.limit_reached ||
+                    payload?.locked ||
+                    payload?.chat?.limit_reached ||
+                    payload?.chat?.locked ||
+                    currentMessageCount >= MAX_MESSAGES
+                );
+
+
+            if (locked) {
+
+                lockChat();
+
+            } else {
+
+                unlockChat();
+
+            }
+
+        } catch (error) {
+
+            if (
+                error.status ===
+                429
+            ) {
+
+                const serverMessage =
+                    error.payload?.error ||
+                    error.payload?.message ||
+                    "امکان ارسال پیام در حال حاضر وجود ندارد.";
+
+                showAlert(
+                    serverMessage
+                );
+
+            } else if (
+                error.message !==
+                "AUTH_REQUIRED"
+            ) {
+
+                console.error(
+                    "Shahdyar send error:",
+                    error
+                );
+
+
+                showAlert(
+                    "در ارتباط با شهدیار مشکلی پیش آمد. لطفاً دوباره تلاش کن."
+                );
+
+            }
+
+        } finally {
+
+            setTyping(
+                false
+            );
+
+
+            isSending =
+                false;
+
+
+            if (!chatLocked) {
+
+                sendButton.disabled =
+                    false;
+
+                messageInput.disabled =
+                    false;
+
+            }
+
+
+            messageInput.focus();
+
+            scrollMessagesToBottom();
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       CREATE NEW CHAT
+    ========================================================= */
+
+    async function createNewChat() {
+
+        if (isSending) {
+
+            return;
+        }
+
+
+        try {
+
+            const payload =
+                await fetchJson(
+                    NEW_CHAT_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        body:
+                            JSON.stringify({})
+
+                    }
+                );
+
+
+            currentChatId =
+                payload?.chat_id ??
+                payload?.chat?.chat_id ??
+                payload?.chat?.id ??
+                null;
+
+
+            currentMessageCount =
+                0;
+
+
+            chatLocked =
+                false;
+
+
+            clearMessages();
+
+            unlockChat();
+
+            updateMessageCounter();
+
+
+            showToast(
+                "گفت‌وگوی جدید ایجاد شد."
+            );
+
+
+            messageInput.focus();
+
+        } catch (error) {
+
+            if (
+                error.message !==
+                "AUTH_REQUIRED"
+            ) {
+
+                console.error(
+                    "New chat error:",
+                    error
+                );
+
+
+                showToast(
+                    "ایجاد گفت‌وگوی جدید انجام نشد."
+                );
+
+            }
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       CLEAR MESSAGES
+    ========================================================= */
+
+    function clearMessages() {
+
+        const rows =
+            messagesContainer.querySelectorAll(
+                ".message-row.assistant, .message-row.user"
+            );
+
+
+        rows.forEach(
+            row => row.remove()
+        );
+
+
+        emptyState.style.display =
+            "flex";
+
+
+        setTyping(
+            false
+        );
+
+
+        hideAlert();
+
+
+        scrollMessagesToBottom();
+    }
+
+
+
+    /* =========================================================
+       CLOSE CHAT
+    ========================================================= */
+
+    async function closeChat() {
+
+        try {
+
+            await fetchJson(
+                CLOSE_CHAT_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    body:
+                        JSON.stringify({
+                            chat_id:
+                                currentChatId
+                        })
+
+                }
+            );
+
+        } catch (error) {
+
+            if (
+                error.message !==
+                "AUTH_REQUIRED"
+            ) {
+
+                console.warn(
+                    "Close chat:",
+                    error
+                );
+
+            }
+
+        } finally {
+
+            currentChatId =
+                null;
+
+            currentMessageCount =
+                0;
+
+            chatLocked =
+                false;
+
+
+            clearMessages();
+
+            unlockChat();
+
+            updateMessageCounter();
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       DELETE CHAT
+    ========================================================= */
+
+    async function deleteChat() {
+
+        if (!currentChatId) {
+
+            return;
+        }
+
+
+        try {
+
+            await fetchJson(
+                DELETE_CHAT_URL,
+                {
+
+                    method:
+                        "DELETE",
+
+                    body:
+                        JSON.stringify({
+                            chat_id:
+                                currentChatId
+                        })
+
+                }
+            );
+
+
+            currentChatId =
+                null;
+
+            currentMessageCount =
+                0;
+
+            chatLocked =
+                false;
+
+
+            clearMessages();
+
+            unlockChat();
+
+            updateMessageCounter();
+
+
+            showToast(
+                "گفت‌وگو حذف شد."
+            );
+
+        } catch (error) {
+
+            if (
+                error.message !==
+                "AUTH_REQUIRED"
+            ) {
+
+                console.error(
+                    "Delete chat error:",
+                    error
+                );
+
+
+                showToast(
+                    "حذف گفت‌وگو انجام نشد."
+                );
+
+            }
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       AUTO RESIZE
+    ========================================================= */
+
+    function autoResizeInput() {
+
+        messageInput.style.height =
+            "auto";
+
+
+        messageInput.style.height =
+            Math.min(
+                messageInput.scrollHeight,
+                140
+            ) + "px";
+    }
+
+
+
+    /* =========================================================
+       EVENT: SEND
+    ========================================================= */
+
+    sendButton.addEventListener(
+        "click",
+        () => {
+
+            sendMessage();
+
+        }
+    );
+
+
+
+    /* =========================================================
+       EVENT: ENTER
+    ========================================================= */
+
+    messageInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================================================
+       EVENT: INPUT
+    ========================================================= */
+
+    messageInput.addEventListener(
+        "input",
+        autoResizeInput
+    );
+
+
+
+    /* =========================================================
+       EVENT: NEW CHAT
+    ========================================================= */
+
+    newChatButton.addEventListener(
+        "click",
+        createNewChat
+    );
+
+
+
+    /* =========================================================
+       EVENT: CLOSE CHAT
+    ========================================================= */
+
+    closeChatButton.addEventListener(
+        "click",
+        closeChat
+    );
+
+
+    closeChatTopButton.addEventListener(
+        "click",
+        closeChat
+    );
+
+
+
+    /* =========================================================
+       EVENT: REFRESH CHAT STATUS
+    ========================================================= */
+
+    refreshStatusButton.addEventListener(
+        "click",
+        async () => {
+
+            refreshStatusButton.disabled =
+                true;
+
+
+            refreshStatusButton.style.opacity =
+                "0.5";
+
+
+            try {
+
+                await loadChatStatus();
+
+                showToast(
+                    "وضعیت گفت‌وگو به‌روزرسانی شد."
+                );
+
+            } finally {
+
+                setTimeout(
+                    () => {
+
+                        refreshStatusButton.disabled =
+                            false;
+
+                        refreshStatusButton.style.opacity =
+                            "1";
+
+                    },
+                    400
+                );
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================================================
+       EVENT: SUGGESTIONS
+    ========================================================= */
+
+    document
+        .querySelectorAll(
+            ".suggestion-button"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const message =
+                            button.dataset.message;
+
+                        sendMessage(
+                            message
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+
+    /* =========================================================
+       PAGE HIDE
+    ========================================================= */
+
+    window.addEventListener(
+        "pagehide",
+        () => {
+
+            /*
+             * Session is controlled server-side.
+             * We intentionally do not delete the chat here.
+             */
+
+        }
+    );
+
+
+
+    /* =========================================================
+       INITIALIZATION
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        async () => {
+
+            autoResizeInput();
+
+            updateMessageCounter();
+
+            await loadChatStatus();
+
+            messageInput.focus();
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

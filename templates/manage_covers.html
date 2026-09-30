@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        مدیریت کاورها | شهدآور
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='owner_panel.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='owner.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="manager-page">
+
+
+    <header class="manager-header">
+
+        <a
+            href="{{ url_for('owner_dashboard') }}"
+            class="manager-back"
+        >
+            ← پنل مالکیت
+        </a>
+
+        <div>
+
+            <h1>
+                🖼️ مدیریت کاور سایت
+            </h1>
+
+            <p>
+                حداکثر ۱۰ کاور برای اسلایدر سایت
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <main class="manager-container">
+
+
+        <!-- ADD COVER -->
+
+        {% if covers|length < 10 %}
+
+        <section class="manager-card">
+
+            <div class="manager-card-title">
+
+                <h2>
+                    افزودن کاور جدید
+                </h2>
+
+                <span>
+                    {{ covers|length }} / 10
+                </span>
+
+            </div>
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="cover-add-form"
+            >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <input
+                    type="hidden"
+                    name="action"
+                    value="add"
+                >
+
+
+                <label class="cover-upload-box">
+
+                    <input
+                        type="file"
+                        name="cover"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        required
+                    >
+
+                    <span>
+                        +
+                    </span>
+
+                    <strong>
+                        انتخاب کاور
+                    </strong>
+
+                    <small>
+                        JPG / PNG / WEBP
+                    </small>
+
+                </label>
+
+
+                <div class="cover-duration-field">
+
+                    <label>
+                        زمان نمایش کاور
+                    </label>
+
+                    <div>
+
+                        <input
+                            type="number"
+                            name="duration"
+                            min="1"
+                            max="120"
+                            value="5"
+                            required
+                        >
+
+                        <span>
+                            ثانیه
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="manager-primary-button"
+                >
+                    + افزودن کاور
+                </button>
+
+            </form>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- COVERS -->
+
+        <section class="manager-card">
+
+            <div class="manager-card-title">
+
+                <div>
+
+                    <h2>
+                        کاورهای فعلی
+                    </h2>
+
+                    <p>
+                        با انتخاب «تغییر»، تصویر و زمان آن را ویرایش کنید.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="covers-grid">
+
+                {% for cover in covers %}
+
+                <article class="cover-manager-card">
+
+
+                    <div class="cover-number">
+                        {{ loop.index }}
+                    </div>
+
+
+                    <div class="cover-preview">
+
+                        <img
+                            src="{% if cover.filename.startswith('hero-') and cover.filename.endswith('.jpg') %}{{ url_for('images', filename=cover.filename) }}{% elif '/' in cover.filename %}{{ url_for('images', filename=cover.filename) }}{% else %}{{ url_for('uploads', filename='covers/' ~ cover.filename) }}{% endif %}"
+                            alt="کاور {{ loop.index }}"
+                        >
+
+                    </div>
+
+
+                    <div class="cover-manager-info">
+
+                        <form
+                            method="POST"
+                            enctype="multipart/form-data"
+                            action="{{ url_for('update_cover_route', cover_id=cover.id) }}"
+                        >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                            <label>
+                                تغییر تصویر
+                            </label>
+
+                            <input
+                                type="file"
+                                name="cover"
+                                accept=".jpg,.jpeg,.png,.webp"
+                            >
+
+
+                            <label>
+                                مدت نمایش
+                            </label>
+
+                            <div class="duration-input">
+
+                                <input
+                                    type="number"
+                                    name="duration"
+                                    min="1"
+                                    max="120"
+                                    value="{{ cover.duration }}"
+                                    required
+                                >
+
+                                <span>
+                                    ثانیه
+                                </span>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="cover-update-button"
+                            >
+                                🔄 تغییر کاور
+                            </button>
+
+                        </form>
+
+
+                        <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><form method="POST" action="{{ url_for('move_cover_route',cover_id=cover.id,direction='up') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button type="submit" class="cover-update-button">⬆️ بالا</button></form><form method="POST" action="{{ url_for('move_cover_route',cover_id=cover.id,direction='down') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button type="submit" class="cover-update-button">⬇️ پایین</button></form></div>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('delete_cover_route', cover_id=cover.id) }}"
+                            onsubmit="return confirm('آیا از حذف این کاور مطمئن هستید؟');"
+                        >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                            <button
+                                type="submit"
+                                class="cover-delete-button"
+                            >
+                                🗑 حذف کاور
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </article>
+
+                {% endfor %}
+
+
+                {% if covers|length < 10 %}
+
+                <div class="empty-cover-slot">
+
+                    <span>
+                        +
+                    </span>
+
+                    <strong>
+                        جایگاه خالی
+                    </strong>
+
+                    <small>
+                        از فرم بالا کاور جدید اضافه کنید.
+                    </small>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

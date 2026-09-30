@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        مدیریت لوگو | شهدآور
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='owner_panel.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='owner.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="manager-page">
+
+
+    <header class="manager-header">
+
+        <a
+            href="{{ url_for('owner_dashboard') }}"
+            class="manager-back"
+        >
+            ← پنل مالکیت
+        </a>
+
+        <div>
+
+            <h1>
+                🏷️ مدیریت لوگو
+            </h1>
+
+            <p>
+                لوگوی سایت را تغییر دهید
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <main class="manager-container">
+
+
+        {% if logo %}
+
+        <section class="logo-manager-card">
+
+            <div class="logo-preview-large">
+
+                <img
+                    src="{{ url_for('uploads', filename='logo/' ~ logo.filename) }}"
+                    alt="لوگوی شهدآور"
+                >
+
+            </div>
+
+
+            <div class="logo-manager-actions">
+
+                <label class="logo-change-button">
+
+                    🔄 تغییر لوگو
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                        class="inline-upload-form"
+                    >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                        <input
+                            type="file"
+                            name="logo"
+                            accept=".jpg,.jpeg,.png,.webp"
+                            onchange="this.form.submit()"
+                            required
+                        >
+
+                    </form>
+
+                </label>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('delete_logo_route') }}"
+                    onsubmit="return confirm('آیا از حذف لوگو مطمئن هستید؟');"
+                >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                    <button
+                        type="submit"
+                        class="logo-delete-button"
+                    >
+                        🗑 حذف لوگو
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        {% else %}
+
+        <section class="logo-empty-card">
+
+            <label class="logo-upload-empty">
+
+                <input
+                    type="file"
+                    name="logo"
+                    id="logoFile"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    hidden
+                >
+
+                <span>
+                    +
+                </span>
+
+                <strong>
+                    افزودن لوگو
+                </strong>
+
+                <small>
+                    روی این مربع کلیک کنید
+                </small>
+
+            </label>
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                id="logoForm"
+            >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <input
+                    type="file"
+                    name="logo"
+                    id="hiddenLogoInput"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    hidden
+                    required
+                >
+
+            </form>
+
+        </section>
+
+        {% endif %}
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+const emptyLogo =
+    document.querySelector(
+        ".logo-upload-empty"
+    );
+
+const logoFile =
+    document.getElementById(
+        "logoFile"
+    );
+
+const hiddenLogoInput =
+    document.getElementById(
+        "hiddenLogoInput"
+    );
+
+const logoForm =
+    document.getElementById(
+        "logoForm"
+    );
+
+
+if (
+    emptyLogo &&
+    logoFile &&
+    hiddenLogoInput &&
+    logoForm
+) {
+
+    emptyLogo.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            logoFile.click();
+
+        }
+    );
+
+
+    logoFile.addEventListener(
+        "change",
+        function () {
+
+            if (!this.files.length) {
+                return;
+            }
+
+            const transfer =
+                new DataTransfer();
+
+            transfer.items.add(
+                this.files[0]
+            );
+
+            hiddenLogoInput.files =
+                transfer.files;
+
+            logoForm.submit();
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

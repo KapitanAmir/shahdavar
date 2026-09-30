@@ -1,0 +1,499 @@
+/* ============================================================
+   CONTACT METHODS MANAGER
+   ============================================================ */
+
+.contact-methods-manager {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-method-item {
+    padding: 13px;
+    border: 1px solid #e6ded3;
+    border-radius: 14px;
+    background: #fffdf9;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+}
+
+.contact-method-item:hover {
+    transform: translateY(-2px);
+    border-color: #d9b24b;
+    box-shadow:
+        0 10px 24px
+        rgba(43,35,25,.06);
+}
+
+
+/* ============================================================
+   CONTACT ICON
+   ============================================================ */
+
+.contact-method-icon {
+    width: 55px;
+    height: 55px;
+    flex: 0 0 55px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff3d0;
+    border: 1px solid #ead9ae;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-method-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    padding: 8px;
+}
+
+.contact-method-icon span {
+    font-size: 25px;
+    line-height: 1;
+}
+
+
+/* ============================================================
+   CONTACT INFORMATION
+   ============================================================ */
+
+.contact-method-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.contact-method-platform {
+    display: inline-flex;
+    align-items: center;
+    min-height: 20px;
+    padding: 3px 7px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    background: #f4eee2;
+    color: #927022;
+    font-size: 7px;
+    font-weight: 900;
+}
+
+.contact-method-info strong {
+    display: block;
+    color: #40382f;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.contact-method-value {
+    display: block;
+    margin-top: 4px;
+    color: #8e8478;
+    font-size: 9px;
+    word-break: break-word;
+}
+
+.contact-method-description {
+    display: block;
+    margin-top: 4px;
+    color: #a49a8e;
+    font-size: 8px;
+    line-height: 1.7;
+}
+
+
+/* ============================================================
+   CONTACT STATUS
+   ============================================================ */
+
+.contact-method-status {
+    min-width: 52px;
+    min-height: 27px;
+    padding: 0 8px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    font-weight: 900;
+}
+
+.contact-method-status.active {
+    background: #e8f3df;
+    color: #5c8c3c;
+}
+
+.contact-method-status.inactive {
+    background: #f2e8e5;
+    color: #a06b62;
+}
+
+
+/* ============================================================
+   CONTACT ACTIONS
+   ============================================================ */
+
+.contact-method-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.contact-method-action {
+    min-width: 38px;
+    min-height: 36px;
+    padding: 0 9px;
+    border: 0;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 900;
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.contact-method-action:hover {
+    transform: translateY(-1px);
+}
+
+.contact-method-action.edit {
+    background: #fff3cf;
+    color: #76560e;
+}
+
+.contact-method-action.edit:hover {
+    background: #f3cc59;
+}
+
+.contact-method-action.toggle {
+    background: #eef2e9;
+    color: #607451;
+}
+
+.contact-method-action.toggle:hover {
+    background: #dfe9d7;
+}
+
+.contact-method-action.delete {
+    background: #f5dfdc;
+    color: #a03e36;
+}
+
+.contact-method-action.delete:hover {
+    background: #edcbc6;
+}
+
+
+/* ============================================================
+   ADD CONTACT FORM
+   ============================================================ */
+
+.contact-add-form {
+    display: grid;
+    grid-template-columns:
+        1fr
+        1fr;
+    gap: 12px;
+}
+
+.contact-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.contact-form-field.full {
+    grid-column: 1 / -1;
+}
+
+.contact-form-field label {
+    color: #62594e;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.contact-form-field input,
+.contact-form-field textarea,
+.contact-form-field select {
+    width: 100%;
+    border: 1px solid #e0d8cd;
+    border-radius: 11px;
+    outline: 0;
+    padding: 11px 13px;
+    background: white;
+    color: #332d26;
+    font-size: 9px;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.contact-form-field textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.8;
+}
+
+.contact-form-field input:focus,
+.contact-form-field textarea:focus,
+.contact-form-field select:focus {
+    border-color: #d7ad3b;
+    box-shadow:
+        0 0 0 3px
+        rgba(215,173,59,.10);
+}
+
+
+/* ============================================================
+   ICON UPLOAD
+   ============================================================ */
+
+.contact-icon-upload {
+    min-height: 120px;
+    border: 2px dashed #dcd3c6;
+    border-radius: 15px;
+    background: #fffdf9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition:
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.contact-icon-upload:hover {
+    border-color: #d5aa36;
+    background: #fffaf0;
+}
+
+.contact-icon-upload input {
+    display: none;
+}
+
+.contact-icon-upload-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: #fff2ca;
+    color: #c89621;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.contact-icon-upload strong {
+    margin-top: 7px;
+    color: #51483d;
+    font-size: 9px;
+}
+
+.contact-icon-upload small {
+    margin-top: 4px;
+    color: #9b9185;
+    font-size: 7px;
+}
+
+
+/* ============================================================
+   EMOJI / ICON OPTIONS
+   ============================================================ */
+
+.contact-icon-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.contact-icon-option {
+    width: 39px;
+    height: 39px;
+    border: 1px solid #e4dbce;
+    border-radius: 9px;
+    background: #faf8f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+.contact-icon-option:hover {
+    transform: translateY(-2px);
+    background: #fff3ce;
+    border-color: #d9ad3f;
+}
+
+.contact-icon-option.selected {
+    background: #fff0bd;
+    border-color: #d7a72b;
+    box-shadow:
+        0 0 0 2px
+        rgba(215,167,43,.12);
+}
+
+
+/* ============================================================
+   CHECKBOX / ACTIVE
+   ============================================================ */
+
+.contact-active-field {
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid #e0d8cd;
+    border-radius: 11px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.contact-active-field input {
+    width: 17px;
+    height: 17px;
+    accent-color: #dba726;
+}
+
+.contact-active-field label {
+    margin: 0;
+    cursor: pointer;
+}
+
+
+/* ============================================================
+   CONTACT EMPTY
+   ============================================================ */
+
+.contact-methods-empty {
+    padding: 45px 20px;
+    border: 1px dashed #ddd1c0;
+    border-radius: 15px;
+    background: #fffdf9;
+    text-align: center;
+}
+
+.contact-methods-empty-icon {
+    font-size: 40px;
+}
+
+.contact-methods-empty h3 {
+    margin: 9px 0 4px;
+    color: #4b433a;
+    font-size: 14px;
+}
+
+.contact-methods-empty p {
+    margin: 0;
+    color: #9b9186;
+    font-size: 8px;
+}
+
+
+/* ============================================================
+   CONTACT FORM FOOTER
+   ============================================================ */
+
+.contact-form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.contact-save-button {
+    min-height: 45px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 10px;
+    background:
+        linear-gradient(
+            135deg,
+            #dfa923,
+            #efc348
+        );
+    color: #4f3909;
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.contact-cancel-button {
+    min-height: 45px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 10px;
+    background: #f1ede6;
+    color: #665e53;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   CONTACT RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 720px) {
+
+    .contact-add-form {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form-field.full {
+        grid-column: auto;
+    }
+
+    .contact-method-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .contact-method-info {
+        width: calc(100% - 68px);
+        flex: none;
+    }
+
+    .contact-method-status {
+        order: 3;
+    }
+
+    .contact-method-actions {
+        width: 100%;
+        order: 4;
+    }
+
+    .contact-method-action {
+        flex: 1;
+    }
+
+    .contact-form-actions {
+        grid-column: auto;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .contact-save-button,
+    .contact-cancel-button {
+        width: 100%;
+    }
+}.owner-messages-nav{position:relative}.owner-unread-square{display:inline-flex!important;min-width:23px;height:23px;padding:0 4px;border-radius:6px;background:#e43b31;color:#fff!important;align-items:center;justify-content:center;font-size:11px;line-height:1;font-weight:900;box-shadow:0 4px 10px rgba(180,30,20,.28)}
+
+/* v6 navigation polish */
+.owner-sidebar{height:100dvh;display:flex;flex-direction:column;overflow:hidden}.owner-navigation{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding-bottom:10px}.owner-sidebar-bottom{flex:0 0 auto;border-top:1px solid rgba(180,140,55,.18);padding:10px;background:inherit}.owner-sidebar-bottom a{display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:12px;margin:5px 0;text-decoration:none;font-weight:900}.owner-sidebar-bottom .logout-link{background:#fff0ee;color:#922f28!important;border:1px solid #efc9c4}.owner-sidebar-bottom>a:first-child{background:#fff7df;color:#6b5018!important}.owner-navigation::-webkit-scrollbar{width:7px}.owner-navigation::-webkit-scrollbar-thumb{background:#d7b45c;border-radius:99px}html[data-theme="dark"] .owner-navigation .owner-nav-item{color:#17130d!important;background:#fffaf0!important}html[data-theme="dark"] .owner-navigation .owner-nav-item:hover,html[data-theme="dark"] .owner-navigation .owner-nav-item.active{background:#f2c85b!important;color:#17130d!important}

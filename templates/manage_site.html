@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        مدیریت سایت | شهدآور
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='owner.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+<style>
+.rich-editor{border:1px solid #dfd3c1;border-radius:18px;overflow:hidden;background:#fff;margin-top:15px}.rich-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:10px;background:#f7f1e6;border-bottom:1px solid #dfd3c1}.rich-toolbar button,.rich-toolbar select,.rich-toolbar input[type=color]{height:36px;border:1px solid #d8cbb8;border-radius:9px;background:#fff;padding:0 9px;font-family:inherit;cursor:pointer}.rich-toolbar input[type=color]{width:42px;padding:3px}.rich-editor-surface{min-height:430px;padding:22px;outline:none;line-height:2.1}.rich-editor-surface:focus{box-shadow:inset 0 0 0 2px rgba(213,165,54,.25)}.rich-editor-surface img{max-width:100%;height:auto;display:block;margin:12px auto;border-radius:12px;cursor:pointer}.rich-editor-surface img.editor-selected{outline:3px solid #dcae31;outline-offset:3px}.image-tools{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:9px 12px;background:#fff9e9;border-bottom:1px solid #ead8aa}.image-tools button{border:1px solid #d9c08a;background:#fff;border-radius:8px;padding:7px 9px;cursor:pointer}.image-tools input[type=range]{vertical-align:middle}.editor-help{display:block;padding:10px 16px;color:#766b5f}.rich-content img{max-width:100%;height:auto}
+</style><style>
+.contact-settings-shortcut{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.contact-settings-shortcut>div{padding:14px;border-radius:13px;background:#faf6ed;border:1px solid #eadfce}.contact-settings-shortcut strong{display:block;font-size:10px}.contact-settings-shortcut span{display:block;margin-top:4px;color:#8b7f70;font-size:9px;line-height:1.8}html[data-theme="dark"] .contact-settings-shortcut>div{background:#211d16;border-color:#4b402f}html[data-theme="dark"] .contact-settings-shortcut span{color:#b9ad9b}@media(max-width:700px){.contact-settings-shortcut{grid-template-columns:1fr}.manager-card-title{gap:12px;flex-direction:column}.manager-primary-button{width:100%}}
+</style></head>
+
+
+<body>
+
+
+<div class="manager-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="manager-header">
+
+        <a
+            href="{{ url_for('owner_dashboard') }}"
+            class="manager-back"
+        >
+            ← پنل مالکیت
+        </a>
+
+
+        <div>
+
+            <h1>
+                ⚙️ مدیریت سایت
+            </h1>
+
+            <p>
+                اطلاعات و ظاهر سایت شهدآور را مدیریت کنید
+            </p>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="manager-container">
+
+
+        <!-- =================================================
+             SITE SETTINGS
+        ================================================== -->
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="site-settings-form"
+        >
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+
+            <!-- =============================================
+                 IDENTITY
+            ============================================== -->
+
+            <section class="manager-card">
+
+                <div class="manager-card-title">
+
+                    <div>
+
+                        <h2>
+                            📝 اطلاعات هویتی سایت
+                        </h2>
+
+                        <p>
+                            نام و شعار سایت
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-grid">
+
+
+                    <div class="setting-field">
+
+                        <label>
+                            نام سایت
+                        </label>
+
+                        <input
+                            type="text"
+                            name="site_name"
+                            value="{{ site.site_name or '' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="setting-field">
+
+                        <label>
+                            شعار سایت
+                        </label>
+
+                        <input
+                            type="text"
+                            name="site_tagline"
+                            value="{{ site.site_tagline or '' }}"
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =============================================
+                 WELCOME BAR
+            ============================================== -->
+
+            <section class="manager-card">
+
+                <div class="manager-card-title">
+
+                    <div>
+
+                        <h2>
+                            📢 نوار سایت
+                        </h2>
+
+                        <p>
+                            متن نوار خوشامدگویی بالای سایت
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="setting-field">
+
+                    <label>
+                        متن نوار
+                    </label>
+
+                    <input
+                        type="text"
+                        name="welcome_text"
+                        value="{{ site.welcome_text or '' }}"
+                    >
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =============================================
+                 ABOUT
+            ============================================== -->
+
+            <section class="manager-card">
+
+                <div class="manager-card-title">
+
+                    <div>
+
+                        <h2>
+                            ℹ️ درباره سایت
+                        </h2>
+
+                        <p>
+                            متن معرفی شهدآور
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-grid">
+                    <div class="setting-field">
+                        <label>عنوان صفحه درباره</label>
+                        <input type="text" name="about_title" value="{{ site.about_title or 'درباره شهدآور' }}">
+                    </div>
+                    <div class="setting-field">
+                        <label>لینک درباره شهدآور</label>
+                        <input type="url" name="about_link" value="{{ site.about_link or '' }}" placeholder="https://...">
+                    </div>
+                </div>
+                <div class="rich-editor" id="aboutEditorWrap">
+                    <div class="rich-toolbar" role="toolbar" aria-label="ابزار ویرایش درباره شهدآور">
+                        <button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><button type="button" data-cmd="strikeThrough"><s>S</s></button>
+                        <select data-block aria-label="نوع متن"><option value="p">پاراگراف</option><option value="h1">H1</option><option value="h2">H2</option><option value="h3">H3</option><option value="h4">H4</option></select>
+                        <select data-size aria-label="اندازه متن">{% for size in [12,14,16,18,20,24,28,32,40] %}<option value="{{ size }}">{{ size }}px</option>{% endfor %}</select>
+                        <input type="color" data-fore-color value="#3a2b1c" title="رنگ متن"><input type="color" data-highlight value="#fff0a8" title="هایلایت">
+                        <button type="button" data-align="right">↦ راست</button><button type="button" data-align="center">↔ وسط</button><button type="button" data-align="left">↤ چپ</button><button type="button" data-align="justify">☰ تراز</button>
+                        <button type="button" data-cmd="insertUnorderedList">• لیست</button><button type="button" data-cmd="insertOrderedList">1. لیست</button><button type="button" data-cmd="formatBlock" data-value="blockquote">❝ نقل‌قول</button>
+                        <button type="button" data-link>🔗 لینک</button><button type="button" data-unlink>قطع لینک</button><button type="button" data-image>🖼 تصویر</button><button type="button" data-cmd="insertHorizontalRule">― خط</button><button type="button" data-cmd="undo">↶</button><button type="button" data-cmd="redo">↷</button><button type="button" data-cmd="removeFormat">پاک‌سازی</button>
+                    </div>
+                    <div class="image-tools" id="imageTools" hidden><strong>تصویر انتخاب‌شده:</strong><button type="button" data-image-width="30">30%</button><button type="button" data-image-width="50">50%</button><button type="button" data-image-width="75">75%</button><button type="button" data-image-width="100">100%</button><label>عرض <input id="imageWidthRange" type="range" min="10" max="100" value="100">%</label><button type="button" data-image-align="right">راست</button><button type="button" data-image-align="center">وسط</button><button type="button" data-image-align="left">چپ</button><button type="button" data-image-remove>حذف تصویر</button></div>
+                    <div id="aboutEditor" class="rich-editor-surface" contenteditable="true" spellcheck="false">{{ site.about_text|safe if site.about_text else '<p>شهدآور با هدف عرضه محصولات طبیعی و اصیل زنبورداری فعالیت می‌کند.</p>' }}</div>
+                    <textarea name="about_text" id="aboutTextValue" hidden></textarea>
+                    <input id="aboutImagePicker" type="file" accept=".jpg,.jpeg,.png,.webp" hidden>
+                    <small class="editor-help">متن، تیتر، رنگ، لینک و تصویر را هرجا که می‌خواهید قرار دهید. تصاویر از عرض محتوای صفحه خارج نمی‌شوند و می‌توانند ۳۰ تا ۱۰۰ درصد عرض داشته باشند.</small>
+                </div>
+                <div class="setting-field" style="margin-top:15px">
+                    <label>تصویر درباره شهدآور</label>
+                    <input type="file" name="about_image" accept=".jpg,.jpeg,.png,.webp">
+                    {% if site.about_image %}<div style="margin-top:10px"><img src="{{ url_for('uploads',filename='banners/' + site.about_image) }}" style="max-width:280px;border-radius:14px"><label><input type="checkbox" name="remove_about_image" value="1"> حذف تصویر فعلی</label></div>{% endif %}
+                </div>
+
+            </section>
+
+
+
+            <!-- =============================================
+                 SUPPORT
+            ============================================== -->
+
+            <section class="manager-card">
+
+                <div class="manager-card-title">
+
+                    <div>
+
+                        <h2>
+                            🛟 پشتیبانی
+                        </h2>
+
+                        <p>
+                            اطلاعات مربوط به پشتیبانی سایت
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    name="support_text"
+                    class="large-setting-textarea"
+                    placeholder="اطلاعات پشتیبانی..."
+                >{{ site.support_text or '' }}</textarea>
+                <div style="margin-top:14px"><a href="{{ url_for('owner_support_branding') }}" class="manager-primary-button" style="text-decoration:none;display:inline-flex">◈ تغییر پروفایل و پس‌زمینه پشتیبانی</a></div>
+
+            </section>
+
+
+
+            <!-- =============================================
+                 CONTACT MANAGEMENT ENTRY
+            ============================================== -->
+
+            <section class="manager-card">
+                <div class="manager-card-title">
+                    <div>
+                        <h2>📞 تماس با ما</h2>
+                        <p>تنظیمات صفحه تماس و تمام راه‌های ارتباطی در یک پنل مستقل و حرفه‌ای مدیریت می‌شود.</p>
+                    </div>
+                    <a href="{{ url_for('manage_contact') }}" class="manager-primary-button" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">مدیریت تماس با ما ←</a>
+                </div>
+                <div class="contact-settings-shortcut">
+                    <div><strong>تنظیمات صفحه</strong><span>عنوان، متن معرفی و متن پیش‌فرض دکمه‌ها</span></div>
+                    <div><strong>راه‌های ارتباطی</strong><span>افزودن، ویرایش، فعال‌سازی، حذف و مرتب‌سازی</span></div>
+                    <div><strong>پیش‌نمایش</strong><span>مشاهده نتیجه واقعی صفحه تماس</span></div>
+                </div>
+            </section>
+
+
+            <!-- =================================================
+                 BACKGROUND COLOR
+            ================================================== -->
+
+            <section class="manager-card">
+
+                <div class="manager-card-title">
+
+                    <div>
+
+                        <h2>
+                            🎨 رنگ پس‌زمینه
+                        </h2>
+
+                        <p>
+                            رنگ اصلی پس‌زمینه سایت
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="color-setting">
+
+                    <input
+                        type="color"
+                        name="background_color"
+                        value="{{ site.background_color or '#fffdf8' }}"
+                    >
+
+
+                    <code>
+                        {{ site.background_color or '#fffdf8' }}
+                    </code>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SAVE
+            ================================================== -->
+
+            <button
+                type="submit"
+                class="site-save-button"
+            >
+
+                ✓ ذخیره تمام تنظیمات
+
+            </button>
+
+
+        <section class="manager-card final-controls">
+<div class="manager-card-title"><div><h2>🎛 سازنده و کنترل‌های نهایی</h2><p>چیدمان خانه، پاورقی و اعلان سفارش را بدون تغییر کد مدیریت کنید.</p></div><a href="{{ url_for('owner_layout') }}" class="manager-primary-button">باز کردن سازنده چیدمان</a></div>
+<div class="settings-grid">
+<div class="setting-field"><label>متن پاورقی</label><textarea name="footer_text" class="large-setting-textarea">{{ site.footer_text or '' }}</textarea></div><div class="setting-field"><label>لینک‌های پاورقی (JSON)</label><textarea name="footer_links_json" class="large-setting-textarea">{{ site.footer_links_json or '[{"title":"محصولات","url":"/pages/products.html"},{"title":"درباره ما","url":"/pages/about.html"},{"title":"مقالات","url":"/pages/knowledge.html"},{"title":"تماس با ما","url":"/pages/contact.html"}]' }}</textarea><small>هر لینک با title و url؛ بدون تغییر کد قابل ویرایش است.</small></div>
+<div class="setting-field"><label>روش اعلان سفارش</label><select name="order_notify_mode"><option value="support" {% if site.order_notify_mode=='support' or not site.order_notify_mode %}selected{% endif %}>پشتیبانی سایت</option><option value="telegram" {% if site.order_notify_mode=='telegram' %}selected{% endif %}>تلگرام</option><option value="both" {% if site.order_notify_mode=='both' %}selected{% endif %}>تلگرام + پشتیبانی</option><option value="webhook" {% if site.order_notify_mode=='webhook' %}selected{% endif %}>Webhook</option></select></div>
+<div class="setting-field"><label>Telegram Bot Token</label><input type="password" name="order_notify_telegram_bot_token" value="{{ site.order_notify_telegram_bot_token or '' }}" placeholder="123456:ABC..."></div>
+<div class="setting-field"><label>Telegram Chat ID</label><input name="order_notify_telegram_chat_id" value="{{ site.order_notify_telegram_chat_id or '' }}" placeholder="@channel یا chat id"></div>
+<div class="setting-field"><label>Webhook اعلان سفارش</label><input type="url" name="order_notify_webhook_url" value="{{ site.order_notify_webhook_url or '' }}" placeholder="https://..."></div>
+<div class="setting-field"><label>پیام هماهنگی پرداخت</label><textarea name="order_coordination_message" class="large-setting-textarea">{{ site.order_coordination_message or 'سفارش شما ثبت شد. برای ادامه پرداخت لطفاً با فروشنده یا پشتیبانی شهدآور هماهنگ کنید.' }}</textarea></div>
+</div>
+<div style="margin-top:12px;padding:12px 14px;border-radius:12px;background:#fff8e5;border:1px solid #ecd7a3;line-height:1.9">برای ارسال مستقیم به پیوی تلگرام، یک Bot بسازید و Token و Chat ID مقصد را همین‌جا وارد کنید؛ هیچ تغییر کدی لازم نیست.</div>
+</section></form>
+
+
+
+        <!-- =================================================
+             MANAGEMENT TOOLS
+        ================================================== -->
+
+        <section class="manager-card">
+
+            <div class="manager-card-title">
+
+                <div>
+
+                    <h2>
+                        ابزارهای بیشتر مدیریت سایت
+                    </h2>
+
+                    <p>
+                        مدیریت بخش‌های مختلف سایت شهدآور
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="site-management-links">
+
+
+                <!-- =========================================
+                     COVERS
+                ========================================== -->
+
+                <a
+                    href="{{ url_for('manage_covers') }}"
+                >
+
+                    🖼️
+
+                    <strong>
+                        تغییر کاور سایت
+                    </strong>
+
+                </a>
+
+
+
+                <!-- =========================================
+                     LOGO
+                ========================================== -->
+
+                <a
+                    href="{{ url_for('manage_logo') }}"
+                >
+
+                    🏷️
+
+                    <strong>
+                        تغییر لوگوی سایت
+                    </strong>
+
+                </a>
+
+
+
+                <!-- =========================================
+                     BANNERS
+                ========================================== -->
+
+                <a
+                    href="{{ url_for('manage_banners') }}"
+                >
+
+                    📢
+
+                    <strong>
+                        افزودن / مدیریت بنر تبلیغاتی
+                    </strong>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =================================================
+           BACKGROUND COLOR
+        ================================================= */
+
+        const colorInput =
+            document.querySelector(
+                'input[name="background_color"]'
+            );
+
+
+        const colorCode =
+            document.querySelector(
+                ".color-setting code"
+            );
+
+
+        if (colorInput && colorCode) {
+
+            colorInput.addEventListener(
+                "input",
+                function () {
+
+                    colorCode.textContent =
+                        colorInput.value;
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================================
+           CONTACT PLATFORM
+        ================================================= */
+
+        updateContactPlaceholder();
+
+
+    }
+);
+
+
+
+/* =========================================================
+   CONTACT PLACEHOLDERS
+========================================================= */
+
+function updateContactPlaceholder() {
+
+
+    const platform =
+        document.getElementById(
+            "contact-platform"
+        );
+
+
+    const value =
+        document.getElementById(
+            "contact-value"
+        );
+
+
+    const link =
+        document.getElementById(
+            "contact-link"
+        );
+
+
+    if (
+        !platform ||
+        !value ||
+        !link
+    ) {
+
+        return;
+
+    }
+
+
+    switch (platform.value) {
+
+
+        case "phone":
+
+            value.placeholder =
+                "مثلاً 02112345678";
+
+            link.placeholder =
+                "مثلاً tel:02112345678";
+
+            break;
+
+
+
+        case "mobile":
+
+            value.placeholder =
+                "مثلاً 09169740802";
+
+            link.placeholder =
+                "مثلاً tel:09169740802";
+
+            break;
+
+
+
+        case "whatsapp":
+
+            value.placeholder =
+                "مثلاً 989169740802+";
+
+            link.placeholder =
+                "مثلاً https://wa.me/989169740802";
+
+            break;
+
+
+
+        case "telegram":
+
+            value.placeholder =
+                "مثلاً @shahdavar";
+
+            link.placeholder =
+                "مثلاً https://t.me/shahdavar";
+
+            break;
+
+
+
+        case "rubika":
+
+            value.placeholder =
+                "مثلاً @shahdavar";
+
+            link.placeholder =
+                "لینک صفحه روبیکا";
+
+            break;
+
+
+
+        case "eitaa":
+
+            value.placeholder =
+                "مثلاً @shahdavar";
+
+            link.placeholder =
+                "لینک صفحه ایتا";
+
+            break;
+
+
+
+        case "instagram":
+
+            value.placeholder =
+                "مثلاً @shahdavar";
+
+            link.placeholder =
+                "مثلاً https://instagram.com/shahdavar";
+
+            break;
+
+
+
+        case "email":
+
+            value.placeholder =
+                "مثلاً info@example.com";
+
+            link.placeholder =
+                "مثلاً mailto:info@example.com";
+
+            break;
+
+
+
+        case "website":
+
+            value.placeholder =
+                "مثلاً سایت رسمی شهدآور";
+
+            link.placeholder =
+                "مثلاً https://example.com";
+
+            break;
+
+
+
+        case "custom":
+
+            value.placeholder =
+                "عنوان یا شناسه راه ارتباطی";
+
+            link.placeholder =
+                "https://...";
+
+            break;
+
+
+
+        default:
+
+            value.placeholder =
+                "شناسه یا اطلاعات راه ارتباطی";
+
+            link.placeholder =
+                "https://...";
+
+            break;
+
+    }
+
+}
+
+
+</script>
+
+
+<script>
+(function(){
+ const editor=document.getElementById('aboutEditor'); if(!editor)return; const hidden=document.getElementById('aboutTextValue'),picker=document.getElementById('aboutImagePicker'),tools=document.getElementById('imageTools'),range=document.getElementById('imageWidthRange'); let selectedImage=null,savedRange=null;
+ function saveSelection(){const sel=window.getSelection();if(sel&&sel.rangeCount){savedRange=sel.getRangeAt(0).cloneRange()}}
+ function restoreSelection(){if(!savedRange)return;const sel=window.getSelection();sel.removeAllRanges();sel.addRange(savedRange)}
+ function cmd(command,value=null){editor.focus();restoreSelection();document.execCommand(command,false,value);saveSelection()}
+ function sync(){hidden.value=editor.innerHTML}
+ document.querySelectorAll('.rich-toolbar [data-cmd]').forEach(btn=>btn.addEventListener('mousedown',e=>e.preventDefault()));
+ document.querySelectorAll('.rich-toolbar [data-cmd]').forEach(btn=>btn.addEventListener('click',()=>cmd(btn.dataset.cmd,btn.dataset.value||null)));
+ document.querySelector('[data-block]').addEventListener('change',e=>cmd('formatBlock',e.target.value));
+ document.querySelector('[data-size]').addEventListener('change',e=>{cmd('fontSize','7');editor.querySelectorAll('font[size="7"]').forEach(el=>{const span=document.createElement('span');span.style.fontSize=e.target.value+'px';span.innerHTML=el.innerHTML;el.replaceWith(span)});sync()});
+ document.querySelector('[data-fore-color]').addEventListener('input',e=>cmd('foreColor',e.target.value)); document.querySelector('[data-highlight]').addEventListener('input',e=>cmd('hiliteColor',e.target.value));
+ document.querySelectorAll('[data-align]').forEach(btn=>btn.addEventListener('click',()=>{editor.focus();restoreSelection();document.execCommand('justify'+btn.dataset.align.charAt(0).toUpperCase()+btn.dataset.align.slice(1),false,null);saveSelection();sync()}));
+ document.querySelector('[data-link]').addEventListener('click',()=>{const url=prompt('آدرس لینک را وارد کنید:','https://');if(url)cmd('createLink',url)}); document.querySelector('[data-unlink]').addEventListener('click',()=>cmd('unlink'));
+ document.querySelector('[data-image]').addEventListener('click',()=>{saveSelection();picker.value='';picker.click()});
+ picker.addEventListener('change',async()=>{const file=picker.files[0];if(!file)return;const fd=new FormData();fd.append('image',file);try{const r=await fetch('{{ url_for("upload_about_editor_image") }}',{method:'POST',body:fd});const d=await r.json();if(!d.success){alert(d.message||'آپلود تصویر ناموفق بود.');return}restoreSelection();editor.focus();document.execCommand('insertHTML',false,'<img src="'+d.url+'" alt="تصویر شهدآور" style="width:100%;height:auto">');sync()}catch(e){alert('ارتباط با سرور برای آپلود تصویر برقرار نشد.')}});
+ editor.addEventListener('click',e=>{if(selectedImage)selectedImage.classList.remove('editor-selected');selectedImage=e.target.closest('img');if(selectedImage&&editor.contains(selectedImage)){selectedImage.classList.add('editor-selected');tools.hidden=false;const w=parseFloat(selectedImage.style.width)||100;range.value=Math.max(10,Math.min(100,w))}else{selectedImage=null;tools.hidden=true}});
+ document.querySelectorAll('[data-image-width]').forEach(btn=>btn.addEventListener('click',()=>{if(!selectedImage)return;selectedImage.style.width=btn.dataset.imageWidth+'%';selectedImage.style.height='auto';range.value=btn.dataset.imageWidth;sync()}));
+ range.addEventListener('input',()=>{if(selectedImage){selectedImage.style.width=range.value+'%';selectedImage.style.height='auto';sync()}});
+ document.querySelectorAll('[data-image-align]').forEach(btn=>btn.addEventListener('click',()=>{if(!selectedImage)return;selectedImage.style.display='block';selectedImage.style.marginTop='12px';selectedImage.style.marginBottom='12px';selectedImage.style.marginLeft=btn.dataset.imageAlign==='right'?'auto':btn.dataset.imageAlign==='left'?'0':'auto';selectedImage.style.marginRight=btn.dataset.imageAlign==='left'?'auto':btn.dataset.imageAlign==='right'?'0':'auto';if(btn.dataset.imageAlign==='center'){selectedImage.style.marginLeft='auto';selectedImage.style.marginRight='auto'}sync()}));
+ document.querySelector('[data-image-remove]').addEventListener('click',()=>{if(selectedImage){selectedImage.remove();selectedImage=null;tools.hidden=true;sync()}});
+ editor.addEventListener('input',sync);editor.addEventListener('keyup',saveSelection);editor.addEventListener('mouseup',saveSelection);
+ editor.closest('form').addEventListener('submit',sync);sync();
+})();
+</script></body>
+
+</html>

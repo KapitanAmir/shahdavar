@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ site.site_name }} | {{ site.site_tagline }}
+    </title>
+
+    <meta name="description" content="{{ site.site_name }}؛ {{ site.site_tagline }} — عرضه عسل و محصولات طبیعی زنبورداری شهدآور.">
+    <link rel="canonical" href="{{ request.host_url.rstrip('/') }}/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ site.site_name }} | {{ site.site_tagline }}">
+    <meta property="og:description" content="{{ site.site_tagline }}">
+    <meta property="og:url" content="{{ request.host_url.rstrip('/') }}/">
+    {% if config.get('GOOGLE_SITE_VERIFICATION') %}<meta name="google-site-verification" content="{{ config.get('GOOGLE_SITE_VERIFICATION') }}">{% endif %}
+    <script type="application/ld+json">{{ {'@context':'https://schema.org','@type':'Organization','name':site.site_name,'url':request.host_url.rstrip('/'),'logo':request.host_url.rstrip('/') ~ '/images/logo/logo.png'}|tojson }}</script>
+
+    <!-- =====================================================
+         MAIN CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('css_files', filename='style.css') }}"
+    >
+
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+
+<style>
+.shd-header-icon,.shd-account-icon{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}.account-button{display:inline-flex;align-items:center;gap:9px}.account-button .shd-account-icon{color:#a87912}.shd-header-cart{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;text-decoration:none!important;border:1px solid #dfc88f;border-radius:999px;padding:9px 13px;background:rgba(224,174,45,.13);color:inherit;font-weight:700;white-space:nowrap}
+.shd-cart-count{display:inline-flex;align-items:center;justify-content:center;min-width:21px;height:21px;border-radius:50%;background:#bd2525;color:#fff;font-size:12px;padding:0 5px}
+@media(max-width:600px){.shd-cart-label{display:none}.shd-header-cart{padding:10px;margin-inline:4px}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{const badge=document.getElementById('shd-cart-count');if(!badge)return;try{const r=await fetch('/api/cart/summary',{credentials:'same-origin'});const d=await r.json();const n=Number(d.count||0);badge.textContent=n>99?'99+':n;badge.hidden=n<1;}catch(e){}});
+</script>
+<style>.about-logo-only{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}.about-logo-only img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;display:block}.home-custom-row{padding:42px 0}.home-custom-inner{width:min(1180px,calc(100% - 28px));margin:auto;display:grid;grid-template-columns:.7fr 1.5fr;gap:22px;align-items:center}.home-custom-copy{padding:20px}.home-custom-copy span{font-size:10px;letter-spacing:2px;color:#b17d13;font-weight:900}.home-custom-copy h2{margin:8px 0;font-size:clamp(20px,3vw,34px)}.home-custom-copy p{color:#776a58;line-height:1.9}.home-custom-slider{position:relative;height:var(--custom-height,340px);overflow:hidden;border-radius:26px;border:1px solid #ead9ae;box-shadow:0 20px 55px #4c381013}.custom-size-xs{--custom-height:150px}.custom-size-sm{--custom-height:210px}.custom-size-md{--custom-height:270px}.custom-size-lg{--custom-height:340px}.custom-size-xl{--custom-height:430px}.custom-size-full{--custom-height:540px}.home-custom-slide{position:absolute;inset:0;opacity:0;transition:opacity .7s}.home-custom-slide.active{opacity:1}.home-custom-slide img{width:100%;height:100%;object-fit:cover}.custom-prev,.custom-next{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:50%;background:#fff;color:#4a3510;cursor:pointer;box-shadow:0 8px 20px #0002}.custom-prev{right:12px}.custom-next{left:12px}@media(max-width:700px){.home-custom-inner{grid-template-columns:1fr;gap:8px}.home-custom-copy{padding:10px}.home-custom-slider{height:var(--custom-height)}}html[data-theme="dark"] .home-custom-copy p{color:#c8bca7}html[data-theme="dark"] .about-logo-only{background:transparent!important}</style></head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="site-header">
+
+    <div class="header-container">
+
+
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
+        <a
+            href="/"
+            class="brand"
+        >
+
+            <div class="brand-logo">
+
+                <img
+                    src="{% if logo.filename and '/' in logo.filename %}{{ url_for('images', filename=logo.filename) }}{% else %}{{ url_for('uploads', filename='logo/' + (logo.filename or 'logo.png')) }}{% endif %}"
+                    alt="لوگوی شهدآور"
+                >
+
+            </div>
+
+
+            <div class="brand-text">
+
+                <strong>
+                    شهدآور
+                </strong>
+
+                <span>
+                    {{ site.site_tagline }}
+                </span>
+
+            </div>
+
+        </a>
+
+
+
+        <!-- =================================================
+             DESKTOP NAV
+        ================================================== -->
+
+        <nav class="desktop-nav">
+
+            <a
+                href="/"
+                class="active"
+            >
+                خانه
+            </a>
+
+            <a href="/pages/products.html">
+                محصولات
+            </a>
+
+            <a href="/pages/about.html">
+                درباره ما
+            </a>
+
+            <a href="/pages/support.html">
+                پشتیبانی
+            </a>
+
+        </nav>
+
+
+
+        <!-- =================================================
+             ACCOUNT
+        ================================================== -->
+
+        <a href="{{ url_for('cart_page') }}" class="shd-header-cart" aria-label="سبد خرید" title="سبد خرید">
+            <svg class="shd-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg><span class="shd-cart-label">سبد خرید</span>
+            <b id="shd-cart-count" class="shd-cart-count" hidden>0</b>
+        </a>
+
+        <div class="header-account">
+
+            {% if current_user %}
+
+                <a
+                    href="/account"
+                    class="account-button"
+                    aria-label="حساب کاربری"
+                    title="حساب کاربری"
+                >
+                    <svg class="shd-account-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                    <img
+                        src="{{ url_for(
+                            'uploaded_file',
+                            filename=('profiles/' + current_user.avatar)
+                        ) }}"
+                        alt="پروفایل"
+                        style="
+                            width:42px;
+                            height:42px;
+                            border-radius:50%;
+                            object-fit:cover;
+                            display:block;
+                        "
+                    >
+
+                </a>
+
+            {% else %}
+
+                <a href="/account" class="account-button shd-login-link" aria-label="ورود">
+                    <svg class="shd-account-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>ورود</span>
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <div class="shd-search" id="siteSearch">
+            <button class="shd-search-trigger" type="button" aria-label="جستجو"><span class="shd-search-icon"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></span></button>
+            <form class="shd-search-form" action="{{ url_for('products_page') }}" method="get"><input name="q" placeholder="جستجوی عسل و محصولات…" autocomplete="off"><button type="submit" aria-label="جستجو"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></button></form>
+        </div>
+
+        <!-- =================================================
+             MOBILE MENU BUTTON
+        ================================================== -->
+
+        <button
+            type="button"
+            class="menu-button"
+            id="menuButton"
+            aria-label="باز کردن منو"
+        >
+            ☰
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MOBILE MENU
+    ====================================================== -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <a href="/">
+            🏠 خانه
+        </a>
+
+        <a href="/pages/products.html">
+            🛒 محصولات
+        </a>
+
+        <a href="/pages/about.html">
+            🍯 درباره شهدآور
+        </a>
+
+        <a href="/pages/support.html">
+            🎧 پشتیبانی
+        </a>
+
+        <a href="/pages/contact.html">
+            📞 تماس با ما
+        </a>
+
+        <a href="/pages/ai.html">
+            🤖 هوش مصنوعی
+        </a>
+
+        <a href="/account" class="mobile-account-link"><svg class="shd-account-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> ورود</a>
+
+    </div>
+
+</header>
+
+
+
+<main id="homeLayout" class="home-layout">
+
+<!-- =========================================================
+     WELCOME BAR
+========================================================= -->
+
+<section class="welcome-section">
+
+    <div class="welcome-bar">
+
+        <span class="welcome-icon">
+            🐝
+        </span>
+
+        <span class="welcome-text">
+            {{ site.welcome_text }}
+        </span>
+
+        <span class="welcome-icon">
+            🍯
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     HERO / COVERS
+========================================================= -->
+
+<section class="hero-section" data-layout-key="hero">
+
+    <div class="hero-wrapper">
+
+        <div
+            class="hero-slider"
+            id="heroSlider"
+        >
+
+
+            <!-- =================================================
+                 SLIDES
+            ================================================== -->
+
+            {% for cover in covers %}
+
+            <div
+                class="hero-slide {% if loop.first %}active{% endif %}"
+                data-duration="{{ cover.duration or 5 }}"
+            >
+
+                <img
+                    src="{% if cover.filename.startswith('hero-') and cover.filename.endswith('.jpg') %}{{ url_for('images', filename=cover.filename) }}{% elif '/' in cover.filename %}{{ url_for('images', filename=cover.filename) }}{% else %}{{ url_for('uploads', filename='covers/' + cover.filename) }}{% endif %}"
+                    alt="شهدآور - کاور {{ loop.index }}"
+                >
+
+            </div>
+
+            {% endfor %}
+
+
+
+            <!-- =================================================
+                 SLIDER ARROWS
+            ================================================== -->
+
+            {% if covers|length > 1 %}
+
+            <button
+                type="button"
+                class="slider-arrow slider-prev"
+                id="prevButton"
+                aria-label="کاور قبلی"
+            >
+                ❯
+            </button>
+
+
+            <button
+                type="button"
+                class="slider-arrow slider-next"
+                id="nextButton"
+                aria-label="کاور بعدی"
+            >
+                ❮
+            </button>
+
+
+
+            <!-- =================================================
+                 SLIDER DOTS
+            ================================================== -->
+
+            <div
+                class="slider-dots"
+                id="sliderDots"
+            >
+
+                {% for cover in covers %}
+
+                <button
+                    type="button"
+                    class="slider-dot {% if loop.first %}active{% endif %}"
+                    data-slide="{{ loop.index0 }}"
+                    aria-label="نمایش کاور {{ loop.index }}"
+                ></button>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<section class="intro-section" data-layout-key="intro">
+
+    <div class="section-container intro-content">
+
+
+        <h1>
+            {{ site.site_name }}
+        </h1>
+
+
+        <h2>
+            طعم واقعی طبیعت
+        </h2>
+
+
+        <p>
+            همراه شما برای تجربه‌ی عسل طبیعی و محصولات اصیل زنبورداری
+        </p>
+
+
+
+        <!-- =================================================
+             HOME QUICK BUTTONS
+        ================================================== -->
+
+        <div class="quick-menu home-visual-menu">
+
+            <a href="/pages/products.html" class="quick-menu-item visual-quick-item">
+                <img src="{{ url_for('images', filename='home-buttons/products.webp') }}" alt="محصولات">
+                <span class="sr-only">محصولات</span>
+            </a>
+
+            <a href="{{ url_for('about_page') }}" class="quick-menu-item visual-quick-item about-logo-only" aria-label="درباره شهدآور">
+                <img src="{% if logo.filename and '/' in logo.filename %}{{ url_for('images', filename=logo.filename) }}{% else %}{{ url_for('uploads', filename='logo/' + (logo.filename or 'logo.png')) }}{% endif %}" alt="درباره شهدآور">
+                <span class="sr-only">درباره شهدآور</span>
+            </a>
+
+            <a href="/pages/support.html" class="quick-menu-item visual-quick-item">
+                <img src="{{ url_for('images', filename='home-buttons/support.webp') }}" alt="پشتیبانی">
+                <span class="sr-only">پشتیبانی</span>
+            </a>
+
+            <a href="/pages/contact.html" class="quick-menu-item visual-quick-item">
+                <img src="{{ url_for('images', filename='home-buttons/contact.webp') }}" alt="تماس با ما">
+                <span class="sr-only">تماس با ما</span>
+            </a>
+
+            <a href="/pages/ai.html" class="quick-menu-item visual-quick-item">
+                <img src="{{ url_for('images', filename='home-buttons/ai.webp') }}" alt="هوش مصنوعی شهدیار">
+                <span class="sr-only">هوش مصنوعی</span>
+            </a>
+
+            <a href="/cart" class="quick-menu-item visual-quick-item">
+                <img src="{{ url_for('images', filename='home-buttons/cart.webp') }}" alt="سبد خرید">
+                <span class="sr-only">سبد خرید</span>
+            </a>
+
+            <a href="/orders" class="quick-menu-item visual-quick-item">
+                <img src="{{ url_for('images', filename='home-buttons/history.webp') }}" alt="تاریخچه خرید">
+                <span class="sr-only">تاریخچه خرید</span>
+            </a>
+
+            <a href="/account" class="quick-menu-item visual-quick-item">
+                <img src="{{ url_for('images', filename='home-buttons/account.webp') }}" alt="حساب کاربری">
+                <span class="sr-only">حساب کاربری</span>
+            </a>
+
+            <a href="/pages/profiles.html" class="quick-menu-item text-visual-item">
+                <span class="text-visual-icon">◉</span><strong>پروفایل</strong><small>عسل، زنبور و دنیای شهدآور</small>
+            </a>
+
+            <a href="/pages/knowledge.html" class="quick-menu-item text-visual-item">
+                <span class="text-visual-icon">✦</span><strong>دانستنی و اطلاعات</strong><small>مقالات علمی و کاربردی</small>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CATEGORIES
+========================================================= -->
+<section class="categories-section" data-layout-key="categories" style="padding:55px 0">
+  <div class="section-container">
+    <div class="section-heading"><div class="section-heading-icon">📁</div><div class="section-heading-content"><h2>دسته‌بندی محصولات</h2><p>محصولات هر نوع را یکجا ببینید.</p></div></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      {% for category in categories %}<a href="{{ url_for('products_page', category=category.name) }}" class="home-category-button">🍯 {{ category.name }}</a>{% endfor %}
+      <a href="{{ url_for('products_page', filter='discount') }}" style="display:inline-flex;padding:12px 18px;border-radius:14px;background:#fff3cf;border:1px solid rgba(80,50,10,.12);text-decoration:none;font-weight:800">🔥 تخفیف‌دارها</a>
+      <a href="{{ url_for('products_page', filter='popular') }}" style="display:inline-flex;padding:12px 18px;border-radius:14px;background:#fff3cf;border:1px solid rgba(80,50,10,.12);text-decoration:none;font-weight:800">⭐ محبوب‌ها</a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     DISCOUNT PRODUCTS
+========================================================= -->
+
+<section class="products-section" data-layout-key="discount">
+
+    <div class="section-container">
+
+
+        <!-- =================================================
+             SECTION HEADER
+        ================================================== -->
+
+        <a class="home-product-banner-link" href="{{ url_for('products_page', filter='discount') }}" aria-label="مشاهده محصولات تخفیف‌دار شهدآور">
+            <img class="home-product-banner" src="{{ url_for('images', filename='home-banners/discounts-shahdavar.png') }}" alt="تخفیف‌های شهدآور — فرصت ویژه برای خرید محصولات محبوب" loading="lazy">
+        </a>
+
+
+
+        <!-- =================================================
+             PRODUCTS
+        ================================================== -->
+
+        {% if discount_products %}
+
+        <div class="product-grid">
+
+            {% for product in discount_products %}
+
+            <article class="product-card">
+
+                <!-- =================================================
+                     PRODUCT IMAGE
+                ================================================== -->
+
+                <div class="product-image">
+                    {% if product.is_discount %}<span class="discount-corner-badge"><small>تخفیف</small>{{ product.discount_percent }}٪</span>{% endif %}
+
+                    {% if product.image_1 %}
+
+                    <img
+                        src="{{ url_for(
+                            'uploads',
+                            filename='products/' + product.image_1
+                        ) }}"
+                        alt="{{ product.title }}"
+                    >
+
+                    {% else %}
+
+                    <div class="product-no-image">
+                        🍯
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if product.is_discount %}
+
+                    <span class="discount-badge">
+                        {{ product.discount_percent }}٪ تخفیف
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if product.is_popular %}
+
+                    <span class="popular-badge">
+                        ⭐ محبوب
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if not product.is_available %}
+
+                    <span class="unavailable-badge">
+                        ناموجود
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRODUCT INFO
+                ================================================== -->
+
+                <div class="product-info">
+
+                    {% if product.category_name %}
+
+                    <span class="product-category">
+                        {{ product.category_name }}
+                    </span>
+
+                    {% endif %}
+
+
+                    <h3>
+                        {{ product.title }}
+                    </h3>
+
+
+                    {% if product.description %}
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+                    {% endif %}
+
+
+
+                    <!-- =================================================
+                         PRICE
+                    ================================================== -->
+
+                    <div class="price-area">
+
+                        {% if not product.is_available %}
+
+                        <strong class="unavailable-price">
+                            ناموجود
+                        </strong>
+
+
+                        {% elif product.is_discount %}
+
+                            {% if product.price %}
+
+                            <del>
+                                {{ "{:,}".format(product.price) }}
+                            </del>
+
+                            {% endif %}
+
+
+                            {% if product.final_price %}
+
+                            <strong>
+                                {{ "{:,}".format(product.final_price) }}
+                            </strong>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+                            {% if product.price %}
+
+                            <strong>
+                                {{ "{:,}".format(product.price) }}
+                            </strong>
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </div>
+                    {% if product.is_discount and product.discount_expires_at %}<div class="discount-countdown" data-discount-expires="{{ product.discount_expires_at }}">در حال محاسبه…</div>{% endif %}
+
+                    <!-- =================================================
+                         PRODUCT BUTTON
+                    ================================================== -->
+
+                    <a
+                        href="{{ url_for('product_detail', product_id=product.id) }}"
+                        class="product-button yellow-button"
+                    >
+                        مشاهده محصول
+                    </a>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-products">
+            در حال حاضر محصولی با تخفیف ویژه ثبت نشده است.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     POPULAR PRODUCTS
+========================================================= -->
+
+<section class="popular-section" data-layout-key="popular">
+
+    <div class="section-container">
+
+
+        <!-- =================================================
+             SECTION HEADER
+        ================================================== -->
+
+        <a class="home-product-banner-link" href="{{ url_for('products_page', filter='popular') }}" aria-label="مشاهده محصولات پرطرفدار و محبوب شهدآور">
+            <img class="home-product-banner" src="{{ url_for('images', filename='home-banners/popular-shahdavar.png') }}" alt="محصولات پرطرفدار و محبوب شهدآور" loading="lazy">
+        </a>
+
+
+
+        <!-- =================================================
+             POPULAR PRODUCTS
+        ================================================== -->
+
+        {% if popular_products %}
+
+        <div class="product-grid">
+
+            {% for product in popular_products %}
+
+            <article class="product-card">
+
+
+                <!-- =================================================
+                     PRODUCT IMAGE
+                ================================================== -->
+
+                <div class="product-image">
+                    {% if product.is_discount %}<span class="discount-corner-badge"><small>تخفیف</small>{{ product.discount_percent }}٪</span>{% endif %}
+
+                    {% if product.image_1 %}
+
+                    <img
+                        src="{{ url_for(
+                            'uploads',
+                            filename='products/' + product.image_1
+                        ) }}"
+                        alt="{{ product.title }}"
+                    >
+
+                    {% else %}
+
+                    <div class="product-no-image">
+                        🍯
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if product.is_discount %}
+
+                    <span class="discount-badge">
+                        {{ product.discount_percent }}٪ تخفیف
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if product.is_popular %}
+
+                    <span class="popular-badge">
+                        ⭐ محبوب
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if not product.is_available %}
+
+                    <span class="unavailable-badge">
+                        ناموجود
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRODUCT INFO
+                ================================================== -->
+
+                <div class="product-info">
+
+
+                    {% if product.category_name %}
+
+                    <span class="product-category">
+                        {{ product.category_name }}
+                    </span>
+
+                    {% endif %}
+
+
+                    <h3>
+                        {{ product.title }}
+                    </h3>
+
+
+                    {% if product.description %}
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+                    {% endif %}
+
+
+
+                    <!-- =================================================
+                         PRICE
+                    ================================================== -->
+
+                    <div class="price-area">
+
+                        {% if not product.is_available %}
+
+                        <strong class="unavailable-price">
+                            ناموجود
+                        </strong>
+
+
+                        {% elif product.is_discount %}
+
+                            {% if product.price %}
+
+                            <del>
+                                {{ "{:,}".format(product.price) }}
+                            </del>
+
+                            {% endif %}
+
+
+                            {% if product.final_price %}
+
+                            <strong>
+                                {{ "{:,}".format(product.final_price) }}
+                            </strong>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+                            {% if product.price %}
+
+                            <strong>
+                                {{ "{:,}".format(product.price) }}
+                            </strong>
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PRODUCT BUTTON
+                    ================================================== -->
+
+                    <a
+                        href="{{ url_for('product_detail', product_id=product.id) }}"
+                        class="product-button"
+                    >
+                        مشاهده محصول
+                    </a>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-products">
+
+            هنوز محصولی برای نمایش ثبت نشده است.
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             ALL PRODUCTS BUTTON
+        ================================================== -->
+
+        <div class="all-products-wrapper">
+
+            <a
+                href="/pages/products.html"
+                class="all-products-button"
+            >
+                مشاهده تمام محصولات
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     NORMAL PRODUCTS
+========================================================= -->
+
+{% if normal_products %}
+
+<section class="products-section normal-products-section" data-layout-key="normal">
+
+    <div class="section-container">
+
+
+        <!-- =================================================
+             SECTION HEADER
+        ================================================== -->
+
+        <div class="section-heading">
+
+            <div class="section-heading-icon">
+                🍯
+            </div>
+
+
+            <div class="section-heading-content">
+
+                <h2>
+                    محصولات شهدآور
+                </h2>
+
+                <p>
+                    محصولات طبیعی و اصیل زنبورداری شهدآور
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PRODUCTS
+        ================================================== -->
+
+        <div class="product-grid">
+
+            {% for product in normal_products %}
+
+            <article class="product-card">
+
+
+                <!-- =================================================
+                     PRODUCT IMAGE
+                ================================================== -->
+
+                <div class="product-image">
+                    {% if product.is_discount %}<span class="discount-corner-badge"><small>تخفیف</small>{{ product.discount_percent }}٪</span>{% endif %}
+
+                    {% if product.image_1 %}
+
+                    <img
+                        src="{{ url_for(
+                            'uploads',
+                            filename='products/' + product.image_1
+                        ) }}"
+                        alt="{{ product.title }}"
+                    >
+
+                    {% else %}
+
+                    <div class="product-no-image">
+                        🍯
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if product.is_discount %}
+
+                    <span class="discount-badge">
+                        {{ product.discount_percent }}٪ تخفیف
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if product.is_popular %}
+
+                    <span class="popular-badge">
+                        ⭐ محبوب
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if not product.is_available %}
+
+                    <span class="unavailable-badge">
+                        ناموجود
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRODUCT INFO
+                ================================================== -->
+
+                <div class="product-info">
+
+
+                    {% if product.category_name %}
+
+                    <span class="product-category">
+                        {{ product.category_name }}
+                    </span>
+
+                    {% endif %}
+
+
+                    <h3>
+                        {{ product.title }}
+                    </h3>
+
+
+                    {% if product.description %}
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+                    {% endif %}
+
+
+
+                    <!-- =================================================
+                         PRICE
+                    ================================================== -->
+
+                    <div class="price-area">
+
+                        {% if not product.is_available %}
+
+                        <strong class="unavailable-price">
+                            ناموجود
+                        </strong>
+
+
+                        {% elif product.is_discount %}
+
+                            {% if product.price %}
+
+                            <del>
+                                {{ "{:,}".format(product.price) }}
+                            </del>
+
+                            {% endif %}
+
+
+                            {% if product.final_price %}
+
+                            <strong>
+                                {{ "{:,}".format(product.final_price) }}
+                            </strong>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+                            {% if product.price %}
+
+                            <strong>
+                                {{ "{:,}".format(product.price) }}
+                            </strong>
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PRODUCT BUTTON
+                    ================================================== -->
+
+                    <a
+                        href="{{ url_for('product_detail', product_id=product.id) }}"
+                        class="product-button"
+                    >
+                        مشاهده محصول
+                    </a>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+
+<!-- =========================================================
+     ARTICLES
+========================================================= -->
+{% for row in custom_rows or [] %}<section class="home-custom-row custom-size-{{ row.size or 'lg' }}" data-layout-key="{{ row.key }}"><div class="home-custom-inner"><div class="home-custom-copy"><span>شهدآور</span><h2>{{ row.title }}</h2>{% if row.subtitle %}<p>{{ row.subtitle }}</p>{% endif %}</div><div class="home-custom-slider" data-duration="{{ row.duration or 5 }}">{% for slide in row.slides %}<div class="home-custom-slide {% if loop.first %}active{% endif %}"><img src="{{ url_for('uploads',filename=slide.filename) }}" alt="{{ slide.alt or row.title }}"></div>{% endfor %}{% if row.slides|length>1 %}<button class="custom-prev" type="button">❯</button><button class="custom-next" type="button">❮</button>{% endif %}</div></div></section>{% endfor %}
+{% if articles %}
+<section class="home-articles-section" data-layout-key="articles">
+  <div class="section-container">
+    <div class="section-heading">
+      <div class="section-heading-icon">✦</div>
+      <div class="section-heading-content">
+        <h2>آخرین مقالات و دانستنی‌ها</h2>
+        <p>مطالب کاربردی درباره عسل، زنبورعسل و فرآورده‌های زنبورداری</p>
+      </div>
+      <a href="{{ url_for('knowledge_page') }}" class="all-products-button">همه مقالات ←</a>
+    </div>
+    <div class="home-articles-grid">
+      {% for article in articles %}
+      <a class="home-article-card" href="{{ url_for('knowledge_detail', slug=article.slug) }}">
+        <div class="home-article-cover">
+          {% if article.cover_image %}
+          <img src="{{ url_for('uploads', filename='knowledge/' + article.cover_image) }}" alt="{{ article.title }}" loading="lazy">
+          {% else %}<span>🍯</span>{% endif %}
+        </div>
+        <div class="home-article-body">
+          <small>{{ article.category or 'دانستنی شهدآور' }}</small>
+          <h3>{{ article.title }}</h3>
+          <p>{{ article.excerpt or 'مطالعه این مطلب برای آشنایی بیشتر با دنیای عسل و زنبورداری.' }}</p>
+          <strong>ادامه مطلب ←</strong>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+</main>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="site-footer">
+
+    <div class="footer-container">
+
+
+        <!-- =================================================
+             FOOTER BRAND
+        ================================================== -->
+
+        <div class="footer-brand">
+
+            <img
+                src="{% if logo.filename and '/' in logo.filename %}{{ url_for('images', filename=logo.filename) }}{% else %}{{ url_for('uploads', filename='logo/' + (logo.filename or 'logo.png')) }}{% endif %}"
+                alt="شهدآور"
+            >
+
+
+            <div>
+
+                <strong>
+                    شهدآور
+                </strong>
+
+                <p>
+                    {{ site.site_tagline }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FOOTER LINKS
+        ================================================== -->
+
+        <div class="footer-links">
+            {% if footer_links %}
+              {% for link in footer_links %}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {% endfor %}
+            {% else %}
+              <a href="/pages/products.html">محصولات</a><a href="/pages/about.html">درباره ما</a><a href="/pages/knowledge.html">مقالات</a><a href="/pages/support.html">پشتیبانی</a><a href="/pages/contact.html">تماس با ما</a><a href="/pages/profiles.html">پروفایل‌ها</a>
+            {% endif %}
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         COPYRIGHT
+    ================================================== -->
+
+    <div class="footer-contact-grid">
+      <div class="footer-contact-item"><span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></span><div><strong>فروشگاه حضوری</strong><small>لرستان-بروجرد، طالقانی-روبه‌روی باشگاه امام علی</small></div></div>
+      <div class="footer-contact-item"><span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M7 3h3l2 5-2.2 1.6a14 14 0 0 0 4.6 4.6L16 12l5 2v3a3 3 0 0 1-3 3C10.3 20 4 13.7 4 6a3 3 0 0 1 3-3z"/></svg></span><div><strong>تماس</strong><small>09169740802</small></div></div>
+      <a class="footer-contact-item" href="{{ url_for('knowledge_detail', slug='modiriat-site-va-parvaresh-zanboor-asal') }}"><span class="footer-contact-icon gold-check"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span><div><strong>مدیریت</strong><small>آقای رضا رحیمی</small></div></a>
+      <a class="footer-about-button" href="{{ url_for('about_page') }}">اطلاعات بیشتر: درباره شهدآور <span>←</span></a>
+    </div>
+
+    <div class="copyright">
+        {{ site.footer_text or ('© 2026 ' ~ site.site_name ~ ' — تمامی حقوق محفوظ است.') }}
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+(function(){
+  const root=document.getElementById('homeLayout');
+  if(!root) return;
+  const order={{ home_layout|tojson }};
+  const byKey={};
+  root.querySelectorAll('[data-layout-key]').forEach(el=>byKey[el.dataset.layoutKey]=el);
+  order.forEach(item=>{
+    const el=byKey[item.key];
+    if(!el) return;
+    el.hidden=!item.enabled;
+    root.appendChild(el);
+  });
+})();
+</script>
+<script src="{{ url_for('js_files', filename='script.js') }}"></script>
+
+
+
+<script>const searchBox=document.getElementById('siteSearch');searchBox?.querySelector('.shd-search-trigger')?.addEventListener('click',function(e){e.stopPropagation();searchBox.classList.toggle('open');if(searchBox.classList.contains('open'))setTimeout(()=>searchBox.querySelector('input')?.focus(),80)});document.addEventListener('click',function(e){if(searchBox&&!searchBox.contains(e.target))searchBox.classList.remove('open')});document.getElementById('homeMoreToggle')?.addEventListener('click',function(){const p=document.getElementById('homeMoreItems');const open=p.classList.toggle('open');this.setAttribute('aria-expanded',open);this.querySelector('strong').textContent=open?'بستن':'بیشتر';this.querySelector('.text-visual-icon').textContent=open?'−':'＋'});document.addEventListener('DOMContentLoaded',()=>{const fa=n=>new Intl.NumberFormat('fa-IR').format(n);document.querySelectorAll('[data-discount-expires]').forEach(el=>{const end=new Date(el.dataset.discountExpires).getTime();const tick=()=>{let d=Math.max(0,end-Date.now());if(!d){el.innerHTML='<strong>تخفیف به پایان رسیده است</strong>';return}let s=Math.floor(d/1000),days=Math.floor(s/86400);s%=86400;let h=Math.floor(s/3600);s%=3600;let m=Math.floor(s/60);s%=60;el.innerHTML='<strong>'+fa(days)+' روز '+fa(h)+' ساعت '+fa(m)+' دقیقه '+fa(s)+' ثانیه</strong> باقی مانده است';};tick();setInterval(tick,1000)})});</script>
+<script>(function(){document.querySelectorAll('.home-custom-slider').forEach(slider=>{const slides=[...slider.querySelectorAll('.home-custom-slide')];if(slides.length<2)return;let i=0;const show=n=>{i=(n+slides.length)%slides.length;slides.forEach((x,j)=>x.classList.toggle('active',j===i))};slider.querySelector('.custom-prev')?.addEventListener('click',()=>show(i-1));slider.querySelector('.custom-next')?.addEventListener('click',()=>show(i+1));setInterval(()=>show(i+1),(parseInt(slider.dataset.duration)||5)*1000)})})();</script></body>
+
+</html>

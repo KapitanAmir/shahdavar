@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.flask_secret_key
+*.db.backup-*
+.env.local

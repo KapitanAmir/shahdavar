@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>مدیریت تماس با ما | شهدآور</title>
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='owner.css') }}">
+    <link rel="stylesheet" href="{{ url_for('css_files', filename='theme.css') }}">
+    <style>
+        .contact-manager{max-width:1180px;margin:0 auto;padding:30px 18px 70px}.cm-hero{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px 26px;margin-bottom:18px;border-radius:22px;background:linear-gradient(135deg,#2a2114,#17130e);color:#fff8e9;box-shadow:0 20px 55px rgba(40,28,10,.15)}.cm-hero h1{margin:0;font-size:25px}.cm-hero p{margin:7px 0 0;color:#cdbfa9;font-size:11px}.cm-back{display:inline-flex;align-items:center;gap:7px;padding:11px 15px;border-radius:12px;background:#f0c348;color:#2b210d;font-weight:900;text-decoration:none;font-size:11px}.cm-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);gap:18px;align-items:start}.cm-card{padding:22px;border:1px solid var(--theme-border,#e8dfd1);border-radius:20px;background:var(--theme-surface,#fff);box-shadow:var(--theme-shadow,0 15px 45px rgba(45,35,20,.07));margin-bottom:18px}.cm-card h2{margin:0;font-size:16px}.cm-card-sub{margin:5px 0 20px;color:var(--theme-muted,#817565);font-size:10px;line-height:1.9}.cm-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.cm-field label{display:block;margin-bottom:6px;font-size:10px;font-weight:900}.cm-field input,.cm-field select,.cm-field textarea{width:100%;box-sizing:border-box;border:1px solid var(--theme-border,#dfd5c7);border-radius:11px;background:var(--theme-surface,#fff);color:var(--theme-text,#2d241a);padding:11px 12px;font:inherit;font-size:11px;outline:none}.cm-field textarea{min-height:90px;resize:vertical;line-height:1.9}.cm-field input:focus,.cm-field select:focus,.cm-field textarea:focus{border-color:#d7ad3b;box-shadow:0 0 0 3px rgba(215,173,59,.12)}.cm-full{grid-column:1/-1}.cm-help{display:block;margin-top:5px;color:#988d7e;font-size:9px;line-height:1.7}.cm-icon-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:13px}.cm-upload{min-height:95px;border:1px dashed #d8c9a8;border-radius:13px;padding:13px;display:flex;flex-direction:column;justify-content:center;gap:5px;background:#fffbf2}.cm-upload input{font-size:10px}.cm-preview{display:flex;align-items:center;gap:13px;padding:13px;border-radius:14px;background:#faf6ed;border:1px solid #eadfcb}.cm-preview-icon{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:#fff0bb;font-size:27px;overflow:hidden;flex:0 0 58px}.cm-preview-icon img{width:100%;height:100%;object-fit:contain;padding:8px}.cm-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.cm-btn{border:0;border-radius:11px;min-height:42px;padding:0 15px;font:inherit;font-size:10px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.cm-btn-primary{background:#e8b638;color:#302205}.cm-btn-secondary{background:#f1ece3;color:#625441}.cm-btn-danger{background:#f4dfdc;color:#a13e36}.cm-btn:hover{filter:brightness(.97);transform:translateY(-1px)}.cm-check{display:flex;align-items:center;gap:8px;margin-top:13px;font-size:10px;font-weight:800}.cm-check input{accent-color:#d7a72d}.cm-method-list{display:grid;gap:11px}.cm-method{display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:center;padding:14px;border:1px solid var(--theme-border,#e7dfd2);border-radius:16px;background:var(--theme-surface,#fff)}.cm-method-icon{width:56px;height:56px;border-radius:15px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff5d4;font-size:25px}.cm-method-icon img{width:100%;height:100%;object-fit:contain;padding:8px}.cm-method-main{min-width:0}.cm-method-platform{display:inline-flex;padding:4px 8px;border-radius:999px;background:#fff4d2;color:#946c18;font-size:8px;font-weight:900}.cm-method-main strong{display:block;margin-top:5px;font-size:13px}.cm-method-value{display:block;margin-top:3px;font-size:10px;color:var(--theme-muted,#817565);word-break:break-word}.cm-method-desc{display:block;margin-top:5px;font-size:9px;color:var(--theme-muted,#817565)}.cm-method-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.cm-mini{min-height:34px;padding:0 9px;border:0;border-radius:9px;font:inherit;font-size:9px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.cm-mini.edit{background:#fff1c8;color:#75540c}.cm-mini.toggle{background:#e8f2e1;color:#4d733e}.cm-mini.delete{background:#f5dfdc;color:#a03e36}.cm-mini.order{width:34px;padding:0;background:#f0ece5;color:#675a4a}.cm-status{font-size:8px;font-weight:900;padding:5px 8px;border-radius:999px;white-space:nowrap}.cm-status.on{background:#e8f2e1;color:#4d733e}.cm-status.off{background:#f2e9e7;color:#91635e}.cm-empty{padding:35px 20px;text-align:center;border:1px dashed #d8c9a8;border-radius:16px;background:#fffbf2;color:#877968}.cm-empty-icon{font-size:30px}.cm-empty strong{display:block;margin:7px 0;font-size:12px}.cm-empty p{margin:0;font-size:9px}.cm-settings-note{padding:12px 14px;border-radius:12px;background:#fff8e6;border:1px solid #eedca9;color:#71561d;font-size:9px;line-height:1.9;margin-top:12px}
+        html[data-theme="dark"] .cm-upload,html[data-theme="dark"] .cm-preview,html[data-theme="dark"] .cm-empty{background:#211d16;border-color:#51442e;color:#eee5d7}html[data-theme="dark"] .cm-method-platform{background:#2b251a;color:#e2b84f}html[data-theme="dark"] .cm-mini.edit{background:#40321b;color:#f1ce78}html[data-theme="dark"] .cm-mini.toggle{background:#25321f;color:#c8e3b9}html[data-theme="dark"] .cm-mini.delete{background:#3b2220;color:#ffb1a9}
+        @media(max-width:900px){.cm-grid{grid-template-columns:1fr}.cm-method{grid-template-columns:auto 1fr}.cm-method-actions{grid-column:1/-1;justify-content:flex-start}.cm-hero{align-items:flex-start;flex-direction:column}.cm-back{width:100%;box-sizing:border-box}}
+        @media(max-width:600px){.contact-manager{padding:18px 11px 45px}.cm-form-grid,.cm-icon-row{grid-template-columns:1fr}.cm-card{padding:16px}.cm-hero{padding:20px}.cm-hero h1{font-size:21px}.cm-method{grid-template-columns:auto 1fr}.cm-method-icon{width:48px;height:48px}.cm-status{grid-column:1/-1;width:max-content}}
+    </style>
+    <script src="{{ url_for('js_files', filename='theme.js') }}"></script>
+</head>
+<body>
+<main class="contact-manager">
+    <section class="cm-hero">
+        <div><h1>📞 مدیریت تماس با ما</h1><p>تنظیمات صفحه، راه‌های ارتباطی، آیکن‌ها، ترتیب و وضعیت نمایش را از یک محل مدیریت کنید.</p></div>
+        <a class="cm-back" href="{{ url_for('owner_dashboard') }}">← بازگشت به پنل مالکیت</a>
+    </section>
+
+    {% with messages=get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="cm-card" style="padding:12px 16px">{% for category,message in messages %}<div style="padding:10px 12px;border-radius:10px;margin:4px 0;background:{% if category=='success' %}#e8f2e1{% elif category in ['error','danger'] %}#f5dfdc{% else %}#fff3cf{% endif %};color:{% if category=='success' %}#4d733e{% elif category in ['error','danger'] %}#a03e36{% else %}#76560e{% endif %};font-size:10px;font-weight:800">{{ message }}</div>{% endfor %}</div>{% endif %}
+    {% endwith %}
+
+    <div class="cm-grid">
+        <div>
+            <section class="cm-card">
+                <h2>⚙️ تنظیمات صفحه تماس</h2>
+                <p class="cm-card-sub">عنوان، متن معرفی و متن پیش‌فرض دکمه‌های تماس را بدون دست‌کاری سایر تنظیمات سایت تغییر دهید.</p>
+                <form method="post" action="{{ url_for('update_contact_settings') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <div class="cm-form-grid">
+                        <div class="cm-field cm-full"><label for="contact_title">عنوان صفحه</label><input id="contact_title" name="contact_title" maxlength="120" value="{{ site.contact_title or 'تماس با شهدآور' }}" required></div>
+                        <div class="cm-field cm-full"><label for="contact_text">متن معرفی</label><textarea id="contact_text" name="contact_text" maxlength="1000" placeholder="متن کوتاه و حرفه‌ای برای معرفی راه‌های ارتباطی...">{{ site.contact_text or '' }}</textarea></div>
+                        <div class="cm-field"><label for="contact_button_text">متن پیش‌فرض دکمه</label><input id="contact_button_text" name="contact_button_text" maxlength="60" value="{{ site.contact_button_text or 'ارتباط' }}"></div>
+                        <div class="cm-field"><label>وضعیت فعلی</label><div class="cm-settings-note">این تنظیمات فقط صفحه «تماس با ما» را تغییر می‌دهد و روی اطلاعات اصلی سایت، محصولات یا سایر بخش‌ها اثر نمی‌گذارد.</div></div>
+                    </div>
+                    <div class="cm-actions"><button class="cm-btn cm-btn-primary" type="submit">✓ ذخیره تنظیمات تماس</button><a class="cm-btn cm-btn-secondary" href="{{ url_for('contact_page') }}" target="_blank">↗ پیش‌نمایش صفحه</a></div>
+                </form>
+            </section>
+
+            <section class="cm-card">
+                <h2>➕ افزودن راه ارتباطی</h2>
+                <p class="cm-card-sub">هر پلتفرم می‌تواند چندین مورد داشته باشد؛ مثلاً چند حساب تلگرام یا چند شماره تلفن.</p>
+                <form method="post" action="{{ url_for('add_contact_method_route') }}" enctype="multipart/form-data" id="contactAddForm">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <div class="cm-form-grid">
+                        <div class="cm-field"><label for="platform">پلتفرم</label><select id="platform" name="platform"><option value="phone">📞 تلفن</option><option value="mobile">📱 موبایل</option><option value="whatsapp">💬 واتساپ</option><option value="telegram">✈️ تلگرام</option><option value="rubika">🟣 روبیکا</option><option value="eitaa">🟢 ایتا</option><option value="instagram">📸 اینستاگرام</option><option value="email">✉️ ایمیل</option><option value="website">🌐 وب‌سایت</option><option value="custom">🔗 سفارشی</option></select></div>
+                        <div class="cm-field"><label for="title">عنوان</label><input id="title" name="title" maxlength="100" placeholder="مثلاً پشتیبانی فروش" required></div>
+                        <div class="cm-field"><label for="value">شماره / شناسه / مقدار</label><input id="value" name="value" maxlength="250" placeholder="مثلاً @shahdavar_support" required></div>
+                        <div class="cm-field"><label for="link">لینک قابل کلیک</label><input id="link" name="link" maxlength="500" placeholder="https://... یا tel:... یا mailto:..."><span class="cm-help">برای تلفن: tel:0912... — برای ایمیل: mailto:...</span></div>
+                        <div class="cm-field"><label for="button_text">متن دکمه</label><input id="button_text" name="button_text" maxlength="60" placeholder="ارتباط در تلگرام"></div>
+                        <div class="cm-field"><label for="sort_order">ترتیب نمایش</label><input id="sort_order" name="sort_order" type="number" min="0" max="9999" placeholder="خودکار"></div>
+                        <div class="cm-field cm-full"><label for="description">توضیح کوتاه</label><textarea id="description" name="description" maxlength="300" placeholder="مثلاً پاسخ‌گویی همه‌روزه از ساعت ۹ تا ۲۱"></textarea></div>
+                    </div>
+                    <div class="cm-icon-row">
+                        <div class="cm-field"><label for="icon_emoji">آیکن ایموجی</label><input id="icon_emoji" name="icon_emoji" maxlength="10" placeholder="✈️"><span class="cm-help">اگر آیکن تصویری انتخاب نشود، این آیکن نمایش داده می‌شود.</span></div>
+                        <label class="cm-upload"><strong>🖼️ آیکن اختصاصی</strong><span class="cm-help">PNG / JPG / WEBP / GIF — حداکثر ۱۰MB</span><input type="file" name="icon_file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+                    </div>
+                    <label class="cm-check"><input type="checkbox" name="is_active" value="1" checked> این راه ارتباطی بلافاصله در سایت نمایش داده شود</label>
+                    <div class="cm-actions"><button class="cm-btn cm-btn-primary" type="submit">＋ افزودن راه ارتباطی</button></div>
+                </form>
+            </section>
+        </div>
+
+        <aside>
+            <section class="cm-card">
+                <h2>👁 پیش‌نمایش سریع</h2>
+                <p class="cm-card-sub">ساختار کارت‌های صفحه تماس بر اساس اطلاعات واقعی ذخیره‌شده نمایش داده می‌شود.</p>
+                <div class="cm-preview"><div class="cm-preview-icon" id="previewIcon">✈️</div><div><strong id="previewTitle">پشتیبانی شهدآور</strong><div id="previewValue" style="margin-top:4px;font-size:10px;color:#817565">@shahdavar_support</div></div></div>
+            </section>
+            <section class="cm-card">
+                <h2>📋 راه‌های ثبت‌شده</h2>
+                <p class="cm-card-sub">برای هر مورد ویرایش، فعال/غیرفعال، جابه‌جایی و حذف در دسترس است.</p>
+                {% if contacts %}
+                <div class="cm-method-list">
+                {% for contact in contacts %}
+                    <article class="cm-method">
+                        <div class="cm-method-icon">
+                            {% if contact.icon_filename %}<img src="{{ url_for('uploads', filename='contact_icons/' + contact.icon_filename) }}" alt="">{% else %}{{ contact.icon_emoji or '🔗' }}{% endif %}
+                        </div>
+                        <div class="cm-method-main">
+                            <span class="cm-method-platform">{{ contact.platform or 'سفارشی' }}</span>
+                            <strong>{{ contact.title }}</strong>
+                            {% if contact.value %}<span class="cm-method-value">{{ contact.value }}</span>{% endif %}
+                            {% if contact.description %}<span class="cm-method-desc">{{ contact.description }}</span>{% endif %}
+                        </div>
+                        <span class="cm-status {{ 'on' if contact.is_active else 'off' }}">{{ 'فعال' if contact.is_active else 'غیرفعال' }}</span>
+                        <div class="cm-method-actions">
+                            <a class="cm-mini edit" href="{{ url_for('edit_contact_method_route', contact_id=contact.id) }}">✏️ ویرایش</a>
+                            <form method="post" action="{{ url_for('toggle_contact_method_route', contact_id=contact.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="cm-mini toggle" type="submit">{{ '🔕 غیرفعال' if contact.is_active else '🔔 فعال' }}</button></form>
+                            <form method="post" action="{{ url_for('move_contact_method_route', contact_id=contact.id, direction='up') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="cm-mini order" type="submit" title="بالا">↑</button></form>
+                            <form method="post" action="{{ url_for('move_contact_method_route', contact_id=contact.id, direction='down') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="cm-mini order" type="submit" title="پایین">↓</button></form>
+                            <form method="post" action="{{ url_for('delete_contact_method_route', contact_id=contact.id) }}" onsubmit="return confirm('این راه ارتباطی حذف شود؟');"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="cm-mini delete" type="submit">🗑 حذف</button></form>
+                        </div>
+                    </article>
+                {% endfor %}
+                </div>
+                {% else %}<div class="cm-empty"><div class="cm-empty-icon">📭</div><strong>هنوز راه ارتباطی ثبت نشده</strong><p>اولین مورد را از فرم افزودن ایجاد کنید.</p></div>{% endif %}
+            </section>
+        </aside>
+    </div>
+</main>
+<script>
+(function(){
+ const p=document.getElementById('platform'), v=document.getElementById('value'), t=document.getElementById('title'), i=document.getElementById('icon_emoji');
+ const iconMap={telegram:'✈️',rubika:'🟣',eitaa:'🟢',instagram:'📸',whatsapp:'💬',phone:'📞',mobile:'📱',email:'✉️',website:'🌐',custom:'🔗'};
+ function sync(){const key=p.value; if(!i.value)i.value=iconMap[key]||'🔗'; document.getElementById('previewIcon').textContent=i.value||iconMap[key]||'🔗'; document.getElementById('previewTitle').textContent=t.value||'پشتیبانی شهدآور'; document.getElementById('previewValue').textContent=v.value||'مقدار راه ارتباطی';}
+ [p,v,t,i].forEach(x=>x&&x.addEventListener('input',sync));p.addEventListener('change',()=>{i.value=iconMap[p.value]||'🔗';sync()});sync();
+})();
+</script>
+</body></html>
